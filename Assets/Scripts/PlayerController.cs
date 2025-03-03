@@ -80,7 +80,8 @@ public class PlayerController : MonoBehaviour
     }
     public void ThrowWeapon(Vector3 target)
     {
-        GameObject throwWeaponPrefab = Instantiate(throwWeapon, posStart.position, transform.rotation);
+        GameObject throwWeaponPrefab = Instantiate(throwWeapon, posStart.position, Quaternion.identity);
+        target.y = posStart.position.y;
         throwWeaponPrefab.GetComponent<ThrowWeapon>().target = target;
     }
 }

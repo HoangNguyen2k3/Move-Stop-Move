@@ -102,9 +102,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2bcf0e8fd24f7041b9b3c78eae0d6f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedRotate: 200
-  speedMove: 2
-  direct: {x: 0, y: 0, z: 1}
+  speedRotate: 500
+  speedMove: 3
+  touchSomething: {fileID: 5373022685450965240, guid: 16447b7419e22dc4380b9d8d5a1bfc8d, type: 3}
   target: {x: 0, y: 0, z: 0}
 --- !u!136 &-7830694342538617642
 CapsuleCollider:
@@ -121,7 +121,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -154,5 +154,5 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 54
+  m_Constraints: 126
   m_CollisionDetection: 0
