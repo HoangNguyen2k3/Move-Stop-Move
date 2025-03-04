@@ -107,6 +107,7 @@ MonoBehaviour:
   touchSomething: {fileID: 5373022685450965240, guid: 16447b7419e22dc4380b9d8d5a1bfc8d, type: 3}
   CURRENT: Player
   TARGET: Enemy
+  currentlevelObject: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
 --- !u!136 &-7830694342538617642
 CapsuleCollider:
@@ -157,4 +158,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 126
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1

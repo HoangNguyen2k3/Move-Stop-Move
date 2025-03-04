@@ -11,7 +11,15 @@ public class FloatingText : MonoBehaviour
 
     private void Awake()
     {
-        root = transform.root;
+        if (GetComponentInParent<EnemiesHealth>())
+        {
+            root = GetComponentInParent<EnemiesHealth>().transform;
+        }
+        else
+        {
+            root = GetComponentInParent<PlayerController>().transform;
+        }
+        //       root = transform.root;
     }
     private void Start()
     {

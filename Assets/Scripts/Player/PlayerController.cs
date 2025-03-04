@@ -11,18 +11,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float cooldown = 5f;
     [SerializeField] private GameObject throwWeapon;
     [SerializeField] private Transform posStart;
-
     [SerializeField] private GameObject circleTarget;
 
-    private string IDLE_STATE = "IsIdle";
-    private string ATTACK_STATE = "IsAttack";
-    private string ENEMY_TAG = "Enemy";
-
+    public float addingScale = 0;
     private bool isCoolDown = false;
+    private bool isEnemyInRange = false;
     private Animator animator;
     private Vector3 direct;
     private Rigidbody rb;
-
     private Transform firstEnemy = null;
     private List<Transform> enemiesInRange = new List<Transform>();
 
@@ -38,6 +34,10 @@ public class PlayerController : MonoBehaviour
         direct.x = my_joyStick.Horizontal;
         direct.z = my_joyStick.Vertical;
         RotateCharacter();
+        if (isEnemyInRange)
+        {
+            circleTarget.transform.position = firstEnemy.position;
+        }
     }
 
     private void FixedUpdate()
@@ -50,11 +50,11 @@ public class PlayerController : MonoBehaviour
         if (direct != Vector3.zero)
         {
             rb.position += direct.normalized * speed * Time.fixedDeltaTime;
-            animator.SetBool(IDLE_STATE, false);
+            animator.SetBool(ApplicationVariable.IDLE_PLAYER_STATE, false);
         }
         else
         {
-            animator.SetBool(IDLE_STATE, true);
+            animator.SetBool(ApplicationVariable.IDLE_PLAYER_STATE, true);
         }
     }
 
@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(ENEMY_TAG))
+        if (other.CompareTag(ApplicationVariable.ENEMY_TAG))
         {
             Transform enemy = other.transform;
             if (!enemiesInRange.Contains(enemy))
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(ENEMY_TAG))
+        if (other.CompareTag(ApplicationVariable.ENEMY_TAG))
         {
             Transform enemy = other.transform;
             enemiesInRange.Remove(enemy);
@@ -101,18 +101,26 @@ public class PlayerController : MonoBehaviour
     {
         if (firstEnemy != null)
         {
+            if (firstEnemy.GetComponent<EnemiesHealth>().isAlive == false)
+            {
+                isEnemyInRange = false;
+                circleTarget.SetActive(false);
+                return;
+            }
             circleTarget.SetActive(true);
+            isEnemyInRange = true;
             circleTarget.transform.position = firstEnemy.position;
         }
         else
         {
+            isEnemyInRange = false;
             circleTarget.SetActive(false);
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag(ENEMY_TAG) && !isCoolDown && firstEnemy == other.transform && direct == Vector3.zero)
+        if (other.CompareTag(ApplicationVariable.ENEMY_TAG) && !isCoolDown && firstEnemy == other.transform && direct == Vector3.zero)
         {
             StartCoroutine(Attack(other.transform));
             ThrowWeapon(other.transform.position);
@@ -123,9 +131,9 @@ public class PlayerController : MonoBehaviour
     {
         isCoolDown = true;
         weapon.SetActive(false);
-        animator.SetBool(ATTACK_STATE, true);
+        animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, true);
         yield return new WaitForSeconds(cooldown / 5);
-        animator.SetBool(ATTACK_STATE, false);
+        animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, false);
         yield return new WaitForSeconds(cooldown / 2);
         weapon.SetActive(true);
         yield return new WaitForSeconds(cooldown / 2);
@@ -143,6 +151,8 @@ public class PlayerController : MonoBehaviour
         }
 
         GameObject throwWeaponPrefab = Instantiate(throwWeapon, posStart.position, Quaternion.identity);
+        throwWeaponPrefab.transform.localScale += Vector3.one * addingScale;
+        throwWeaponPrefab.GetComponent<ThrowWeapon>().currentlevelObject = GetComponent<LevelManager>();
         target.y = posStart.position.y;
         throwWeaponPrefab.GetComponent<ThrowWeapon>().target = target;
     }

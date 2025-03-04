@@ -5,10 +5,9 @@ public class ThrowWeapon : MonoBehaviour
     [SerializeField] private float speedRotate = 200f;
     [SerializeField] private float speedMove = 10f;
     [SerializeField] private GameObject touchSomething;
-    [SerializeField] private string CURRENT = "Player";
-    [SerializeField] private string TARGET = "Enemy";
 
 
+    public LevelManager currentlevelObject;
     public Vector3 target;
 
     private void Update()
@@ -26,14 +25,22 @@ public class ThrowWeapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag(CURRENT))
+        if (other.gameObject.CompareTag(ApplicationVariable.IGNORE_TAG)) { return; }
+        if (other.gameObject.GetComponentInChildren<EnemiesHealth>())
         {
+            currentlevelObject.AddLevel();
             Destroy(gameObject);
         }
-        else if (!other.gameObject.CompareTag(TARGET) && !other.gameObject.CompareTag(CURRENT))
+        else
         {
-            Instantiate(touchSomething, transform.position, Quaternion.identity);
+            if (!other.gameObject.CompareTag(ApplicationVariable.PLAYER_TAG))
+            {
+                Destroy(gameObject);
+            }
+            else if (!other.gameObject.GetComponentInChildren<EnemiesHealth>() && !other.gameObject.CompareTag(ApplicationVariable.PLAYER_TAG))
+            {
+                Instantiate(touchSomething, transform.position, Quaternion.identity);
+            }
         }
-
     }
 }

@@ -3,9 +3,11 @@ using UnityEngine;
 public class EnemiesHealth : MonoBehaviour
 {
     [SerializeField] private ParticleSystem take_damage_FX;
-    private bool isAlive = true;
-    private Animator animator;
+    [SerializeField] private GameObject enemy;
+    [SerializeField] private SkinnedMeshRenderer current_Mesh;
 
+    public bool isAlive = true;
+    private Animator animator;
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -15,7 +17,8 @@ public class EnemiesHealth : MonoBehaviour
     {
         if (other.GetComponent<ThrowWeapon>() && isAlive)
         {
-            Instantiate(take_damage_FX, other.transform.position, Quaternion.identity);
+            ParticleSystem temp = Instantiate(take_damage_FX, other.transform.position, Quaternion.identity);
+            temp.GetComponent<ParticleSystemRenderer>().material = current_Mesh.material;
             isAlive = false;
             Die();
         }
@@ -25,7 +28,7 @@ public class EnemiesHealth : MonoBehaviour
     {
         if (!take_damage_FX.isPlaying && !isAlive)
         {
-            animator.SetBool("IsDead", true);
+            animator.SetBool(ApplicationVariable.IS_DEAD_STATE, true);
             Invoke("DestroyEnemy", 1.25f);
         }
     }
@@ -37,6 +40,6 @@ public class EnemiesHealth : MonoBehaviour
         {
             player.GetComponent<PlayerController>().RemoveEnemyFromList(transform);
         }
-        Destroy(gameObject);
+        Destroy(enemy.gameObject);
     }
 }
