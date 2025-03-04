@@ -17,7 +17,6 @@ public class FloatingText : MonoBehaviour
     {
         main_cam = Camera.main.transform;
         unit = transform.parent;
-        // worldSpaceCanvas = FindFirstObjectByType<Canvas>().transform;
         transform.SetParent(worldSpaceCanvas);
     }
     private void Update()

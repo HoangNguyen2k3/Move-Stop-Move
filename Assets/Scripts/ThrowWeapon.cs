@@ -5,6 +5,9 @@ public class ThrowWeapon : MonoBehaviour
     [SerializeField] private float speedRotate = 200f;
     [SerializeField] private float speedMove = 10f;
     [SerializeField] private GameObject touchSomething;
+    [SerializeField] private string CURRENT = "Player";
+    [SerializeField] private string TARGET = "Enemy";
+
 
     public Vector3 target;
 
@@ -15,16 +18,22 @@ public class ThrowWeapon : MonoBehaviour
             new Vector3(target.x, transform.position.y, target.z), speedMove * Time.deltaTime);
 
         transform.position = newPosition;
+        if (newPosition == target)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("Player"))
+        if (!other.gameObject.CompareTag(CURRENT))
+        {
+            Destroy(gameObject);
+        }
+        else if (!other.gameObject.CompareTag(TARGET) && !other.gameObject.CompareTag(CURRENT))
         {
             Instantiate(touchSomething, transform.position, Quaternion.identity);
-
         }
-        if (!other.gameObject.CompareTag("Player"))
-            Destroy(gameObject);
+
     }
 }
