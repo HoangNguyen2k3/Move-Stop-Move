@@ -5,12 +5,21 @@ public class ThrowWeapon : MonoBehaviour
     [SerializeField] private float speedRotate = 200f;
     [SerializeField] private float speedMove = 10f;
     [SerializeField] private GameObject touchSomething;
+    [SerializeField] private bool isTurning = true;
 
-    public GameObject who_throw_obj;
-    public string who_throw = "Player";
-    public LevelManager currentlevelObject;
-    public Vector3 target;
+    [HideInInspector] public GameObject who_throw_obj;
+    [HideInInspector] public string who_throw = "Player";
+    [HideInInspector] public LevelManager currentlevelObject;
+    [HideInInspector] public Vector3 target;
 
+    private void Start()
+    {
+        if (!isTurning)
+        {
+            transform.LookAt(target);
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x - 90f, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+        }
+    }
     private void Update()
     {
         if (currentlevelObject == null) { Destroy(gameObject); }
@@ -24,9 +33,15 @@ public class ThrowWeapon : MonoBehaviour
 
     private Vector3 FindNewPosition()
     {
-        transform.rotation = Quaternion.Euler(90f, transform.rotation.eulerAngles.y + (speedRotate * Time.deltaTime), 0f);
+        if (isTurning)
+        {
+            transform.rotation = Quaternion.Euler(90f, transform.rotation.eulerAngles.y + (speedRotate * Time.deltaTime), 0f);
+        }
+
+        /*        Vector3 newPosition = Vector3.MoveTowards(transform.position,
+                    new Vector3(target.x, transform.position.y, target.z), speedMove * Time.deltaTime);*/
         Vector3 newPosition = Vector3.MoveTowards(transform.position,
-            new Vector3(target.x, transform.position.y, target.z), speedMove * Time.deltaTime);
+                   new Vector3(target.x, target.y, target.z), speedMove * Time.deltaTime);
         return newPosition;
     }
 
@@ -52,6 +67,7 @@ public class ThrowWeapon : MonoBehaviour
                     Instantiate(touchSomething, transform.position, Quaternion.identity);
                 }
             }
+            //Instantiate(touchSomething, transform.position, Quaternion.identity);
         }
         else
         {
@@ -66,18 +82,20 @@ public class ThrowWeapon : MonoBehaviour
             else if (other.gameObject != who_throw_obj && other.gameObject.CompareTag(ApplicationVariable.ENEMY_TAG) && who_throw_obj != null)
             {
                 other.gameObject.GetComponent<EnemiesHealth>().isAlive = false;
+                currentlevelObject.AddLevel();
                 other.gameObject.GetComponent<EnemiesHealth>().Die();
                 Destroy(gameObject);
             }
             else
             {
-                if (!other.gameObject.CompareTag(ApplicationVariable.ENEMY_TAG))
-                {
-                    Destroy(gameObject);
-                }
-                else if (!other.gameObject.GetComponentInChildren<PlayerController>() && !other.gameObject.CompareTag(ApplicationVariable.ENEMY_TAG))
+                /*                if (!other.gameObject.CompareTag(ApplicationVariable.ENEMY_TAG))
+                                {
+                                    Destroy(gameObject);
+                                }*/
+                if (!other.gameObject.GetComponentInChildren<PlayerController>() && !other.gameObject.CompareTag(ApplicationVariable.ENEMY_TAG))
                 {
                     Instantiate(touchSomething, transform.position, Quaternion.identity);
+                    Destroy(gameObject);
                 }
             }
         }

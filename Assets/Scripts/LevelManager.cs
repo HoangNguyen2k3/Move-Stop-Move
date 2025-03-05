@@ -9,12 +9,17 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private float maxCam = 84;
     [SerializeField] private ParticleSystem levelup;
+    [Header("Floating text")]
+    [SerializeField] private float numAddingOffset = 0.05f;
+    public float offset_floatingtext = 0f;
+
 
     private float temp = 1;
     private float start_level = 0;
     public float current_level;
-    private float addingLevel = 1;
+    private float addingLevel = 6;
     private CinemachineCamera cam;
+
     private void Start()
     {
         current_level = start_level;
@@ -34,6 +39,7 @@ public class LevelManager : MonoBehaviour
     }
     private void LevelUp()
     {
+        offset_floatingtext += numAddingOffset;
         if (!levelup.isPlaying)
         {
             levelup.Play();

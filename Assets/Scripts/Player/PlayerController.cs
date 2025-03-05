@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     public bool isDead = false;
     private bool isAnimationDead = false;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -139,12 +140,15 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag(ApplicationVariable.ENEMY_TAG) && !isCoolDown && firstEnemy == other.transform && direct == Vector3.zero)
         {
-            StartCoroutine(Attack(other.transform));
-            ThrowWeapon(other.transform.position);
+            StartCoroutine(Attack());
+            if (other.gameObject.GetComponentInChildren<TargetPos>())
+            {
+                ThrowWeapon(other.gameObject.GetComponentInChildren<TargetPos>().transform.position);
+            }
         }
     }
 
-    private IEnumerator Attack(Transform target)
+    private IEnumerator Attack()
     {
         isCoolDown = true;
         weapon.SetActive(false);
@@ -170,8 +174,9 @@ public class PlayerController : MonoBehaviour
         GameObject throwWeaponPrefab = Instantiate(throwWeapon, posStart.position, Quaternion.identity);
         throwWeaponPrefab.transform.localScale += Vector3.one * addingScale;
         throwWeaponPrefab.GetComponent<ThrowWeapon>().currentlevelObject = GetComponent<LevelManager>();
-        target.y = posStart.position.y;
+        //  target.y = posStart.position.y;
         throwWeaponPrefab.GetComponent<ThrowWeapon>().target = target;
+        // throwWeaponPrefab.GetComponent<ThrowWeapon>().target = target.GetComponentInChildren<TargetPos>().transform.position;
     }
     public void RemoveEnemyFromList(Transform enemy)
     {

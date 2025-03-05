@@ -12,12 +12,12 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float wanderInterval = 3f;
 
     [SerializeField] private float attackRange = 10f;
-    [SerializeField] private float timeCoolDown = 2f;
+    [SerializeField] private float timeCoolDown = 1.5f;
     [SerializeField] private GameObject weaponThrow;
     [SerializeField] private Transform posStartThrow;
+    [SerializeField] private GameObject weapon;
 
     private bool isAttacking = false;
-    //    private bool isMoving = false;
 
     private Transform target;
     private EnemiesHealth health;
@@ -60,12 +60,11 @@ public class EnemyAI : MonoBehaviour
 
         foreach (var col in colliders)
         {
-            if ((col.CompareTag("Player") || col.CompareTag("Enemy")) && col.transform != transform.GetChild(1))
+            if ((col.CompareTag("Player") || col.CompareTag("Enemy")) && col.transform.gameObject != transform.GetChild(1).gameObject)
             {
                 float dist = Vector3.Distance(transform.position, col.transform.position);
                 if (dist < minDist)
                 {
-
                     minDist = dist;
                     nearest = col.transform;
                 }
@@ -74,11 +73,11 @@ public class EnemyAI : MonoBehaviour
 
         target = nearest;
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, attackRange);
-    }
+    /*    private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(transform.position, attackRange);
+        }*/
     private void StopAndAttack()
     {
         enemy.isStopped = true;
@@ -93,17 +92,22 @@ public class EnemyAI : MonoBehaviour
     private IEnumerator Attack()
     {
         isAttacking = true;
+        weapon.SetActive(false);
         animator.SetBool("IsAttack", true);
-        yield return new WaitForSeconds(0.2f);
+        //        yield return new WaitForSeconds(0.2f);
+
 
         GameObject throwWeapon = Instantiate(weaponThrow, posStartThrow.position, Quaternion.identity);
         throwWeapon.GetComponent<ThrowWeapon>().who_throw_obj = transform.GetChild(1).gameObject;
         throwWeapon.GetComponent<ThrowWeapon>().currentlevelObject = GetComponent<LevelManager>();
         throwWeapon.GetComponent<ThrowWeapon>().who_throw = "Enemy";
-        throwWeapon.GetComponent<ThrowWeapon>().target = target.position;
+        throwWeapon.GetComponent<ThrowWeapon>().target = target.GetComponentInChildren<TargetPos>().transform.position;
 
-
-        yield return new WaitForSeconds(timeCoolDown);
+        yield return new WaitForSeconds(timeCoolDown / 2);
+        weapon.SetActive(true);
+        yield return new WaitForSeconds(timeCoolDown / 2);
+        target = null;
+        FindNearestTarget();
         isAttacking = false;
         animator.SetBool("IsAttack", false);
     }

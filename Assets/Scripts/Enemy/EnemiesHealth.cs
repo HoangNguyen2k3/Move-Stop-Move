@@ -6,10 +6,12 @@ public class EnemiesHealth : MonoBehaviour
     [SerializeField] private GameObject enemy;
     [SerializeField] private SkinnedMeshRenderer current_Mesh;
 
+    private Collider currentCollider;
     public bool isAlive = true;
     private Animator animator;
     private void Start()
     {
+        currentCollider = GetComponent<Collider>();
         animator = GetComponent<Animator>();
     }
 
@@ -27,6 +29,7 @@ public class EnemiesHealth : MonoBehaviour
 
     public void Die()
     {
+        Destroy(currentCollider);
         if (!take_damage_FX.isPlaying && !isAlive)
         {
             animator.SetBool(ApplicationVariable.IS_DEAD_STATE, true);
