@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI textlevel;
+    [Header("If is Player")]
     [SerializeField] private PlayerController playerController;
     [SerializeField] private float maxCam = 84;
     [SerializeField] private ParticleSystem levelup;
@@ -44,6 +45,10 @@ public class LevelManager : MonoBehaviour
         {
             cam.Lens.FieldOfView += 10;
         }
-        playerController.addingScale += 2.5f;
+        if (playerController)
+        {
+            playerController.addingScale += 2.5f;
+        }
+
     }
 }

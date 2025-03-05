@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -12,6 +13,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject throwWeapon;
     [SerializeField] private Transform posStart;
     [SerializeField] private GameObject circleTarget;
+    [SerializeField] private CinemachineCamera cam_end;
+
+    [SerializeField] private ParticleSystem take_damage_FX;
+    [SerializeField] private SkinnedMeshRenderer current_Mesh;
 
     public float addingScale = 0;
     private bool isCoolDown = false;
@@ -22,6 +27,8 @@ public class PlayerController : MonoBehaviour
     private Transform firstEnemy = null;
     private List<Transform> enemiesInRange = new List<Transform>();
 
+    public bool isDead = false;
+    private bool isAnimationDead = false;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -31,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (isDead && !isAnimationDead) { StartCoroutine(DiePlayer()); }
         direct.x = my_joyStick.Horizontal;
         direct.z = my_joyStick.Vertical;
         RotateCharacter();
@@ -44,7 +52,16 @@ public class PlayerController : MonoBehaviour
     {
         Movement();
     }
-
+    private IEnumerator DiePlayer()
+    {
+        ParticleSystem temp = Instantiate(take_damage_FX, transform.position, Quaternion.identity);
+        temp.GetComponent<ParticleSystemRenderer>().material = current_Mesh.material;
+        isAnimationDead = true;
+        animator.SetBool(ApplicationVariable.IS_DEAD_STATE, true);
+        yield return new WaitForSeconds(0.3f);
+        cam_end.Priority = 10;
+        Destroy(gameObject);
+    }
     private void Movement()
     {
         if (direct != Vector3.zero)
@@ -169,5 +186,8 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
+    private void OnDestroy()
+    {
+        Destroy(circleTarget);
+    }
 }

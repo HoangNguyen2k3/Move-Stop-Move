@@ -17,6 +17,7 @@ public class EnemiesHealth : MonoBehaviour
     {
         if (other.GetComponent<ThrowWeapon>() && isAlive)
         {
+            if (other.GetComponent<ThrowWeapon>().who_throw == "Enemy") { return; }
             ParticleSystem temp = Instantiate(take_damage_FX, other.transform.position, Quaternion.identity);
             temp.GetComponent<ParticleSystemRenderer>().material = current_Mesh.material;
             isAlive = false;
@@ -24,7 +25,7 @@ public class EnemiesHealth : MonoBehaviour
         }
     }
 
-    private void Die()
+    public void Die()
     {
         if (!take_damage_FX.isPlaying && !isAlive)
         {
