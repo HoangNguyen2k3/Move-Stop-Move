@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 3325832998401755648}
   m_Layer: 7
   m_Name: EnemyRoot
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -256,7 +256,7 @@ MonoBehaviour:
   playerController: {fileID: 0}
   maxCam: 84
   levelup: {fileID: 1383535296870798941}
-  numAddingOffset: 0.1
+  numAddingOffset: 0.05
   offset_floatingtext: 0
   current_level: 0
 --- !u!1 &715156513440782930

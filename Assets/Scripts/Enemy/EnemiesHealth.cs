@@ -33,7 +33,7 @@ public class EnemiesHealth : MonoBehaviour
         if (!take_damage_FX.isPlaying && !isAlive)
         {
             animator.SetBool(ApplicationVariable.IS_DEAD_STATE, true);
-            Invoke("DestroyEnemy", 1.25f);
+            Invoke("DestroyEnemy", 1.1f);
         }
     }
 

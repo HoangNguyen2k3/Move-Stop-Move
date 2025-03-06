@@ -13,27 +13,50 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float numAddingOffset = 0.05f;
     public float offset_floatingtext = 0f;
 
+    [SerializeField] private GameObject textAdding;
 
+    public float startLevel = 0f;
     private float temp = 1;
-    private float start_level = 0;
+    //   private float start_level = 0;
     public float current_level;
     private float addingLevel = 6;
     private CinemachineCamera cam;
-
+    private bool isPlayer = false;
     private void Start()
     {
-        current_level = start_level;
+        if (gameObject.GetComponent<PlayerController>())
+        {
+            isPlayer = true;
+        }
+        current_level = startLevel;
         textlevel.text = current_level.ToString();
         cam = FindFirstObjectByType<CinemachineCamera>();
     }
-
+    /*    public void CheckLevelBegin()
+        {
+            current_level = 
+        }*/
     public void AddLevel()
     {
+        if (isPlayer)
+        {
+            textAdding.SetActive(true);
+        }
         current_level += addingLevel;
         textlevel.text = current_level.ToString();
         if (current_level >= 5 * temp && current_level != 0)
         {
             LevelUp();
+        }
+
+    }
+    public void AddLevelLoop()
+    {
+        textlevel.text = current_level.ToString();
+        if (current_level >= 5 * temp && current_level != 0)
+        {
+            LevelUp();
+            AddLevelLoop();
         }
 
     }

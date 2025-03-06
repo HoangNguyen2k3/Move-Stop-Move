@@ -45,7 +45,11 @@ public class PlayerController : MonoBehaviour
         RotateCharacter();
         if (isEnemyInRange)
         {
-            circleTarget.transform.position = firstEnemy.position;
+            if (firstEnemy)
+            {
+                circleTarget.transform.position = firstEnemy.position;
+            }
+
         }
     }
 

@@ -7,13 +7,16 @@ public class ThrowWeapon : MonoBehaviour
     [SerializeField] private GameObject touchSomething;
     [SerializeField] private bool isTurning = true;
 
+
     [HideInInspector] public GameObject who_throw_obj;
     [HideInInspector] public string who_throw = "Player";
     [HideInInspector] public LevelManager currentlevelObject;
     [HideInInspector] public Vector3 target;
 
+    private GameManager gameManager;
     private void Start()
     {
+        gameManager = FindFirstObjectByType<GameManager>();
         if (!isTurning)
         {
             transform.LookAt(target);
@@ -54,6 +57,7 @@ public class ThrowWeapon : MonoBehaviour
             if (other.gameObject.GetComponentInChildren<EnemiesHealth>())
             {
                 currentlevelObject.AddLevel();
+                //                gameManager.MinusEnemy();
                 Destroy(gameObject);
             }
             else
@@ -83,6 +87,7 @@ public class ThrowWeapon : MonoBehaviour
             {
                 other.gameObject.GetComponent<EnemiesHealth>().isAlive = false;
                 currentlevelObject.AddLevel();
+                //               gameManager.MinusEnemy();
                 other.gameObject.GetComponent<EnemiesHealth>().Die();
                 Destroy(gameObject);
             }

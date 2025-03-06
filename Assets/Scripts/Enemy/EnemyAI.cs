@@ -13,10 +13,11 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] private float attackRange = 10f;
     [SerializeField] private float timeCoolDown = 1.5f;
-    [SerializeField] private GameObject weaponThrow;
+    [SerializeField] public GameObject weaponThrow;
     [SerializeField] private Transform posStartThrow;
     [SerializeField] private GameObject weapon;
 
+    private GameManager gameManager;
     private bool isAttacking = false;
 
     private Transform target;
@@ -26,6 +27,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
+        gameManager = FindFirstObjectByType<GameManager>();
         health = GetComponentInChildren<EnemiesHealth>();
         InvokeRepeating(nameof(Wander), 0f, wanderInterval);
     }
@@ -140,5 +142,9 @@ public class EnemyAI : MonoBehaviour
             }
         }
         return origin;
+    }
+    private void OnDisable()
+    {
+        gameManager.MinusEnemy();
     }
 }
