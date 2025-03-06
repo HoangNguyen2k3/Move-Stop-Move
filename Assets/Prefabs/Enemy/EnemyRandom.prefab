@@ -7240,7 +7240,7 @@ MonoBehaviour:
   wanderRadius: 10
   wanderInterval: 3
   attackRange: 3
-  timeCoolDown: 1.5
+  timeCoolDown: 1.2
   weaponThrow: {fileID: 2053064001698601882, guid: e6e14cc3a0ac41b4c8c847b92f52cb2f, type: 3}
   posStartThrow: {fileID: 2807562407535198424}
   weapon: {fileID: 1568698086672074397}
@@ -7347,7 +7347,6 @@ MonoBehaviour:
   skin: {fileID: 1904708365168849838}
   pant: {fileID: 6719674582386734205}
   weapon_start_hold: {fileID: 1568698086672074397}
-  weapon_start_throw: {fileID: 0}
   hair: {fileID: 0}
   random_level: 0
 --- !u!1 &6994541180828958052

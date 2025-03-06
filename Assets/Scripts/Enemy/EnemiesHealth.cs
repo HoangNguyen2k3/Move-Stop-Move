@@ -33,7 +33,7 @@ public class EnemiesHealth : MonoBehaviour
         if (!take_damage_FX.isPlaying && !isAlive)
         {
             animator.SetBool(ApplicationVariable.IS_DEAD_STATE, true);
-            Invoke("DestroyEnemy", 1.1f);
+            Invoke("DestroyEnemy", 1.0f);
         }
     }
 
@@ -44,6 +44,9 @@ public class EnemiesHealth : MonoBehaviour
         {
             player.GetComponent<PlayerController>().RemoveEnemyFromList(transform);
         }
-        Destroy(enemy.gameObject);
+        if (enemy.gameObject)
+        {
+            Destroy(enemy.gameObject);
+        }
     }
 }

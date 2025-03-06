@@ -11,7 +11,7 @@ public class GenerateEnemyType : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer skin;
     [SerializeField] private SkinnedMeshRenderer pant;
     [SerializeField] private GameObject weapon_start_hold;
-    [SerializeField] private GameObject weapon_start_throw;
+    //    [SerializeField] private GameObject weapon_start_throw;
     [SerializeField] private GameObject hair;
 
     private EnemyAI enemyAI;
@@ -24,17 +24,14 @@ public class GenerateEnemyType : MonoBehaviour
         enemyAI = GetComponent<EnemyAI>();
         random_level = Random.Range(0, 10);
         levelManager.startLevel = random_level;
-    }
-    private void Start()
-    {
         skin.material = materials_body[Random.Range(0, materials_body.Length)];
         pant.material = materials_pants[Random.Range(0, materials_pants.Length)];
 
-        int temp = Random.Range(0, weapon_throw.Length);
-        enemyAI.weaponThrow = weapon_throw[temp];
-        weapon_start_throw = enemyAI.weaponThrow;
+        int index = Random.Range(0, weapon_throw.Length);
+        enemyAI.weaponThrow = weapon_throw[index];
+        //       weapon_start_throw = enemyAI.weaponThrow;
 
-        GameObject weapon_h = weapon_hold[temp];
+        GameObject weapon_h = weapon_hold[index];
         if (weapon_start_hold != null)
         {
             MeshFilter weaponMeshFilter = weapon_start_hold.GetComponent<MeshFilter>();
@@ -59,6 +56,9 @@ public class GenerateEnemyType : MonoBehaviour
                 hairRenderer.materials = hair_h.GetComponent<MeshRenderer>().sharedMaterials;
             }
         }
+    }
+    private void Start()
+    {
     }
 
 

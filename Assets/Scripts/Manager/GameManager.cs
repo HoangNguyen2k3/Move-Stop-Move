@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float enemy_spawn_pertime;
     [SerializeField] private float enemy_remain; //Tong quai can danh hien tai ke ca chua spawn
+    public PlayerController playerController;
     private float enemy_not_spawn_num;
 
 
@@ -30,6 +31,15 @@ public class GameManager : MonoBehaviour
             iswinning = true;
             enemy_alive.text = quickAddText(0);
             winningGame.SetActive(true);
+            playerController.animator.SetBool("IsWin", true);
+            playerController.isWinning = true;
+        }
+        if (playerController == null && enemy_remain == 1 && !iswinning)
+        {
+            iswinning = true;
+            EnemyAI enemy_win = FindFirstObjectByType<EnemyAI>();
+            enemy_win.animator.SetBool("IsWin", true);
+            enemy_win.iswinning = true;
         }
     }
     private string quickAddText(float num)
@@ -43,7 +53,6 @@ public class GameManager : MonoBehaviour
     }
     private void SpawnEnemy()
     {
-        //        Debug.Log(enemy_spawn_pertime + "+" + enemy_remain + "+" + enemy_not_spawn_num);
         if (enemy_not_spawn_num == 0)
         {
             return;

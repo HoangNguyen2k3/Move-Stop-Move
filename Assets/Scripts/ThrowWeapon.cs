@@ -7,16 +7,12 @@ public class ThrowWeapon : MonoBehaviour
     [SerializeField] private GameObject touchSomething;
     [SerializeField] private bool isTurning = true;
 
-
     [HideInInspector] public GameObject who_throw_obj;
     [HideInInspector] public string who_throw = "Player";
     [HideInInspector] public LevelManager currentlevelObject;
     [HideInInspector] public Vector3 target;
-
-    private GameManager gameManager;
     private void Start()
     {
-        gameManager = FindFirstObjectByType<GameManager>();
         if (!isTurning)
         {
             transform.LookAt(target);
@@ -40,9 +36,6 @@ public class ThrowWeapon : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(90f, transform.rotation.eulerAngles.y + (speedRotate * Time.deltaTime), 0f);
         }
-
-        /*        Vector3 newPosition = Vector3.MoveTowards(transform.position,
-                    new Vector3(target.x, transform.position.y, target.z), speedMove * Time.deltaTime);*/
         Vector3 newPosition = Vector3.MoveTowards(transform.position,
                    new Vector3(target.x, target.y, target.z), speedMove * Time.deltaTime);
         return newPosition;

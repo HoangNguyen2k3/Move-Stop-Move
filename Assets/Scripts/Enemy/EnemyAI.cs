@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemyAI : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent enemy;
-    [SerializeField] private Animator animator;
+    [SerializeField] public Animator animator;
 
     [SerializeField] private float wanderRadius = 10f;
     [SerializeField] private float wanderInterval = 3f;
@@ -25,16 +26,49 @@ public class EnemyAI : MonoBehaviour
     private Vector3 randomPoint;
     private List<Transform> enemiesInRange = new List<Transform>();
 
-    private void Start()
+    public bool iswinning = false;
+    public GameObject indicatorPrefab;
+    public Transform canvasTransform;
+    private GameObject indicator;
+    public SkinnedMeshRenderer skinnedMeshRenderer;
+
+    private bool dontMove = false;
+
+    private void Awake()
     {
+        canvasTransform = GameObject.FindGameObjectWithTag("CanvasOverlay").transform;
         gameManager = FindFirstObjectByType<GameManager>();
         health = GetComponentInChildren<EnemiesHealth>();
+
+    }
+    private void Start()
+    {
         InvokeRepeating(nameof(Wander), 0f, wanderInterval);
+        Indicator();
+    }
+
+    private void Indicator()
+    {
+        indicator = Instantiate(indicatorPrefab, canvasTransform);
+        indicator.GetComponent<Image>().color = skinnedMeshRenderer.material.color;
+        //        Debug.Log(skinnedMeshRenderer.material.color);
+        //       Debug.Log(indicator.GetComponent<Image>().color);
+        indicator.GetComponent<OffScreenIndicator>().target = enemy.transform;
+        indicator.GetComponent<OffScreenIndicator>().mainCamera = Camera.main;
     }
 
     private void Update()
     {
-        if (!health.isAlive) return;
+        if (!health.isAlive || iswinning)
+        {
+            if (!dontMove)
+            {
+                dontMove = true;
+                CancelInvoke(nameof(Wander));
+
+            }
+            return;
+        }
         if (randomPoint == transform.position)
         {
             animator.SetBool("IsIdle", true);
@@ -116,6 +150,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Wander()
     {
+        if (!health.isAlive || iswinning) { return; }
         if (enemy.isStopped) enemy.isStopped = false;
 
         //       else
@@ -145,6 +180,11 @@ public class EnemyAI : MonoBehaviour
     }
     private void OnDisable()
     {
-        gameManager.MinusEnemy();
+        if (indicator)
+        {
+            Destroy(indicator);
+        }
+        if (gameManager)
+            gameManager.MinusEnemy();
     }
 }

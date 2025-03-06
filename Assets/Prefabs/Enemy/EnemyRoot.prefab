@@ -214,10 +214,13 @@ MonoBehaviour:
   wanderRadius: 10
   wanderInterval: 3
   attackRange: 3
-  timeCoolDown: 1.5
+  timeCoolDown: 1.2
   weaponThrow: {fileID: 2053064001698601882, guid: e6e14cc3a0ac41b4c8c847b92f52cb2f, type: 3}
   posStartThrow: {fileID: 64830413003859207}
   weapon: {fileID: 7163423958961393164}
+  indicatorPrefab: {fileID: 7899798293861165288, guid: 64269e229f89db549979b0c8a08416a0, type: 3}
+  canvasTransform: {fileID: 0}
+  skinnedMeshRenderer: {fileID: 5916302215505487162}
 --- !u!195 &712208511087895105
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -258,6 +261,9 @@ MonoBehaviour:
   levelup: {fileID: 1383535296870798941}
   numAddingOffset: 0.05
   offset_floatingtext: 0
+  textAdding: {fileID: 0}
+  textAnnouceDistance: {fileID: 0}
+  startLevel: 0
   current_level: 0
 --- !u!1 &715156513440782930
 GameObject:

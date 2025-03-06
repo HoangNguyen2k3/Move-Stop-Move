@@ -21,14 +21,15 @@ public class PlayerController : MonoBehaviour
     public float addingScale = 0;
     private bool isCoolDown = false;
     private bool isEnemyInRange = false;
-    private Animator animator;
-    private Vector3 direct;
+    [HideInInspector] public Animator animator;
+    [HideInInspector] public Vector3 direct;
     private Rigidbody rb;
     private Transform firstEnemy = null;
     private List<Transform> enemiesInRange = new List<Transform>();
 
     public bool isDead = false;
     private bool isAnimationDead = false;
+    [HideInInspector] public bool isWinning = false;
 
     private void Start()
     {
@@ -39,6 +40,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (isWinning)
+        {
+            return;
+        }
         if (isDead && !isAnimationDead) { StartCoroutine(DiePlayer()); }
         direct.x = my_joyStick.Horizontal;
         direct.z = my_joyStick.Vertical;
@@ -55,6 +60,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isWinning)
+        {
+            return;
+        }
         Movement();
     }
     private IEnumerator DiePlayer()

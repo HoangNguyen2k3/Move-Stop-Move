@@ -15,11 +15,13 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] private GameObject textAdding;
 
+    [SerializeField] private GameObject textAnnouceDistance;
+
     public float startLevel = 0f;
     private float temp = 1;
     //   private float start_level = 0;
     public float current_level;
-    private float addingLevel = 6;
+    private float addingLevel = 1;
     private CinemachineCamera cam;
     private bool isPlayer = false;
     private void Start()
@@ -32,15 +34,12 @@ public class LevelManager : MonoBehaviour
         textlevel.text = current_level.ToString();
         cam = FindFirstObjectByType<CinemachineCamera>();
     }
-    /*    public void CheckLevelBegin()
-        {
-            current_level = 
-        }*/
     public void AddLevel()
     {
         if (isPlayer)
         {
             textAdding.SetActive(true);
+            textAdding.GetComponent<TextMeshProUGUI>().text = "+" + addingLevel;
         }
         current_level += addingLevel;
         textlevel.text = current_level.ToString();
@@ -62,6 +61,12 @@ public class LevelManager : MonoBehaviour
     }
     private void LevelUp()
     {
+        if (playerController)
+        {
+            textAnnouceDistance.SetActive(true);
+            textAnnouceDistance.GetComponent<TextMeshProUGUI>().text = (transform.localScale.x * 10).ToString() + " m";
+            textAnnouceDistance.GetComponent<Animator>().Play("TextAnouce");
+        }
         offset_floatingtext += numAddingOffset;
         if (!levelup.isPlaying)
         {
