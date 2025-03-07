@@ -61,6 +61,10 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
+        if (LobbyManager.Instance.currentinLobby)
+        {
+            return;
+        }
         indicator.GetComponent<IndicatorObj>().numEnemyLevel.text = levelManager.current_level.ToString();
         if (!health.isAlive || iswinning)
         {
@@ -152,7 +156,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Wander()
     {
-        if (!health.isAlive || iswinning) { return; }
+        if (!health.isAlive || iswinning || LobbyManager.Instance.currentinLobby) { return; }
         if (enemy.isStopped) enemy.isStopped = false;
 
         //       else

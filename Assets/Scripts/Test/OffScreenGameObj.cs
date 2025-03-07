@@ -7,6 +7,10 @@ public class OffScreenGameObj : MonoBehaviour
     public Camera mainCamera;
     public TextMeshProUGUI indicatorImage;
     public float edgeOffset = 50f;
+    private void Start()
+    {
+        Vector3 screenPos = mainCamera.WorldToScreenPoint(target.position);
+    }
     private void Update()
     {
         if (target == null)
@@ -15,6 +19,7 @@ public class OffScreenGameObj : MonoBehaviour
             return;
         }
         Vector3 screenPos = mainCamera.WorldToScreenPoint(target.position);
+        /*        Debug.Log(screenPos);*/
         bool isOffScreen = screenPos.x <= 0 || screenPos.x >= Screen.width || screenPos.y <= 0 || screenPos.y >= Screen.height;
 
         indicatorImage.enabled = isOffScreen;

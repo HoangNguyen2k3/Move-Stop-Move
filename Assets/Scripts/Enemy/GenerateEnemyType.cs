@@ -9,7 +9,7 @@ public class GenerateEnemyType : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer pant;
     [SerializeField] private GameObject weapon_start_hold;
     [SerializeField] private GameObject hair;
-    [SerializeField] private TextMeshProUGUI nameEnemy;
+    [SerializeField] public TextMeshProUGUI nameEnemy;
     private EnemyAI enemyAI;
     public int random_level;
     private LevelManager levelManager;

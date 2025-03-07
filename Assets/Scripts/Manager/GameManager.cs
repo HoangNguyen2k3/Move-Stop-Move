@@ -12,10 +12,11 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private float enemy_remain; //Tong quai can danh hien tai ke ca chua spawn
     public PlayerController playerController;
     private float enemy_not_spawn_num;
-
-
+    [HideInInspector] public string name_enemy_win;
+    [HideInInspector] public float num_coin = 0;
     private bool iswinning = false;
 
+    //    private bool firstTime = false;
     private string enemy_text = "ALIVE: ";
     private Vector3 randomPoint;
     private void Start()
@@ -38,6 +39,7 @@ public class GameManager : Singleton<GameManager>
         {
             iswinning = true;
             EnemyAI enemy_win = FindFirstObjectByType<EnemyAI>();
+            //            name_enemy_win = enemy_win.GetComponent<GenerateEnemyType>().nameEnemy.ToString();
             enemy_win.animator.SetBool("IsWin", true);
             enemy_win.iswinning = true;
         }
@@ -53,6 +55,8 @@ public class GameManager : Singleton<GameManager>
     }
     private void SpawnEnemy()
     {
+        if (LobbyManager.Instance.currentinLobby) { return; }
+        //        firstTime = true;
         if (enemy_not_spawn_num == 0)
         {
             return;

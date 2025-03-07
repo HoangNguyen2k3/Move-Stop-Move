@@ -32,6 +32,13 @@ public class LevelManager : MonoBehaviour
         textlevel.text = current_level.ToString();
         cam = FindFirstObjectByType<CinemachineCamera>();
     }
+    private void Update()
+    {
+        if (isPlayer)
+        {
+            GameManager.Instance.num_coin = current_level;
+        }
+    }
     public void AddLevel()
     {
         if (isPlayer)

@@ -71,6 +71,7 @@ public class ThrowWeapon : MonoBehaviour
             {
                 if (other.isTrigger) { return; }
                 currentlevelObject.AddLevel();
+                GameManager.Instance.name_enemy_win = who_throw_obj.GetComponentInParent<GenerateEnemyType>().nameEnemy.text;
                 other.gameObject.GetComponentInChildren<PlayerController>().isDead = true;
                 Destroy(gameObject);
             }
