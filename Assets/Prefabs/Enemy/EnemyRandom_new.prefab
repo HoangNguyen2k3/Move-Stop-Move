@@ -1465,6 +1465,7 @@ MonoBehaviour:
   weapon_start_hold: {fileID: 1573147970539752129}
   hair: {fileID: 1478178442086112852}
   nameEnemy: {fileID: 3273060623916750650}
+  image: {fileID: 6188157627048601793}
   random_level: 0
 --- !u!1 &4375216059520748557
 GameObject:

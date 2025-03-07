@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     }
     public void RestartScene()
     {
+        GameManager.Instance.gameObject.GetComponent<CoinManager>().AddingCoin();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

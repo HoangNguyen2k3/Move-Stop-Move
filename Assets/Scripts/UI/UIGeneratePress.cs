@@ -3,15 +3,32 @@ using UnityEngine.SceneManagement;
 
 public class UIGeneratePress : MonoBehaviour
 {
-    [SerializeField] private GameObject showGameObject;
-
+    [SerializeField] private GameObject[] showGameObject;
+    [SerializeField] private GameObject[] hiddenGameObject;
     public void ShowGameObject()
     {
-        showGameObject.SetActive(true);
+        for (int i = 0; i < showGameObject.Length; i++)
+        {
+            showGameObject[i].SetActive(true);
+        }
     }
     public void HiddenGameObject()
     {
-        showGameObject.SetActive(false);
+        for (int i = 0; i < hiddenGameObject.Length; i++)
+        {
+            hiddenGameObject[i].SetActive(false);
+        }
+    }
+    public void ShowAndHiddenGameObject()
+    {
+        for (int i = 0; i < showGameObject.Length; i++)
+        {
+            showGameObject[i].SetActive(true);
+        }
+        for (int i = 0; i < hiddenGameObject.Length; i++)
+        {
+            hiddenGameObject[i].SetActive(false);
+        }
     }
     public void ReturnToHome()
     {

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GenerateEnemyType : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class GenerateEnemyType : MonoBehaviour
     [SerializeField] private GameObject weapon_start_hold;
     [SerializeField] private GameObject hair;
     [SerializeField] public TextMeshProUGUI nameEnemy;
+    [SerializeField] public Image image;
     private EnemyAI enemyAI;
     public int random_level;
     private LevelManager levelManager;
@@ -51,5 +53,7 @@ public class GenerateEnemyType : MonoBehaviour
             }
         }
         nameEnemy.text = enemyRandomObj.nameEnemy[Random.Range(0, enemyRandomObj.nameEnemy.Length)];
+        nameEnemy.GetComponent<TextMeshProUGUI>().color = skin.material.color;
+        image.GetComponent<Image>().color = skin.material.color;
     }
 }
