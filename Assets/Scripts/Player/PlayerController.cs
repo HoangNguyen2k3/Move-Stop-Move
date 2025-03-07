@@ -8,12 +8,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private float angle = 5f;
     [SerializeField] private Joystick my_joyStick;
-    [SerializeField] private GameObject weapon;
-    [SerializeField] private float cooldown = 5f;
-    [SerializeField] private GameObject throwWeapon;
+    [SerializeField] private GameObject hold_weapon;
     [SerializeField] private Transform posStart;
     [SerializeField] private GameObject circleTarget;
     [SerializeField] private CinemachineCamera cam_end;
+
+    [SerializeField] private CharaterObj characterPlayer;
 
     [SerializeField] private ParticleSystem take_damage_FX;
     [SerializeField] private SkinnedMeshRenderer current_Mesh;
@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     private bool isEnemyInRange = false;
     [HideInInspector] public Animator animator;
     [HideInInspector] public Vector3 direct;
-    private Rigidbody rb;
     private Transform firstEnemy = null;
     private List<Transform> enemiesInRange = new List<Transform>();
 
@@ -33,9 +32,16 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        transform.localScale = new Vector3(characterPlayer.beginRange, characterPlayer.beginRange, characterPlayer.beginRange);
         animator = GetComponent<Animator>();
         circleTarget.SetActive(false);
+        TakeInfoHoldWeapon();
+    }
+
+    private void TakeInfoHoldWeapon()
+    {
+        hold_weapon.GetComponent<MeshFilter>().mesh = characterPlayer.current_Weapon.weaponHold.GetComponent<MeshFilter>().sharedMesh;
+        hold_weapon.GetComponent<MeshRenderer>().materials = characterPlayer.current_Weapon.weaponHold.GetComponent<MeshRenderer>().sharedMaterials;
     }
 
     private void Update()
@@ -47,6 +53,7 @@ public class PlayerController : MonoBehaviour
         if (isDead && !isAnimationDead) { StartCoroutine(DiePlayer()); }
         direct.x = my_joyStick.Horizontal;
         direct.z = my_joyStick.Vertical;
+        Movement();
         RotateCharacter();
         if (isEnemyInRange)
         {
@@ -64,7 +71,7 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        Movement();
+        //       Movement();
     }
     private IEnumerator DiePlayer()
     {
@@ -80,7 +87,7 @@ public class PlayerController : MonoBehaviour
     {
         if (direct != Vector3.zero)
         {
-            rb.position += direct.normalized * speed * Time.fixedDeltaTime;
+            transform.position += direct.normalized * speed * Time.deltaTime;
             animator.SetBool(ApplicationVariable.IDLE_PLAYER_STATE, false);
         }
         else
@@ -164,13 +171,13 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Attack()
     {
         isCoolDown = true;
-        weapon.SetActive(false);
+        hold_weapon.SetActive(false);
         animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, true);
-        yield return new WaitForSeconds(cooldown / 5);
+        yield return new WaitForSeconds(characterPlayer.coolDownAttack / 5);
         animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, false);
-        yield return new WaitForSeconds(cooldown / 2);
-        weapon.SetActive(true);
-        yield return new WaitForSeconds(cooldown / 2);
+        yield return new WaitForSeconds(characterPlayer.coolDownAttack / 2);
+        hold_weapon.SetActive(true);
+        yield return new WaitForSeconds(characterPlayer.coolDownAttack / 2);
         isCoolDown = false;
     }
 
@@ -184,7 +191,7 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angle * 10 * Time.deltaTime);
         }
 
-        GameObject throwWeaponPrefab = Instantiate(throwWeapon, posStart.position, Quaternion.identity);
+        GameObject throwWeaponPrefab = Instantiate(characterPlayer.current_Weapon.weaponThrow, posStart.position, Quaternion.identity);
         throwWeaponPrefab.transform.localScale += Vector3.one * addingScale;
         throwWeaponPrefab.GetComponent<ThrowWeapon>().currentlevelObject = GetComponent<LevelManager>();
         //  target.y = posStart.position.y;

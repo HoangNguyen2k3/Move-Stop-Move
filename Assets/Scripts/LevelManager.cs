@@ -12,9 +12,7 @@ public class LevelManager : MonoBehaviour
     [Header("Floating text")]
     [SerializeField] private float numAddingOffset = 0.05f;
     public float offset_floatingtext = 0f;
-
     [SerializeField] private GameObject textAdding;
-
     [SerializeField] private GameObject textAnnouceDistance;
 
     public float startLevel = 0f;

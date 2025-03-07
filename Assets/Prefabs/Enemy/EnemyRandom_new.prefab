@@ -1399,7 +1399,8 @@ MonoBehaviour:
   weaponThrow: {fileID: 2053064001698601882, guid: e6e14cc3a0ac41b4c8c847b92f52cb2f, type: 3}
   posStartThrow: {fileID: 6023055337867382231}
   weapon: {fileID: 1573147970539752129}
-  indicatorPrefab: {fileID: 7899798293861165288, guid: 64269e229f89db549979b0c8a08416a0, type: 3}
+  iswinning: 0
+  indicatorPrefab: {fileID: 1829906405034785546, guid: 4ed38bccbbfd3f04a86a29740b3fafdd, type: 3}
   canvasTransform: {fileID: 0}
   skinnedMeshRenderer: {fileID: 397648326692316363}
 --- !u!195 &5047894856089703786
@@ -1458,55 +1459,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b310617e46b85f4aa0e4e959a1a62c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  materials_body:
-  - {fileID: 2100000, guid: 1c643c54c9869dc43b431e8f0449eb3a, type: 2}
-  - {fileID: 2100000, guid: 09504c3e38b61b24cae11d3af0f85db2, type: 2}
-  - {fileID: 2100000, guid: 87e3fa178e7956545b4d0c3e41630aeb, type: 2}
-  - {fileID: 2100000, guid: 9410c5628d9c43f46bcae5309b1c38cc, type: 2}
-  - {fileID: 2100000, guid: f095010f7dffd6a46a6892afd13140b1, type: 2}
-  - {fileID: 2100000, guid: a91e7cfde38ae9e4a8994706dc24a28f, type: 2}
-  - {fileID: 2100000, guid: d04bb62ba2414c6459c0df58f0077d49, type: 2}
-  - {fileID: 2100000, guid: 9cb455a618a6e274cb3f4d9f47c234f1, type: 2}
-  materials_pants:
-  - {fileID: 2100000, guid: e84d4c513d2c95247ab1b057406b6766, type: 2}
-  - {fileID: 2100000, guid: 8411112922f748f4bb1007458b1720e4, type: 2}
-  - {fileID: 2100000, guid: 34dbfd475b51ad244bb7ce13e812dcc4, type: 2}
-  - {fileID: 2100000, guid: 4183d1df888f5734f92e2ce7d24e9f18, type: 2}
-  - {fileID: 2100000, guid: 791f3bafa5b73ee4babb6bf84b5cbe6b, type: 2}
-  - {fileID: 2100000, guid: 5ad5fe2fd16a71b4fb5f6480a1a4a7d2, type: 2}
-  - {fileID: 2100000, guid: 1829c30edb69d59458ce02d68fed40e8, type: 2}
-  - {fileID: 2100000, guid: 57830793b498fc44eb40580c247ead97, type: 2}
-  - {fileID: 2100000, guid: 5d6d2c0d5b0a3c64abb935c18612dcd0, type: 2}
-  - {fileID: 2100000, guid: 9410c5628d9c43f46bcae5309b1c38cc, type: 2}
-  - {fileID: 2100000, guid: 1c643c54c9869dc43b431e8f0449eb3a, type: 2}
-  - {fileID: 2100000, guid: 09504c3e38b61b24cae11d3af0f85db2, type: 2}
-  - {fileID: 2100000, guid: 87e3fa178e7956545b4d0c3e41630aeb, type: 2}
-  - {fileID: 2100000, guid: f095010f7dffd6a46a6892afd13140b1, type: 2}
-  - {fileID: 2100000, guid: a91e7cfde38ae9e4a8994706dc24a28f, type: 2}
-  - {fileID: 2100000, guid: d04bb62ba2414c6459c0df58f0077d49, type: 2}
-  - {fileID: 2100000, guid: 9cb455a618a6e274cb3f4d9f47c234f1, type: 2}
-  weapon_hold:
-  - {fileID: 6631450432033280675, guid: fd39ff64e7f942a41816f232e32bf20c, type: 3}
-  - {fileID: 1183598430815540528, guid: 3b494b1216e964b40ba37a1b85adb4ef, type: 3}
-  - {fileID: 839023233600481435, guid: 2b8529394b89b474088d3f3bbca47eb6, type: 3}
-  - {fileID: 5808698619149925164, guid: 5372348307dcb47488e06c6df13d04f2, type: 3}
-  - {fileID: 2774914305842834732, guid: b4a1e88798bfdce4a8093b1909e54084, type: 3}
-  - {fileID: 2611023300772851564, guid: df76dbfe9c320a948a684918849806b5, type: 3}
-  weapon_throw:
-  - {fileID: 2662976395196642379, guid: ce0bae8528ad06e48bbc2d7731c5a8bb, type: 3}
-  - {fileID: 2661551747254017551, guid: 3fdb7f0035a685148800959324211998, type: 3}
-  - {fileID: 2053064001698601882, guid: e6e14cc3a0ac41b4c8c847b92f52cb2f, type: 3}
-  - {fileID: 1718460876696729877, guid: 5aed32fd2e96e5e4882b8623cc3bd589, type: 3}
-  - {fileID: 7619172995278842757, guid: a9ec68e51db18bc4498d57946bfccb29, type: 3}
-  - {fileID: 7149454222310069375, guid: 83befa62ec78e0c488e8d66bd07b3421, type: 3}
-  hairs:
-  - {fileID: 2172496136216055461, guid: 8d3d93908401f9c4b930eb23dce693d8, type: 3}
-  - {fileID: 624366586449451079, guid: 5b3e6d90bcef86647b1f7ccc4016473f, type: 3}
-  - {fileID: 0}
+  enemyRandomObj: {fileID: 11400000, guid: 7b59a93bb399ce64189c8d6549e91f5f, type: 2}
   skin: {fileID: 397648326692316363}
   pant: {fileID: 4269996226810471621}
   weapon_start_hold: {fileID: 1573147970539752129}
-  hair: {fileID: 0}
+  hair: {fileID: 1478178442086112852}
+  nameEnemy: {fileID: 3273060623916750650}
   random_level: 0
 --- !u!1 &4375216059520748557
 GameObject:

@@ -1,19 +1,15 @@
+using TMPro;
 using UnityEngine;
 
 public class GenerateEnemyType : MonoBehaviour
 {
-    [SerializeField] private Material[] materials_body;
-    [SerializeField] private Material[] materials_pants;
-    [SerializeField] private GameObject[] weapon_hold;
-    [SerializeField] private GameObject[] weapon_throw;
-    [SerializeField] private GameObject[] hairs;
+    [SerializeField] private EnemyRandomObj enemyRandomObj;
 
     [SerializeField] private SkinnedMeshRenderer skin;
     [SerializeField] private SkinnedMeshRenderer pant;
     [SerializeField] private GameObject weapon_start_hold;
-    //    [SerializeField] private GameObject weapon_start_throw;
     [SerializeField] private GameObject hair;
-
+    [SerializeField] private TextMeshProUGUI nameEnemy;
     private EnemyAI enemyAI;
     public int random_level;
     private LevelManager levelManager;
@@ -24,14 +20,12 @@ public class GenerateEnemyType : MonoBehaviour
         enemyAI = GetComponent<EnemyAI>();
         random_level = Random.Range(0, 10);
         levelManager.startLevel = random_level;
-        skin.material = materials_body[Random.Range(0, materials_body.Length)];
-        pant.material = materials_pants[Random.Range(0, materials_pants.Length)];
+        skin.material = enemyRandomObj.materials_body[Random.Range(0, enemyRandomObj.materials_body.Length)];
+        pant.material = enemyRandomObj.materials_pants[Random.Range(0, enemyRandomObj.materials_pants.Length)];
 
-        int index = Random.Range(0, weapon_throw.Length);
-        enemyAI.weaponThrow = weapon_throw[index];
-        //       weapon_start_throw = enemyAI.weaponThrow;
-
-        GameObject weapon_h = weapon_hold[index];
+        int index = Random.Range(0, enemyRandomObj.weapon_throw.Length);
+        enemyAI.weaponThrow = enemyRandomObj.weapon_throw[index];
+        GameObject weapon_h = enemyRandomObj.weapon_hold[index];
         if (weapon_start_hold != null)
         {
             MeshFilter weaponMeshFilter = weapon_start_hold.GetComponent<MeshFilter>();
@@ -44,7 +38,7 @@ public class GenerateEnemyType : MonoBehaviour
             }
         }
 
-        GameObject hair_h = hairs[Random.Range(0, hairs.Length)];
+        GameObject hair_h = enemyRandomObj.hairs[Random.Range(0, enemyRandomObj.hairs.Length)];
         if (hair != null && hair_h != null)
         {
             MeshFilter hairFilter = hair.GetComponent<MeshFilter>();
@@ -56,10 +50,6 @@ public class GenerateEnemyType : MonoBehaviour
                 hairRenderer.materials = hair_h.GetComponent<MeshRenderer>().sharedMaterials;
             }
         }
+        nameEnemy.text = enemyRandomObj.nameEnemy[Random.Range(0, enemyRandomObj.nameEnemy.Length)];
     }
-    private void Start()
-    {
-    }
-
-
 }

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -18,7 +17,6 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private Transform posStartThrow;
     [SerializeField] private GameObject weapon;
 
-    private GameManager gameManager;
     private bool isAttacking = false;
 
     private Transform target;
@@ -31,14 +29,15 @@ public class EnemyAI : MonoBehaviour
     public Transform canvasTransform;
     private GameObject indicator;
     public SkinnedMeshRenderer skinnedMeshRenderer;
+    private LevelManager levelManager;
 
     private bool dontMove = false;
 
     private void Awake()
     {
         canvasTransform = GameObject.FindGameObjectWithTag("CanvasOverlay").transform;
-        gameManager = FindFirstObjectByType<GameManager>();
         health = GetComponentInChildren<EnemiesHealth>();
+        levelManager = GetComponent<LevelManager>();
 
     }
     private void Start()
@@ -50,7 +49,10 @@ public class EnemyAI : MonoBehaviour
     private void Indicator()
     {
         indicator = Instantiate(indicatorPrefab, canvasTransform);
-        indicator.GetComponent<Image>().color = skinnedMeshRenderer.material.color;
+        indicator.GetComponent<IndicatorObj>().arrow.color = skinnedMeshRenderer.material.color;
+        indicator.GetComponent<IndicatorObj>().backGround.color = skinnedMeshRenderer.material.color;
+        indicator.GetComponent<IndicatorObj>().numEnemyLevel.text = levelManager.current_level.ToString();
+        //       indicator.GetComponent<Image>().color = skinnedMeshRenderer.material.color;
         //        Debug.Log(skinnedMeshRenderer.material.color);
         //       Debug.Log(indicator.GetComponent<Image>().color);
         indicator.GetComponent<OffScreenIndicator>().target = enemy.transform;
@@ -59,6 +61,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
+        indicator.GetComponent<IndicatorObj>().numEnemyLevel.text = levelManager.current_level.ToString();
         if (!health.isAlive || iswinning)
         {
             if (!dontMove)
@@ -130,7 +133,6 @@ public class EnemyAI : MonoBehaviour
         isAttacking = true;
         weapon.SetActive(false);
         animator.SetBool("IsAttack", true);
-        //        yield return new WaitForSeconds(0.2f);
 
 
         GameObject throwWeapon = Instantiate(weaponThrow, posStartThrow.position, Quaternion.identity);
@@ -184,7 +186,9 @@ public class EnemyAI : MonoBehaviour
         {
             Destroy(indicator);
         }
-        if (gameManager)
-            gameManager.MinusEnemy();
+        if (GameManager.Instance)
+        {
+            GameManager.Instance.MinusEnemy();
+        }
     }
 }

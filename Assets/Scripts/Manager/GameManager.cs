@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private TextMeshProUGUI enemy_alive;
     [SerializeField] private GameObject winningGame;

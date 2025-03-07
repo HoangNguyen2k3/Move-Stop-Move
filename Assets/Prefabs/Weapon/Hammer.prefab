@@ -102,11 +102,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2bcf0e8fd24f7041b9b3c78eae0d6f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedRotate: 750
-  speedMove: 3.2
-  touchSomething: {fileID: 5373022685450965240, guid: 16447b7419e22dc4380b9d8d5a1bfc8d, type: 3}
-  CURRENT: Player
-  TARGET: Enemy
+  weapon: {fileID: 11400000, guid: f7b9d69c55369f9418a1f9665b060c5b, type: 2}
+  who_throw_obj: {fileID: 0}
+  who_throw: Player
   currentlevelObject: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
 --- !u!136 &-7830694342538617642

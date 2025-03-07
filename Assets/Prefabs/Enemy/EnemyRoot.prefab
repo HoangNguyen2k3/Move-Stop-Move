@@ -218,7 +218,8 @@ MonoBehaviour:
   weaponThrow: {fileID: 2053064001698601882, guid: e6e14cc3a0ac41b4c8c847b92f52cb2f, type: 3}
   posStartThrow: {fileID: 64830413003859207}
   weapon: {fileID: 7163423958961393164}
-  indicatorPrefab: {fileID: 7899798293861165288, guid: 64269e229f89db549979b0c8a08416a0, type: 3}
+  iswinning: 0
+  indicatorPrefab: {fileID: 1829906405034785546, guid: 4ed38bccbbfd3f04a86a29740b3fafdd, type: 3}
   canvasTransform: {fileID: 0}
   skinnedMeshRenderer: {fileID: 5916302215505487162}
 --- !u!195 &712208511087895105
@@ -2194,7 +2195,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d04bb62ba2414c6459c0df58f0077d49, type: 2}
+  - {fileID: 2100000, guid: 25b8f5349a40d114abeb4f766b6b12c7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3097,7 +3098,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ENEMIES
+  m_text: NLQH
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 22051cc3f4a2f724e9e7c924ae6d89b9, type: 2}
   m_sharedMaterial: {fileID: -4151187125610482490, guid: 22051cc3f4a2f724e9e7c924ae6d89b9, type: 2}

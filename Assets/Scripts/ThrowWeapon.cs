@@ -2,29 +2,28 @@ using UnityEngine;
 
 public class ThrowWeapon : MonoBehaviour
 {
-    [SerializeField] private float speedRotate = 200f;
-    [SerializeField] private float speedMove = 10f;
-    [SerializeField] private GameObject touchSomething;
-    [SerializeField] private bool isTurning = true;
+    [SerializeField] private WeaponObject weapon;
 
     [HideInInspector] public GameObject who_throw_obj;
     [HideInInspector] public string who_throw = "Player";
     [HideInInspector] public LevelManager currentlevelObject;
     [HideInInspector] public Vector3 target;
+    private Vector3 startPosition;
     private void Start()
     {
-        if (!isTurning)
+        if (!weapon.isTurning)
         {
             transform.LookAt(target);
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x - 90f, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         }
+        startPosition = transform.position;
     }
     private void Update()
     {
         if (currentlevelObject == null) { Destroy(gameObject); }
         Vector3 newPosition = FindNewPosition();
         transform.position = newPosition;
-        if (newPosition == target)
+        if (Vector3.Distance(startPosition, transform.position) >= weapon.range)
         {
             Destroy(gameObject);
         }
@@ -32,12 +31,13 @@ public class ThrowWeapon : MonoBehaviour
 
     private Vector3 FindNewPosition()
     {
-        if (isTurning)
+        if (weapon.isTurning)
         {
-            transform.rotation = Quaternion.Euler(90f, transform.rotation.eulerAngles.y + (speedRotate * Time.deltaTime), 0f);
+            transform.rotation = Quaternion.Euler(90f, transform.rotation.eulerAngles.y + (weapon.speedRotate * Time.deltaTime), 0f);
         }
-        Vector3 newPosition = Vector3.MoveTowards(transform.position,
-                   new Vector3(target.x, target.y, target.z), speedMove * Time.deltaTime);
+        Vector3 direction = (target - startPosition).normalized;
+        Vector3 newPosition = transform.position + direction * weapon.speedMove * Time.deltaTime;
+
         return newPosition;
     }
 
@@ -50,7 +50,6 @@ public class ThrowWeapon : MonoBehaviour
             if (other.gameObject.GetComponentInChildren<EnemiesHealth>())
             {
                 currentlevelObject.AddLevel();
-                //                gameManager.MinusEnemy();
                 Destroy(gameObject);
             }
             else
@@ -61,10 +60,9 @@ public class ThrowWeapon : MonoBehaviour
                 }
                 else if (!other.gameObject.GetComponentInChildren<EnemiesHealth>() && !other.gameObject.CompareTag(ApplicationVariable.PLAYER_TAG))
                 {
-                    Instantiate(touchSomething, transform.position, Quaternion.identity);
+                    Instantiate(weapon.touchSomething, transform.position, Quaternion.identity);
                 }
             }
-            //Instantiate(touchSomething, transform.position, Quaternion.identity);
         }
         else
         {
@@ -80,19 +78,14 @@ public class ThrowWeapon : MonoBehaviour
             {
                 other.gameObject.GetComponent<EnemiesHealth>().isAlive = false;
                 currentlevelObject.AddLevel();
-                //               gameManager.MinusEnemy();
                 other.gameObject.GetComponent<EnemiesHealth>().Die();
                 Destroy(gameObject);
             }
             else
             {
-                /*                if (!other.gameObject.CompareTag(ApplicationVariable.ENEMY_TAG))
-                                {
-                                    Destroy(gameObject);
-                                }*/
                 if (!other.gameObject.GetComponentInChildren<PlayerController>() && !other.gameObject.CompareTag(ApplicationVariable.ENEMY_TAG))
                 {
-                    Instantiate(touchSomething, transform.position, Quaternion.identity);
+                    Instantiate(weapon.touchSomething, transform.position, Quaternion.identity);
                     Destroy(gameObject);
                 }
             }

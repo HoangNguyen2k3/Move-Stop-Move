@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67d2e2c2c98e7e143bec42fa147cbe16, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  current_Weapon: {fileID: 11400000, guid: f7b9d69c55369f9418a1f9665b060c5b, type: 2}
+  coolDownAttack: 2
+  beginRange: 0.5

@@ -2026,7 +2026,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ENEMIES
+  m_text: VIP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 22051cc3f4a2f724e9e7c924ae6d89b9, type: 2}
   m_sharedMaterial: {fileID: -4151187125610482490, guid: 22051cc3f4a2f724e9e7c924ae6d89b9, type: 2}
@@ -7607,7 +7607,8 @@ MonoBehaviour:
   weaponThrow: {fileID: 1718460876696729877, guid: 5aed32fd2e96e5e4882b8623cc3bd589, type: 3}
   posStartThrow: {fileID: 3687028104324279714}
   weapon: {fileID: 4051981269221120385}
-  indicatorPrefab: {fileID: 7899798293861165288, guid: 64269e229f89db549979b0c8a08416a0, type: 3}
+  iswinning: 0
+  indicatorPrefab: {fileID: 1829906405034785546, guid: 4ed38bccbbfd3f04a86a29740b3fafdd, type: 3}
   canvasTransform: {fileID: 0}
   skinnedMeshRenderer: {fileID: 1358400154321661954}
 --- !u!195 &9118190209255419169
