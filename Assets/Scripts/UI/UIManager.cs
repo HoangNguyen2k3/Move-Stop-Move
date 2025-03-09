@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     public string nameEnemyWin;
     private GameObject player;
     [SerializeField] private GameObject gameOver;
+    [SerializeField] private TextMeshProUGUI earnCoinlose;
     [SerializeField] private TextMeshProUGUI textNameEnemy;
     private void Start()
     {
@@ -22,6 +23,7 @@ public class UIManager : MonoBehaviour
         {
             gameOver.SetActive(true);
             textNameEnemy.text = nameEnemyWin;
+            earnCoinlose.text = GameManager.Instance.num_coin.ToString();
         }
     }
     public void RestartScene()

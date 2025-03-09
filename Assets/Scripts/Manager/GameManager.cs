@@ -14,6 +14,8 @@ public class GameManager : Singleton<GameManager>
     private float enemy_not_spawn_num;
     [HideInInspector] public string name_enemy_win;
     [HideInInspector] public float num_coin = 0;
+    [SerializeField] private TextMeshProUGUI earnCoinwin;
+
     private bool iswinning = false;
 
     //    private bool firstTime = false;
@@ -32,6 +34,7 @@ public class GameManager : Singleton<GameManager>
             iswinning = true;
             enemy_alive.text = quickAddText(0);
             winningGame.SetActive(true);
+            earnCoinwin.text = num_coin.ToString();
             playerController.animator.SetBool("IsWin", true);
             playerController.isWinning = true;
         }
