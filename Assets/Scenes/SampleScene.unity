@@ -405,8 +405,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16.6658, y: 482}
-  m_SizeDelta: {x: 492.2022, y: 164.4395}
+  m_AnchoredPosition: {x: 0.7059, y: 496.71973}
+  m_SizeDelta: {x: 1084.4917, y: 135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &15450736
 MonoBehaviour:
@@ -455,8 +455,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 97.1
-  m_fontSizeBase: 97.1
+  m_fontSize: 96
+  m_fontSizeBase: 96
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -722,7 +722,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &69776644
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3883,13 +3883,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 511236070}
+  - component: {fileID: 511236072}
+  - component: {fileID: 511236071}
   m_Layer: 5
   m_Name: WeaponShop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &511236070
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3914,6 +3916,45 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &511236071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511236069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d061a33357727a342997f8bc4e19de26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponShops:
+  - {fileID: 11400000, guid: 23bd45e88986e064c9f36c170e515d45, type: 2}
+  - {fileID: 11400000, guid: b9289cf8fc3d6b548b4590e21cd3f0ef, type: 2}
+  - {fileID: 11400000, guid: 1bcde7892ebd3a64fb15980dc79cd02a, type: 2}
+  name_weapon: {fileID: 15450736}
+  status: {fileID: 1360824081}
+  image_Weapon: {fileID: 724054016}
+  paramWeapon: {fileID: 682570029}
+  price: {fileID: 770061940}
+  btn_purchase: {fileID: 1351965561}
+--- !u!114 &511236072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511236069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4145a59e6d3029146872a4a9ff17ecad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showGameObject:
+  - {fileID: 69776643}
+  - {fileID: 2083613713265176012}
+  hiddenGameObject:
+  - {fileID: 511236069}
 --- !u!1001 &518158593
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4819,7 +4860,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 6.9794, y: 24.428}
-  m_SizeDelta: {x: 545, y: 545}
+  m_SizeDelta: {x: 525, y: 525}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &724054016
 MonoBehaviour:
@@ -5290,8 +5331,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 451.85303, y: 546.0458}
-  m_SizeDelta: {x: 104.2757, y: 89.9084}
+  m_AnchoredPosition: {x: 436.7422, y: 541.6013}
+  m_SizeDelta: {x: 134.4973, y: 98.7972}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &824179101
 MonoBehaviour:
@@ -5336,7 +5377,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 824179102}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 511236072}
+        m_TargetAssemblyTypeName: UIGeneratePress, Assembly-CSharp
+        m_MethodName: ShowAndHiddenGameObject
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &824179102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5919,7 +5972,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6.9783, y: -255}
+  m_AnchoredPosition: {x: 6.9783, y: -301}
   m_SizeDelta: {x: 545, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &929159880
@@ -7992,7 +8045,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 18.0347, y: -378.12964}
+  m_AnchoredPosition: {x: 18.0347, y: -424.12964}
   m_SizeDelta: {x: 319.7356, y: 88.3979}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1351965561
@@ -8052,7 +8105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.095675945, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8307,8 +8360,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16.6658, y: 347}
-  m_SizeDelta: {x: 492.2022, y: 164.4395}
+  m_AnchoredPosition: {x: 16.6658, y: 363.07}
+  m_SizeDelta: {x: 492.2022, y: 132.29}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1360824081
 MonoBehaviour:
@@ -8357,8 +8410,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 53.7
-  m_fontSizeBase: 53.7
+  m_fontSize: 52
+  m_fontSizeBase: 52
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -8786,7 +8839,7 @@ GameObject:
   - component: {fileID: 1398280277}
   - component: {fileID: 1398280276}
   m_Layer: 5
-  m_Name: Right
+  m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8854,7 +8907,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1398280277}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 511236071}
+        m_TargetAssemblyTypeName: WeaponShopUI, Assembly-CSharp
+        m_MethodName: LeftArrowPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1398280277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9415,6 +9480,7 @@ GameObject:
   - component: {fileID: 1504027087}
   - component: {fileID: 1504027086}
   - component: {fileID: 1504027085}
+  - component: {fileID: 1504027088}
   m_Layer: 5
   m_Name: Weapon
   m_TagString: Untagged
@@ -9486,7 +9552,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1504027086}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1504027088}
+        m_TargetAssemblyTypeName: UIGeneratePress, Assembly-CSharp
+        m_MethodName: ShowAndHiddenGameObject
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1504027086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9525,6 +9603,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1504027083}
   m_CullTransparentMesh: 1
+--- !u!114 &1504027088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504027083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4145a59e6d3029146872a4a9ff17ecad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showGameObject:
+  - {fileID: 511236069}
+  hiddenGameObject:
+  - {fileID: 69776643}
+  - {fileID: 2083613713265176012}
 --- !u!1 &1557890861
 GameObject:
   m_ObjectHideFlags: 0
@@ -9900,7 +9995,7 @@ RectTransform:
   m_Father: {fileID: 237450578}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.2, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -5.5912, y: 0}
   m_SizeDelta: {x: 11.1824, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10968,7 +11063,7 @@ GameObject:
   - component: {fileID: 1724502476}
   - component: {fileID: 1724502475}
   m_Layer: 5
-  m_Name: Left
+  m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11036,7 +11131,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1724502476}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 511236071}
+        m_TargetAssemblyTypeName: WeaponShopUI, Assembly-CSharp
+        m_MethodName: RightArrowPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1724502476
 MonoBehaviour:
   m_ObjectHideFlags: 0
