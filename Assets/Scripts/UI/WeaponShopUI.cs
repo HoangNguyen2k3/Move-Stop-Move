@@ -13,68 +13,152 @@ public class WeaponShopUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI paramWeapon;
     [SerializeField] private TextMeshProUGUI price;
     [SerializeField] private Button btn_purchase;
+    [SerializeField] private Image icon_coin;
+    [SerializeField] private PlayerController player;
 
     private int current_page;
     private int max_page;
 
-    public static EventHandler eventEquipWeapon;
+    public static event EventHandler<WeaponObject> OnWeaponPurchase;
+
     private void Start()
     {
-        /*        if (!PlayerPrefs.HasKey("EquippedWeapon"))
-                {
-                    PlayerPrefs.SetString("EquippedWeapon", weaponShops[0].nameWeapon);
-                    PlayerPrefs.SetString("WeaponStatus_" + weaponShops[0].nameWeapon, "Purchased");
-                }*/
+        if (!PlayerPrefs.HasKey("EquippedWeapon"))
+        {
+            PlayerPrefs.SetString("EquippedWeapon", weaponShops[0].nameWeapon);
+            PlayerPrefs.SetString("WeaponStatus_" + weaponShops[0].nameWeapon, "Equipped");
+        }
         max_page = weaponShops.Length;
         current_page = 0;
-        //        LoadWeaponStatus();
+        LoadWeaponStatus();
         SettingShopUI();
     }
+
     private void LoadWeaponStatus()
     {
         foreach (var weapon in weaponShops)
         {
-            string status = PlayerPrefs.GetString("WeaponStatus_" + weapon.nameWeapon, "NotPurchased");
-            weapon.status = status == "Purchased";
-            /*            if (PlayerPrefs.GetString("EquippedWeapon") == weapon.nameWeapon)
-                        {
-                            weapon.param_Attack += " (Equipped)";
-                        }*/
+            string status = PlayerPrefs.GetString("WeaponStatus_" + weapon.nameWeapon, ApplicationVariable.notPurchase_status);
+            weapon.status = status;
         }
     }
+
     public void SettingShopUI()
     {
-        name_weapon.text = weaponShops[current_page].name;
-        if (weaponShops[current_page].status)
+        var currentWeapon = weaponShops[current_page];
+
+        name_weapon.text = currentWeapon.nameWeapon;
+        image_Weapon.sprite = currentWeapon.imageWeapon;
+        paramWeapon.text = currentWeapon.param_Attack;
+
+        if (currentWeapon.status == ApplicationVariable.purchase_status)
         {
             status.text = "(Unlock)";
-            btn_purchase.interactable = false;
+            btn_purchase.interactable = true;
+            price.text = "EQUIP";
+            icon_coin.gameObject.SetActive(false);
         }
-        else
+        else if (currentWeapon.status == ApplicationVariable.notPurchase_status)
         {
             status.text = "(Lock)";
             btn_purchase.interactable = true;
+            price.text = currentWeapon.price.ToString();
+            icon_coin.gameObject.SetActive(true);
         }
-        image_Weapon.sprite = weaponShops[current_page].imageWeapon;
-        paramWeapon.text = weaponShops[current_page].param_Attack;
-        price.text = weaponShops[current_page].price.ToString();
+        else if (currentWeapon.status == ApplicationVariable.eqquipped_status)
+        {
+            status.text = "(Unlock)";
+            btn_purchase.interactable = false;
+            price.text = "EQUIPPED";
+            icon_coin.gameObject.SetActive(false);
+        }
     }
+
     public void LeftArrowPressed()
     {
-        if (current_page == 0)
+        if (current_page > 0)
         {
-            return;
+            current_page--;
+            SettingShopUI();
         }
-        current_page--;
-        SettingShopUI();
     }
+
     public void RightArrowPressed()
     {
-        if (current_page == (max_page - 1))
+        if (current_page < max_page - 1)
         {
-            return;
+            current_page++;
+            SettingShopUI();
         }
-        current_page++;
+    }
+    public void OnPurchaseOrEqquip()
+    {
+        var currentWeapon = weaponShops[current_page];
+        float coin = PlayerPrefs.GetFloat(ApplicationVariable.COIN);
+        if (currentWeapon.status == ApplicationVariable.notPurchase_status)
+        {
+            if (coin >= weaponShops[current_page].price)
+            {
+                coin -= weaponShops[current_page].price;
+                PlayerPrefs.SetString("WeaponStatus_" + currentWeapon.nameWeapon, "Equipped");
+                PlayerPrefs.SetFloat(ApplicationVariable.COIN, coin);
+                foreach (var weapon_check in weaponShops)
+                {
+                    if (weapon_check.status == ApplicationVariable.eqquipped_status)
+                    {
+                        weapon_check.status = ApplicationVariable.purchase_status;
+                        PlayerPrefs.SetString("WeaponStatus_" + weapon_check.nameWeapon, ApplicationVariable.purchase_status);
+                    }
+                }
+                currentWeapon.status = ApplicationVariable.eqquipped_status;
+                OnWeaponPurchase?.Invoke(this, currentWeapon.weapon);
+                player.characterPlayer.current_Weapon = currentWeapon.weapon;
+                player.TakeInfoHoldWeapon();
+            }
+            else
+            {
+                //Lam tiep canh bao khong du tien
+            }
+        }
+        else if (currentWeapon.status == ApplicationVariable.purchase_status)
+        {
+            foreach (var weapon_check in weaponShops)
+            {
+                if (weapon_check.status == ApplicationVariable.eqquipped_status)
+                {
+                    weapon_check.status = ApplicationVariable.purchase_status;
+                }
+            }
+            currentWeapon.status = ApplicationVariable.eqquipped_status;
+            OnWeaponPurchase?.Invoke(this, currentWeapon.weapon);
+            player.characterPlayer.current_Weapon = currentWeapon.weapon;
+            player.TakeInfoHoldWeapon();
+        }
         SettingShopUI();
     }
+    /*    public void OnPurchaseOrEquip()
+        {
+            var currentWeapon = weaponShops[current_page];
+
+            if (currentWeapon.status == "NotPurchased")
+            {
+                PlayerPrefs.SetString("WeaponStatus_" + currentWeapon.nameWeapon, "Purchased");
+                currentWeapon.status = "Purchased";
+            }
+            else if (currentWeapon.status == "Purchased")
+            {
+                PlayerPrefs.SetString("EquippedWeapon", currentWeapon.nameWeapon);
+
+                foreach (var weapon in weaponShops)
+                {
+                    PlayerPrefs.SetString("WeaponStatus_" + weapon.nameWeapon, "Purchased");
+                    weapon.status = "Purchased";
+                }
+
+                PlayerPrefs.SetString("WeaponStatus_" + currentWeapon.nameWeapon, "Equipped");
+                currentWeapon.status = "Equipped";
+            }
+
+            SettingShopUI();
+        }*/
 }

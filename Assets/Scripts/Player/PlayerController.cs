@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject circleTarget;
     [SerializeField] private CinemachineCamera cam_end;
 
-    [SerializeField] private CharaterObj characterPlayer;
+    public CharaterObj characterPlayer;
 
     [SerializeField] private ParticleSystem take_damage_FX;
     [SerializeField] private SkinnedMeshRenderer current_Mesh;
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
         TakeInfoHoldWeapon();
     }
 
-    private void TakeInfoHoldWeapon()
+    public void TakeInfoHoldWeapon()
     {
         hold_weapon.GetComponent<MeshFilter>().mesh = characterPlayer.current_Weapon.weaponHold.GetComponent<MeshFilter>().sharedMesh;
         hold_weapon.GetComponent<MeshRenderer>().materials = characterPlayer.current_Weapon.weaponHold.GetComponent<MeshRenderer>().sharedMaterials;

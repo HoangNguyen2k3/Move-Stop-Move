@@ -10,7 +10,6 @@ public class LobbyManager : Singleton<LobbyManager>
     public bool currentinLobby = true;
 
     private PlayerController playerControl;
-
     private void Start()
     {
         playerControl = FindFirstObjectByType<PlayerController>();

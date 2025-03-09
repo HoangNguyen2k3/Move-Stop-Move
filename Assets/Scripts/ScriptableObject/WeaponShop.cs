@@ -4,7 +4,7 @@ using UnityEngine;
 public class WeaponShop : ScriptableObject
 {
     public string nameWeapon;
-    public bool status = false;
+    public string status;
     public WeaponObject weapon;
     public string required_item;
     public Sprite imageWeapon;
