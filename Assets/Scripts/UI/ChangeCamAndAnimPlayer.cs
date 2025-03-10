@@ -18,6 +18,6 @@ public class ChangeCamAndAnimPlayer : MonoBehaviour
     public void ReturnCamPriority()
     {
         playerController.animator.SetBool("IsDance", false);
-        cam.GetComponent<CinemachineCamera>().Priority = 0;
+        cam.GetComponent<CinemachineCamera>().Priority = -1;
     }
 }

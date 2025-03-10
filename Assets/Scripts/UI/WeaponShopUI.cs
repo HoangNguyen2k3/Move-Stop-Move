@@ -100,7 +100,6 @@ public class WeaponShopUI : MonoBehaviour
             if (coin >= weaponShops[current_page].price)
             {
                 coin -= weaponShops[current_page].price;
-                PlayerPrefs.SetString("WeaponStatus_" + currentWeapon.nameWeapon, "Equipped");
                 PlayerPrefs.SetFloat(ApplicationVariable.COIN, coin);
                 foreach (var weapon_check in weaponShops)
                 {
@@ -110,6 +109,7 @@ public class WeaponShopUI : MonoBehaviour
                         PlayerPrefs.SetString("WeaponStatus_" + weapon_check.nameWeapon, ApplicationVariable.purchase_status);
                     }
                 }
+                PlayerPrefs.SetString("WeaponStatus_" + currentWeapon.nameWeapon, "Equipped");
                 currentWeapon.status = ApplicationVariable.eqquipped_status;
                 OnWeaponPurchase?.Invoke(this, currentWeapon.weapon);
                 player.characterPlayer.current_Weapon = currentWeapon.weapon;
@@ -122,13 +122,16 @@ public class WeaponShopUI : MonoBehaviour
         }
         else if (currentWeapon.status == ApplicationVariable.purchase_status)
         {
+
             foreach (var weapon_check in weaponShops)
             {
                 if (weapon_check.status == ApplicationVariable.eqquipped_status)
                 {
                     weapon_check.status = ApplicationVariable.purchase_status;
+                    PlayerPrefs.SetString("WeaponStatus_" + weapon_check.nameWeapon, ApplicationVariable.purchase_status);
                 }
             }
+            PlayerPrefs.SetString("WeaponStatus_" + currentWeapon.nameWeapon, "Equipped");
             currentWeapon.status = ApplicationVariable.eqquipped_status;
             OnWeaponPurchase?.Invoke(this, currentWeapon.weapon);
             player.characterPlayer.current_Weapon = currentWeapon.weapon;

@@ -147,11 +147,11 @@ public class EnemyAI : MonoBehaviour
 
         yield return new WaitForSeconds(timeCoolDown / 2);
         weapon.SetActive(true);
+        animator.SetBool("IsAttack", false);
         yield return new WaitForSeconds(timeCoolDown / 2);
         target = null;
         FindNearestTarget();
         isAttacking = false;
-        animator.SetBool("IsAttack", false);
     }
 
     private void Wander()
