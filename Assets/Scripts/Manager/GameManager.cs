@@ -15,7 +15,6 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector] public string name_enemy_win;
     [HideInInspector] public float num_coin = 0;
     [SerializeField] private TextMeshProUGUI earnCoinwin;
-
     private bool iswinning = false;
 
     //    private bool firstTime = false;
@@ -23,12 +22,17 @@ public class GameManager : Singleton<GameManager>
     private Vector3 randomPoint;
     private void Start()
     {
+        if (PlayerPrefs.HasKey("num_enemy_level"))
+        {
+            enemy_remain = PlayerPrefs.GetFloat("num_enemy_level");
+        }
         enemy_not_spawn_num = enemy_remain;
         enemy_alive.text = quickAddText(enemy_remain);
         InvokeRepeating(nameof(SpawnEnemy), 0, 2.5f);
     }
     private void Update()
     {
+
         if (enemy_remain <= 0 && !iswinning)
         {
             iswinning = true;
@@ -53,6 +57,8 @@ public class GameManager : Singleton<GameManager>
     }
     public void MinusEnemy()
     {
+        Debug.Log(enemy_remain + "con lai");
+        Debug.Log(enemy_not_spawn_num + "chuan bi spawn");
         enemy_remain--;
         enemy_alive.text = quickAddText(enemy_remain);
     }
@@ -79,7 +85,7 @@ public class GameManager : Singleton<GameManager>
     }
     private void SpawnEnemyPerTime(float a)
     {
-        for (int i = 0; i < enemy_spawn_pertime; i++)
+        for (int i = 0; i < a; i++)
         {
             int random_enemy = Random.Range(0, enemy.Length);
             Instantiate(enemy[random_enemy], GetRandomNavMeshPosition(transform.position, 100f), Quaternion.identity);
@@ -97,5 +103,10 @@ public class GameManager : Singleton<GameManager>
             }
         }
         return origin;
+    }
+    public void SettingEnemyMaxCount(float num)
+    {
+        enemy_remain = num;
+        enemy_not_spawn_num = enemy_remain;
     }
 }

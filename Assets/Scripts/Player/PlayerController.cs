@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
         if (direct == Vector3.zero)
             return;
         Quaternion rot = Quaternion.LookRotation(direct.normalized);
-        transform.rotation = Quaternion.RotateTowards(this.transform.rotation, rot, angle * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(this.transform.rotation, rot, angle);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -188,7 +188,7 @@ public class PlayerController : MonoBehaviour
             Vector3 directionToEnemy = firstEnemy.position - transform.position;
             directionToEnemy.y = 0;
             Quaternion targetRotation = Quaternion.LookRotation(directionToEnemy);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angle * 10 * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angle * 10);
         }
 
         GameObject throwWeaponPrefab = Instantiate(characterPlayer.current_Weapon.weaponThrow, posStart.position, Quaternion.identity);

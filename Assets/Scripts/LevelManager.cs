@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
     [Header("Floating text")]
     [SerializeField] private float numAddingOffset = 0.05f;
     public float offset_floatingtext = 0f;
+    public FloatingText[] floating;
     [SerializeField] private GameObject textAdding;
     [SerializeField] private GameObject textAnnouceDistance;
 
@@ -20,7 +21,7 @@ public class LevelManager : MonoBehaviour
     //   private float start_level = 0;
     public float current_level;
     private float addingLevel = 1;
-    private CinemachineCamera cam;
+    [SerializeField] private CinemachineCamera cam;
     private bool isPlayer = false;
     private void Start()
     {
@@ -30,7 +31,7 @@ public class LevelManager : MonoBehaviour
         }
         current_level = startLevel;
         textlevel.text = current_level.ToString();
-        cam = FindFirstObjectByType<CinemachineCamera>();
+        //        cam = FindFirstObjectByType<CinemachineCamera>();
     }
     private void Update()
     {
@@ -41,7 +42,7 @@ public class LevelManager : MonoBehaviour
     }
     public void AddLevel()
     {
-        if (isPlayer)
+        if (isPlayer && textAdding)
         {
             textAdding.SetActive(true);
             textAdding.GetComponent<TextMeshProUGUI>().text = "+" + addingLevel;
@@ -71,8 +72,17 @@ public class LevelManager : MonoBehaviour
             textAnnouceDistance.SetActive(true);
             textAnnouceDistance.GetComponent<TextMeshProUGUI>().text = (transform.localScale.x * 10).ToString() + " m";
             textAnnouceDistance.GetComponent<Animator>().Play("TextAnouce");
+
+            if (cam.Lens.FieldOfView <= maxCam)
+            {
+                cam.Lens.FieldOfView += 10;
+            }
         }
-        offset_floatingtext += numAddingOffset;
+        for (int i = 0; i < floating.Length; i++)
+        {
+            floating[i].AddOffset(numAddingOffset);
+
+        }
         if (!levelup.isPlaying)
         {
             levelup.Play();
@@ -80,12 +90,10 @@ public class LevelManager : MonoBehaviour
         temp++;
         addingLevel++;
         transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
-        if (cam.Lens.FieldOfView <= maxCam)
-        {
-            cam.Lens.FieldOfView += 10;
-        }
+
         if (playerController)
         {
+
             playerController.addingScale += 2.5f;
         }
 

@@ -18,7 +18,6 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private GameObject weapon;
 
     private bool isAttacking = false;
-
     private Transform target;
     private EnemiesHealth health;
     private Vector3 randomPoint;
@@ -68,6 +67,7 @@ public class EnemyAI : MonoBehaviour
         indicator.GetComponent<IndicatorObj>().numEnemyLevel.text = levelManager.current_level.ToString();
         if (!health.isAlive || iswinning)
         {
+            enemy.isStopped = true;
             if (!dontMove)
             {
                 dontMove = true;
@@ -89,7 +89,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            if (!IsInvoking(nameof(Wander)))
+            if (!IsInvoking(nameof(Wander)) && enemy.isStopped == false)
             {
                 InvokeRepeating(nameof(Wander), 0f, wanderInterval);
             }
@@ -123,8 +123,9 @@ public class EnemyAI : MonoBehaviour
         }*/
     private void StopAndAttack()
     {
-        enemy.isStopped = true;
         transform.LookAt(target);
+
+        //        enemy.ResetPath();
 
         if (!isAttacking)
         {
@@ -134,6 +135,8 @@ public class EnemyAI : MonoBehaviour
 
     private IEnumerator Attack()
     {
+        //        enemy.isStopped = true;
+        enemy.isStopped = true;
         isAttacking = true;
         weapon.SetActive(false);
         animator.SetBool("IsAttack", true);
@@ -145,10 +148,13 @@ public class EnemyAI : MonoBehaviour
         throwWeapon.GetComponent<ThrowWeapon>().who_throw = "Enemy";
         throwWeapon.GetComponent<ThrowWeapon>().target = target.GetComponentInChildren<TargetPos>().transform.position;
 
-        yield return new WaitForSeconds(timeCoolDown / 2);
+        //        yield return new WaitForSeconds(timeCoolDown / 2.5f);
+        yield return new WaitForSeconds(1f);
+        enemy.isStopped = false;
         weapon.SetActive(true);
         animator.SetBool("IsAttack", false);
-        yield return new WaitForSeconds(timeCoolDown / 2);
+        //        enemy.isStopped = false;
+        yield return new WaitForSeconds(timeCoolDown / 5);
         target = null;
         FindNearestTarget();
         isAttacking = false;
@@ -157,7 +163,7 @@ public class EnemyAI : MonoBehaviour
     private void Wander()
     {
         if (!health.isAlive || iswinning || LobbyManager.Instance.currentinLobby) { return; }
-        if (enemy.isStopped) enemy.isStopped = false;
+        if (enemy.isStopped) { enemy.isStopped = false; }
 
         //       else
         //        {
