@@ -23,11 +23,11 @@ public class UIGeneratePress : MonoBehaviour
     {
         for (int i = 0; i < showGameObject.Length; i++)
         {
-            showGameObject[i].SetActive(true);
+            if (showGameObject[i] != null) { showGameObject[i].SetActive(true); }
         }
         for (int i = 0; i < hiddenGameObject.Length; i++)
         {
-            hiddenGameObject[i].SetActive(false);
+            if (hiddenGameObject[i] != null) { hiddenGameObject[i].SetActive(false); }
         }
     }
     public void ReturnToHome()

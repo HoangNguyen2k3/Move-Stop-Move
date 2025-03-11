@@ -4,7 +4,7 @@ public class Introduction : MonoBehaviour
 {
     [SerializeField] private GameObject gameIntroduction;
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private float timeRemain = 10f;
+    [SerializeField] private float timeRemain = 5f;
     private float temp_time = 0f;
     private void Update()
     {

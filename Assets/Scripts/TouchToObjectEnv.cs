@@ -21,14 +21,28 @@ public class TouchToObjectEnv : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GetComponent<MeshRenderer>().material = transparent_material;
+            TransparentObject();
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            GetComponent<MeshRenderer>().material = begin_material;
+            ReturnColorObject();
         }
+    }
+    public void TransparentObject()
+    {
+        //if (GetComponent<MeshRenderer>().material != transparent_material)
+        //{
+        GetComponent<MeshRenderer>().material = transparent_material;
+        //}
+    }
+    public void ReturnColorObject()
+    {
+        //if (GetComponent<MeshRenderer>().material != begin_material)
+        //{
+        GetComponent<MeshRenderer>().material = begin_material;
+        //}
     }
 }

@@ -15,8 +15,8 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector] public string name_enemy_win;
     [HideInInspector] public float num_coin = 0;
     [SerializeField] private TextMeshProUGUI earnCoinwin;
-    private bool iswinning = false;
-
+    public bool iswinning = false;
+    public bool islose = false;
     //    private bool firstTime = false;
     private string enemy_text = "ALIVE: ";
     private Vector3 randomPoint;
@@ -57,8 +57,8 @@ public class GameManager : Singleton<GameManager>
     }
     public void MinusEnemy()
     {
-        Debug.Log(enemy_remain + "con lai");
-        Debug.Log(enemy_not_spawn_num + "chuan bi spawn");
+        /*        Debug.Log(enemy_remain + "con lai");
+                Debug.Log(enemy_not_spawn_num + "chuan bi spawn");*/
         enemy_remain--;
         enemy_alive.text = quickAddText(enemy_remain);
     }

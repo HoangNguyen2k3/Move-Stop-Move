@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameOver;
     [SerializeField] private TextMeshProUGUI earnCoinlose;
     [SerializeField] private TextMeshProUGUI textNameEnemy;
+    private bool iswin = false;
     private void Start()
     {
         player = FindFirstObjectByType<PlayerController>().gameObject;
@@ -19,10 +20,13 @@ public class UIManager : MonoBehaviour
         {
             nameEnemyWin = GameManager.Instance.name_enemy_win;
         }
-        if (player == null && gameOver.activeSelf == false)
+        if (player == null && gameOver.activeSelf == false && !iswin)
         {
             gameOver.SetActive(true);
+            iswin = true;
+            GetComponent<UIGeneratePress>().ShowAndHiddenGameObject();
             textNameEnemy.text = nameEnemyWin;
+            GameManager.Instance.islose = true;
             earnCoinlose.text = GameManager.Instance.num_coin.ToString();
         }
     }
