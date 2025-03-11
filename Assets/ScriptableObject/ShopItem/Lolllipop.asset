@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8daa14f19962d44ab3ec8710329f10b, type: 3}
-  m_Name: Hammer
+  m_Name: Lolllipop
   m_EditorClassIdentifier: 
   nameWeapon: HAMMER
-  status: Purchased
+  status: 1
   weapon: {fileID: 11400000, guid: f7b9d69c55369f9418a1f9665b060c5b, type: 2}
   required_item: 
-  imageWeapon: {fileID: 839023233600481435, guid: 8f5bab9d71aa24d47a0d29b205aa304e, type: 3}
+  imageWeapon: {fileID: 848821403876111888, guid: 339ce87fb885e39478093ea2814df0c4, type: 3}
   param_Attack: +3 Range
   price: 0

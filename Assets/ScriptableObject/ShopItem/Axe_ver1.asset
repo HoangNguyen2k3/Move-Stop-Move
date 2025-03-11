@@ -16,6 +16,6 @@ MonoBehaviour:
   status: Equipped
   weapon: {fileID: 11400000, guid: f333a8dc72728cb4b93b737682eb448a, type: 2}
   required_item: 
-  imageWeapon: {fileID: 21300000, guid: c0e85ffc93ead054f8c67b9085091a5d, type: 3}
+  imageWeapon: {fileID: 3146213775905627499, guid: 0e2451982bd738f4eaef6d4ca67ea43a, type: 3}
   param_Attack: +5 Range
   price: 100

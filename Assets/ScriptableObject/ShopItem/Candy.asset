@@ -16,6 +16,6 @@ MonoBehaviour:
   status: NotPurchased
   weapon: {fileID: 11400000, guid: acdcfa002a5f99a4ca17d674dffa63da, type: 2}
   required_item: 
-  imageWeapon: {fileID: 21300000, guid: 9528173fd9d6bf5459c42afe593e50a6, type: 3}
+  imageWeapon: {fileID: 2774914305842834732, guid: f4520d40ddde8f4469fd808ec8dc3340, type: 3}
   param_Attack: +5 speed move
   price: 200

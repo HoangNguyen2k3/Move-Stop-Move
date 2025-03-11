@@ -7,7 +7,7 @@ public class WeaponShop : ScriptableObject
     public string status;
     public WeaponObject weapon;
     public string required_item;
-    public Sprite imageWeapon;
+    public GameObject imageWeapon;
     public string param_Attack;
     public float price;
 }

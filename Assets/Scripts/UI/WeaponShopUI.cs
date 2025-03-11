@@ -5,11 +5,18 @@ using UnityEngine.UI;
 
 public class WeaponShopUI : MonoBehaviour
 {
+    [Header("Special Shop")]
+    public WeaponShop[] specialShop;
+    [SerializeField] private GameObject specialShopObj1;
+    [SerializeField] private GameObject specialShopObj2;
+    [SerializeField] private GameObject normalshopObj;
+    [Header("Normal Shop")]
     public WeaponShop[] weaponShops;
+
 
     [SerializeField] private TextMeshProUGUI name_weapon;
     [SerializeField] private TextMeshProUGUI status;
-    [SerializeField] private Image image_Weapon;
+    [SerializeField] private GameObject image_Weapon;
     [SerializeField] private TextMeshProUGUI paramWeapon;
     [SerializeField] private TextMeshProUGUI price;
     [SerializeField] private Button btn_purchase;
@@ -48,7 +55,8 @@ public class WeaponShopUI : MonoBehaviour
         var currentWeapon = weaponShops[current_page];
 
         name_weapon.text = currentWeapon.nameWeapon;
-        image_Weapon.sprite = currentWeapon.imageWeapon;
+        image_Weapon.GetComponent<MeshFilter>().mesh = currentWeapon.imageWeapon.GetComponent<MeshFilter>().sharedMesh;
+        image_Weapon.GetComponent<MeshRenderer>().materials = currentWeapon.imageWeapon.GetComponent<MeshRenderer>().sharedMaterials;
         paramWeapon.text = currentWeapon.param_Attack;
 
         if (currentWeapon.status == ApplicationVariable.purchase_status)
@@ -81,15 +89,52 @@ public class WeaponShopUI : MonoBehaviour
             current_page--;
             SettingShopUI();
         }
+        else if (current_page == 0)
+        {
+            current_page--;
+            specialShopObj1.SetActive(true);
+            specialShopObj2.SetActive(false);
+            normalshopObj.SetActive(false);
+            SettingSpecialShop();
+        }
+        else if (current_page == -1)
+        {
+            current_page--;
+            specialShopObj1.SetActive(false);
+            specialShopObj2.SetActive(true);
+            normalshopObj.SetActive(false);
+            SettingSpecialShop();
+        }
     }
 
     public void RightArrowPressed()
     {
-        if (current_page < max_page - 1)
+        if (current_page < max_page - 1 && current_page >= 0)
         {
             current_page++;
             SettingShopUI();
         }
+        else if (current_page == -1)
+        {
+            current_page++;
+            specialShopObj1.SetActive(false);
+            specialShopObj2.SetActive(false);
+            normalshopObj.SetActive(true);
+            SettingShopUI();
+
+        }
+        else if (current_page == -2)
+        {
+            specialShopObj1.SetActive(true);
+            specialShopObj2.SetActive(false);
+            normalshopObj.SetActive(false);
+            current_page++;
+            SettingSpecialShop();
+        }
+    }
+    public void SettingSpecialShop()
+    {
+
     }
     public void OnPurchaseOrEqquip()
     {
