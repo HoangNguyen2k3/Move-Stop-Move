@@ -64,7 +64,8 @@ public class EnemyAI : MonoBehaviour
         {
             return;
         }
-        indicator.GetComponent<IndicatorObj>().numEnemyLevel.text = levelManager.current_level.ToString();
+        if (indicator)
+            indicator.GetComponent<IndicatorObj>().numEnemyLevel.text = levelManager.current_level.ToString();
         if (!health.isAlive || iswinning)
         {
             enemy.isStopped = true;
