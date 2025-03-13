@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8daa14f19962d44ab3ec8710329f10b, type: 3}
+  m_Name: Knife
+  m_EditorClassIdentifier: 
+  nameWeapon: KNIFE
+  status: Purchased
+  weapon: {fileID: 11400000, guid: e836dcb5b0862054aa78a5fc736f44cb, type: 2}
+  required_item: 
+  imageWeapon: {fileID: 5808698619149925164, guid: 5372348307dcb47488e06c6df13d04f2, type: 3}
+  param_Attack: +5 speed
+  price: 100
+  skinWeapon:
+  - {fileID: 5808698619149925164, guid: 5372348307dcb47488e06c6df13d04f2, type: 3}
+  - {fileID: 2625882542719208928, guid: fab7fdc689ba0c34cbdce4883141c5a2, type: 3}
+  - {fileID: 8430848247027805841, guid: 683e1c25b42255f42a194ee601f3f2f5, type: 3}
+  - {fileID: 5896844542484079169, guid: 906a4b60d58a1254381c98dd6eebd886, type: 3}
+  - {fileID: 6729854876994530701, guid: e6e29f834ce115045a29b496776cfbc1, type: 3}

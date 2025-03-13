@@ -9,7 +9,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private GameObject[] enemy;
 
     [SerializeField] private float enemy_spawn_pertime;
-    [SerializeField] private float enemy_remain; //Tong quai can danh hien tai ke ca chua spawn
+    [SerializeField] public float enemy_remain; //Tong quai can danh hien tai ke ca chua spawn
     public PlayerController playerController;
     private float enemy_not_spawn_num;
     [HideInInspector] public string name_enemy_win;

@@ -10,4 +10,6 @@ public class WeaponShop : ScriptableObject
     public GameObject imageWeapon;
     public string param_Attack;
     public float price;
+
+    public GameObject[] skinWeapon;
 }

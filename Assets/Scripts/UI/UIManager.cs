@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameOver;
     [SerializeField] private TextMeshProUGUI earnCoinlose;
     [SerializeField] private TextMeshProUGUI textNameEnemy;
+    [SerializeField] private TextMeshProUGUI num_rank_lose_txt;
     private bool iswin = false;
     private void Start()
     {
@@ -28,6 +29,7 @@ public class UIManager : MonoBehaviour
             textNameEnemy.text = nameEnemyWin;
             GameManager.Instance.islose = true;
             earnCoinlose.text = GameManager.Instance.num_coin.ToString();
+            num_rank_lose_txt.text = "#" + GameManager.Instance.enemy_remain.ToString();
         }
     }
     public void RestartScene()

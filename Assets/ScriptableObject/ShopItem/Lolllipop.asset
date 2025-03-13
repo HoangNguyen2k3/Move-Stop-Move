@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8daa14f19962d44ab3ec8710329f10b, type: 3}
   m_Name: Lolllipop
   m_EditorClassIdentifier: 
-  nameWeapon: HAMMER
-  status: 1
-  weapon: {fileID: 11400000, guid: f7b9d69c55369f9418a1f9665b060c5b, type: 2}
+  nameWeapon: LOLLIPOP
+  status: Purchased
+  weapon: {fileID: 11400000, guid: e170f449ef91f8b4391affe6acc3c2cd, type: 2}
   required_item: 
   imageWeapon: {fileID: 848821403876111888, guid: 339ce87fb885e39478093ea2814df0c4, type: 3}
   param_Attack: +3 Range
-  price: 0
+  price: 50
+  skinWeapon:
+  - {fileID: 848821403876111888, guid: 339ce87fb885e39478093ea2814df0c4, type: 3}
+  - {fileID: 6178012049125945725, guid: fb7af3a74db532f41b23a66d151b2453, type: 3}
+  - {fileID: 2417238474674903134, guid: 8f67a88d606ae1841bb18443fdd49d7f, type: 3}
+  - {fileID: 1099132090200711701, guid: e1bb2f33b3ecc5d46918482f6e2c62cf, type: 3}
+  - {fileID: 7467828593969568844, guid: d4f1bd97afcf2fa4d9597c52ed0fdf1e, type: 3}

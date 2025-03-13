@@ -37,13 +37,34 @@ public class PlayerController : MonoBehaviour
         circleTarget.SetActive(false);
         TakeInfoHoldWeapon();
     }
+    /*    public void TakeColorWeaponFromDatabase()
+        {
+            if (!PlayerPrefs.HasKey("EquipCurrentWeapon")) { return; }
+            string name_weapon = PlayerPrefs.GetString("EquipCurrentWeapon");
+            for (int i = 0; i < characterPlayer.current_Weapon.weaponThrow.GetComponent<MeshRenderer>().sharedMaterials.Length; i++)
+            {
+                string key = "Color_" + name_weapon + "_custom_" + i;
+                string hexColor = PlayerPrefs.GetString(key);
 
+                if (ColorUtility.TryParseHtmlString(hexColor, out Color newColor))
+                {
+                    characterPlayer.skin_current_weapon.material[i].color = newColor;
+                }
+            }
+
+        }*/
     public void TakeInfoHoldWeapon()
     {
+        //TakeColorWeaponFromDatabase();
+        for (int i = 0; i < characterPlayer.current_Weapon.weaponHold.GetComponent<MeshRenderer>().sharedMaterials.Length; i++)
+        {
+            characterPlayer.current_Weapon.weaponHold.GetComponent<MeshRenderer>().sharedMaterials[i].color = characterPlayer.skin_current_weapon.material[i].color;
+            characterPlayer.current_Weapon.weaponThrow.GetComponent<MeshRenderer>().sharedMaterials[i].color = characterPlayer.skin_current_weapon.material[i].color;
+
+        }
         hold_weapon.GetComponent<MeshFilter>().mesh = characterPlayer.current_Weapon.weaponHold.GetComponent<MeshFilter>().sharedMesh;
         hold_weapon.GetComponent<MeshRenderer>().materials = characterPlayer.current_Weapon.weaponHold.GetComponent<MeshRenderer>().sharedMaterials;
     }
-
     private void Update()
     {
         if (isWinning)

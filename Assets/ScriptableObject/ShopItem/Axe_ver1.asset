@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: Axe_ver1
   m_EditorClassIdentifier: 
   nameWeapon: AXE_VER2
-  status: Equipped
+  status: NotPurchased
   weapon: {fileID: 11400000, guid: f333a8dc72728cb4b93b737682eb448a, type: 2}
   required_item: 
   imageWeapon: {fileID: 3146213775905627499, guid: 0e2451982bd738f4eaef6d4ca67ea43a, type: 3}
   param_Attack: +5 Range
-  price: 100
+  price: 300
+  skinWeapon:
+  - {fileID: 9059837650657168156, guid: eca960dd987f4d143a3e5dcecb1aa25d, type: 3}
+  - {fileID: 106902534658338363, guid: 882f370f59c7a2e409d3aff8afdaa021, type: 3}
+  - {fileID: 9059837650657168156, guid: eca960dd987f4d143a3e5dcecb1aa25d, type: 3}
+  - {fileID: 7038725582915252903, guid: d910cf22afe1ada46a4c30b18222ec8d, type: 3}
+  - {fileID: 106902534658338363, guid: 882f370f59c7a2e409d3aff8afdaa021, type: 3}

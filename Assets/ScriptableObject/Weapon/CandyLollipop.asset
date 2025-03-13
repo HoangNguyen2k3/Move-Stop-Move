@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e03f550d3080d114f8ddc418449d85ef, type: 3}
   m_Name: CandyLollipop
   m_EditorClassIdentifier: 
-  weaponThrow: {fileID: 0}
-  weaponHold: {fileID: 0}
+  weaponThrow: {fileID: 7619172995278842757, guid: 5d3cecd88f18535459becc6e17e022a3, type: 3}
+  weaponHold: {fileID: 6178012049125945725, guid: fb7af3a74db532f41b23a66d151b2453, type: 3}
   touchSomething: {fileID: 5373022685450965240, guid: 16447b7419e22dc4380b9d8d5a1bfc8d, type: 3}
   speedMove: 4.5
   speedRotate: 700

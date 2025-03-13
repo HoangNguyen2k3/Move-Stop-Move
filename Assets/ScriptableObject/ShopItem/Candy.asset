@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: Candy
   m_EditorClassIdentifier: 
   nameWeapon: CANDY
-  status: NotPurchased
+  status: Purchased
   weapon: {fileID: 11400000, guid: acdcfa002a5f99a4ca17d674dffa63da, type: 2}
   required_item: 
   imageWeapon: {fileID: 2774914305842834732, guid: f4520d40ddde8f4469fd808ec8dc3340, type: 3}
-  param_Attack: +5 speed move
+  param_Attack: +5 speed
   price: 200
+  skinWeapon:
+  - {fileID: 8199500296956037650, guid: 308a530ba6aac4d47a0f0eafc747c7d5, type: 3}
+  - {fileID: 3549886755964887827, guid: 999bc9e87dbb6aa4fafb96915ca1710c, type: 3}
+  - {fileID: 8199500296956037650, guid: 308a530ba6aac4d47a0f0eafc747c7d5, type: 3}
+  - {fileID: 7698326908664849449, guid: 763b1ada3ec34d64f955161624ef46cc, type: 3}
+  - {fileID: 9098727235838204601, guid: 3dafc8dde561b074c98b9906913df72e, type: 3}

@@ -19,3 +19,9 @@ MonoBehaviour:
   imageWeapon: {fileID: 839023233600481435, guid: 8f5bab9d71aa24d47a0d29b205aa304e, type: 3}
   param_Attack: +3 Range
   price: 0
+  skinWeapon:
+  - {fileID: 8948039776417992388, guid: 77c5de30759d87a479e9a0a5826a92ce, type: 3}
+  - {fileID: 1213408396181939566, guid: b0705ef3a028eee42b3bee7dfebf8ff3, type: 3}
+  - {fileID: 2478480624632788458, guid: 589747f83667bf244a1d8f747d45b0f7, type: 3}
+  - {fileID: 7343874825650559182, guid: 60f7e31b5bd40384fae34fe19ab8b621, type: 3}
+  - {fileID: 4006436187853993556, guid: 0194296eae2111e4997a80a9b135bb1c, type: 3}

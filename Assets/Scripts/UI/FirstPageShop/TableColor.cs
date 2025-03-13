@@ -5,14 +5,27 @@ public class TableColor : MonoBehaviour
 {
     public GameObject[] currentPart;
     private int current_num_choose = 0;
-    [SerializeField] private bool isHammer = true;
+    public string saveName;
 
-    private string hammer_save = "Color_Hammer_";
-    private string candy_save = "Color_Candy_";
-    private void OnEnable()
+    private void Awake()
     {
         ComponentOptColor.OnChangePart += ChangCurrentNum;
     }
+    private void OnEnable()
+    {
+    }
+
+    private void TakeColor(object sender, WeaponShop e)
+    {
+        saveName = e.nameWeapon;
+        Debug.Log(saveName + "normal");
+    }
+
+    /*    public void TakeColor(WeaponShop e)
+        {
+            saveName = e.nameWeapon;
+            Debug.Log(saveName + "normal");
+        }*/
 
     private void ChangCurrentNum(object sender, int e)
     {
@@ -20,24 +33,17 @@ public class TableColor : MonoBehaviour
     }
     public void TakeColorForPart()
     {
-
         Color selectedColor = gameObject.GetComponent<Image>().color;
         currentPart[current_num_choose].GetComponent<ColorComponent>().ChangeColor(selectedColor);
         string hexColor = "#" + ColorUtility.ToHtmlStringRGB(selectedColor);
-        Debug.Log(hexColor);
-        if (isHammer)
-        {
-            PlayerPrefs.SetString(hammer_save + current_num_choose.ToString(), hexColor);
-        }
-        else
-        {
-            PlayerPrefs.SetString(candy_save + current_num_choose.ToString(), hexColor);
-        }
+        PlayerPrefs.SetString("Color_" + PurchaseCustomWeapon.lastWeaponShop.nameWeapon + "_custom_" + current_num_choose.ToString(), hexColor);
+        Debug.Log("Color_" + PurchaseCustomWeapon.lastWeaponShop.nameWeapon + "_custom_" + current_num_choose.ToString());
+        Debug.Log("num choose" + current_num_choose);
         PlayerPrefs.Save();
     }
-    private void OnDisable()
-    {
-        ComponentOptColor.OnChangePart -= ChangCurrentNum;
-    }
+    /*    private void OnDisable()
+        {
+            ComponentOptColor.OnChangePart -= ChangCurrentNum;
+        }*/
 }
 

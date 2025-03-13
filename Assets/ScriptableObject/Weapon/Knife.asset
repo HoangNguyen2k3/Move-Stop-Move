@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e03f550d3080d114f8ddc418449d85ef, type: 3}
   m_Name: Knife
   m_EditorClassIdentifier: 
-  weaponThrow: {fileID: 0}
-  weaponHold: {fileID: 0}
+  weaponThrow: {fileID: 1718460876696729877, guid: 5aed32fd2e96e5e4882b8623cc3bd589, type: 3}
+  weaponHold: {fileID: 5808698619149925164, guid: 5372348307dcb47488e06c6df13d04f2, type: 3}
   touchSomething: {fileID: 5373022685450965240, guid: 16447b7419e22dc4380b9d8d5a1bfc8d, type: 3}
   speedMove: 5
   speedRotate: 0

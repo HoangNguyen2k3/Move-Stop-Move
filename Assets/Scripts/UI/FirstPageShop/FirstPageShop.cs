@@ -1,3 +1,5 @@
+//using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,93 +8,84 @@ public class FirstPageShop : MonoBehaviour
     [Header("Button Feature specific")]
     [SerializeField] private GameObject current_GameObjectChoose;
     [SerializeField] private GameObject main_image_weapon;
-    [Header("Generate")]
-    [SerializeField] private GameObject[] current_GameObjectVer2;
     [Header("Required")]
     [SerializeField] private GameObject[] color_part_weapon;
-    [SerializeField] private WeaponShop currentWeapon;
+    [HideInInspector] public WeaponShop currentWeapon;
+
+
     [SerializeField] private GameObject button_purchase;
-    [SerializeField] private GameObject button_select_custem;
+    [SerializeField] private GameObject image_ads;
+    [SerializeField] private TextMeshProUGUI text;
+
+
+    [SerializeField] private RectTransform begin_Pos;
+    [SerializeField] private RectTransform custom_Pos;
     [SerializeField] private GameObject colorBar;
     public bool isChangeColorWeapon = false;
-    [SerializeField] private bool isHammer = true;
-    [SerializeField] private int num_weapon;
+    [SerializeField] public int num_weapon;
 
+    [SerializeField] private PurchaseCustomWeapon custom;
+
+
+    /*    private void OnEnable()
+        {
+            EventManager.OnChangeWeaponCustom += ChaneWeaponCustom;
+        }
+
+        private void ChaneWeaponCustom(object sender, WeaponShop e)
+        {
+            currentWeapon = e;
+            if (PlayerPrefs.HasKey("Color_" + currentWeapon.nameWeapon + "_custom_0"))
+                GetColorCustom(currentWeapon.imageWeapon.GetComponent<MeshRenderer>().sharedMaterials.Length);
+        }*/
     private void Start()
     {
-        if (!isChangeColorWeapon) { return; }
-        int num_color = color_part_weapon.Length;
-        if (!PlayerPrefs.HasKey("Color_Candy_1") && !isHammer)
-        {
-            InitColorCandy();
-        }
-        else if (!PlayerPrefs.HasKey("Color_Hammer_1") && isHammer)
-        {
-            InitColorHammer();
-        }
-        if (!isHammer)
-        {
-            GetColorCandy(num_color);
-        }
-        else if (isHammer)
-        {
-            GetColorHammer(num_color);
-        }
+        custom = GetComponentInParent<PurchaseCustomWeapon>();
     }
-
-    private void GetColorHammer(int num_color)
+    public void GetColorCustom(int num_color)
     {
+        MeshRenderer meshRenderer = current_GameObjectChoose.GetComponent<MeshRenderer>();
+        Material[] currentMaterials = meshRenderer.sharedMaterials;
+        if (currentMaterials.Length < num_color)
+        {
+            Material[] newMaterials = new Material[num_color];
+            for (int i = 0; i < num_color; i++)
+            {
+                newMaterials[i] = i < currentMaterials.Length
+                    ? currentMaterials[i]
+                    : new Material(Shader.Find("Standard"));
+            }
+            meshRenderer.materials = newMaterials;
+        }
         for (int i = 0; i < num_color; i++)
         {
-            string hexColor = PlayerPrefs.GetString("Color_Hammer_" + i);
+            string key = "Color_" + PurchaseCustomWeapon.lastWeaponShop.nameWeapon + "_custom_" + i;
+            string hexColor = PlayerPrefs.GetString(key);
+
             if (ColorUtility.TryParseHtmlString(hexColor, out Color newColor))
             {
-                current_GameObjectChoose.GetComponent<MeshRenderer>().materials[i].color = newColor;
-            }
-            else
-            {
-                Debug.LogWarning("Invalid hex color: " + hexColor);
+                meshRenderer.materials[i].color = newColor;
             }
         }
     }
 
-    private void GetColorCandy(int num_color)
-    {
-        for (int i = 0; i < num_color; i++)
-        {
-            string hexColor = PlayerPrefs.GetString("Color_Candy_" + i);
-            if (ColorUtility.TryParseHtmlString(hexColor, out Color newColor))
-            {
-                current_GameObjectChoose.GetComponent<MeshRenderer>().materials[i].color = newColor;
-            }
-            else
-            {
-                Debug.LogWarning("Invalid hex color: " + hexColor);
-            }
-        }
-    }
 
-    public void InitColorCandy()
-    {
-        PlayerPrefs.SetString("Color_Candy_0", "#6CE075");
-        PlayerPrefs.SetString("Color_Candy_1", "#1F9F29");
-        PlayerPrefs.SetString("Color_Candy_2", "#330404");
-    }
-    public void InitColorHammer()
-    {
-        PlayerPrefs.SetString("Color_Candy_0", "#330404");
-        PlayerPrefs.SetString("Color_Candy_1", "#330404");
-    }
     public void OnChangeType()
     {
-        if (isHammer)
+        if (num_weapon != 3 && num_weapon != 4)
+            custom.CheckEqippedWeapon(num_weapon);
+        if (num_weapon == 3 || num_weapon == 4)
         {
-            PlayerPrefs.SetInt("num_weapon_choose_hammer", num_weapon);
+            image_ads.SetActive(true);
+            text.text = "Unlock";
+            text.color = Color.red;
         }
         else
         {
-            PlayerPrefs.SetInt("num_weapon_choose_candy", num_weapon);
+            text.color = Color.black;
+            image_ads.SetActive(false);
         }
+        PurchaseCustomWeapon.num_weap = num_weapon;
         Mesh mesh = current_GameObjectChoose.GetComponent<MeshFilter>().mesh;
         Material[] materials = current_GameObjectChoose.GetComponent<MeshRenderer>().materials;
         main_image_weapon.GetComponent<MeshFilter>().mesh = mesh;
@@ -100,9 +93,9 @@ public class FirstPageShop : MonoBehaviour
         if (isChangeColorWeapon)
         {
             colorBar.SetActive(true);
-            button_select_custem.SetActive(true);
-            button_purchase.SetActive(false);
-            for (int i = 0; i < color_part_weapon.Length; i++)
+            button_purchase.GetComponent<RectTransform>().anchoredPosition = custom_Pos.anchoredPosition;
+            ComponentOptColor.OnChangePart?.Invoke(this, 0);
+            for (int i = 0; i < current_GameObjectChoose.GetComponent<MeshRenderer>().materials.Length; i++)
             {
                 color_part_weapon[i].GetComponent<Image>().color = materials[i].color;
             }
@@ -110,31 +103,11 @@ public class FirstPageShop : MonoBehaviour
         else
         {
             colorBar.SetActive(false);
-            button_purchase.SetActive(true);
-            button_select_custem.SetActive(false);
+            button_purchase.GetComponent<RectTransform>().anchoredPosition = begin_Pos.anchoredPosition;
         }
     }
-    public void OnChangeTypeVer2(int num)
-    {
-        Mesh mesh = current_GameObjectVer2[num].GetComponent<MeshFilter>().mesh;
-        Material[] materials = current_GameObjectVer2[num].GetComponent<MeshRenderer>().materials;
-        main_image_weapon.GetComponent<MeshFilter>().mesh = mesh;
-        main_image_weapon.GetComponent<MeshRenderer>().materials = materials;
-        if (num == 0)
+    /*    private void OnDisable()
         {
-            button_select_custem.SetActive(true);
-            colorBar.SetActive(true);
-            button_purchase.SetActive(false);
-            for (int i = 0; i < color_part_weapon.Length; i++)
-            {
-                color_part_weapon[i].GetComponent<Image>().color = materials[i].color;
-            }
-        }
-        else
-        {
-            button_select_custem.SetActive(false);
-            colorBar.SetActive(false);
-            button_purchase.SetActive(true);
-        }
-    }
+            EventManager.OnChangeWeaponCustom -= ChaneWeaponCustom;
+        }*/
 }

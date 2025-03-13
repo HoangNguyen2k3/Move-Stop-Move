@@ -28,7 +28,6 @@ public class SpecialWeaponShopCanvas : MonoBehaviour
                 activeWeapon[i].SetActive(false);
             }
         }
-        GetComponent<FirstPageShop>().OnChangeTypeVer2(num_weapon_choose);
     }
 
 }
