@@ -30,12 +30,27 @@ public class PlayerController : MonoBehaviour
     private bool isAnimationDead = false;
     [HideInInspector] public bool isWinning = false;
 
+
+    public GameObject[] skinPlayerObject;
+
     private void Start()
     {
         transform.localScale = new Vector3(characterPlayer.beginRange, characterPlayer.beginRange, characterPlayer.beginRange);
         animator = GetComponent<Animator>();
         circleTarget.SetActive(false);
         TakeInfoHoldWeapon();
+    }
+    public void SettingSkin(ClotherShop skin, int index)
+    {
+        if (index != 1)
+        {
+            skinPlayerObject[index].GetComponent<MeshFilter>().mesh = skin.skin.GetComponentInChildren<MeshFilter>().sharedMesh;
+            skinPlayerObject[index].GetComponent<MeshRenderer>().materials = skin.skin.GetComponentInChildren<MeshRenderer>().sharedMaterials;
+        }
+        else
+        {
+            skinPlayerObject[index].GetComponent<SkinnedMeshRenderer>().materials = skin.skin.GetComponentInChildren<MeshRenderer>().sharedMaterials;
+        }
     }
     /*    public void TakeColorWeaponFromDatabase()
         {

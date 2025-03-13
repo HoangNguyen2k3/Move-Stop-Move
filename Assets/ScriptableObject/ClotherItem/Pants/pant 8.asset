@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a14199eb0710d574591c2e863528b75f, type: 3}
+  m_Name: pant 8
+  m_EditorClassIdentifier: 
+  nameClothShop: Pant9
+  skin: {fileID: 3311193435486896817, guid: a24d51f1a9434c94ab793ade8572eb37, type: 3}
+  paramCloth: 8% move speed
+  status: NotPurchase
+  clothType: 1

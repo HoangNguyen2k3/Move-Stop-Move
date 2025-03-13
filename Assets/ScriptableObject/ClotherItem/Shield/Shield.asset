@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a14199eb0710d574591c2e863528b75f, type: 3}
+  m_Name: Shield
+  m_EditorClassIdentifier: 
+  nameClothShop: shield1
+  skin: {fileID: 6834413115697061241, guid: bf536d4f28cc40d4398fdf2c08f2122f, type: 3}
+  paramCloth: 25% gold
+  status: NotPurchase
+  clothType: 2

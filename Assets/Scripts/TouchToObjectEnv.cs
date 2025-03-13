@@ -23,7 +23,6 @@ public class TouchToObjectEnv : MonoBehaviour
         if (other.CompareTag("Player") && other.isTrigger)
         {
             isInCircle = true;
-            Debug.Log("check 1");
             TransparentObject();
         }
     }
@@ -39,7 +38,6 @@ public class TouchToObjectEnv : MonoBehaviour
         if (other.CompareTag("Player") && other.isTrigger)
         {
             isInCircle = false;
-            Debug.Log("check 2");
             GetComponent<MeshRenderer>().material = begin_material;
         }
     }

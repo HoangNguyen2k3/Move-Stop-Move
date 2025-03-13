@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a14199eb0710d574591c2e863528b75f, type: 3}
+  m_Name: Hat1 5
+  m_EditorClassIdentifier: 
+  nameClothShop: Hat5
+  skin: {fileID: 624366586449451079, guid: 5b3e6d90bcef86647b1f7ccc4016473f, type: 3}
+  paramCloth: 5% Range
+  status: NotPurchase

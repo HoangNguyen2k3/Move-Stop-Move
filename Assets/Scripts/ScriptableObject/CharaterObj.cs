@@ -8,4 +8,5 @@ public class CharaterObj : ScriptableObject
     public float beginRange = 0.5f;
 
     public DataCurrentWeapon skin_current_weapon;
+    public ClothPlayerObject skinClother;
 }

@@ -16,3 +16,4 @@ MonoBehaviour:
   coolDownAttack: 2
   beginRange: 0.5
   skin_current_weapon: {fileID: 11400000, guid: 552306f6528720f4681ab64671936d9f, type: 2}
+  skinClother: {fileID: 11400000, guid: d9894f5181df2314e98633cfa94e7a62, type: 2}
