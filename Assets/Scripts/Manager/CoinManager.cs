@@ -13,7 +13,7 @@ public class CoinManager : MonoBehaviour
         {
             PlayerPrefs.SetFloat("Coin", 0);
         }
-        PlayerPrefs.SetFloat("Coin", 2500);
+        /*        PlayerPrefs.SetFloat("Coin", 500);*/
     }
     private void OnEnable()
     {

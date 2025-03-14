@@ -7,6 +7,7 @@ public class FullSkinObject : ScriptableObject
     public GameObject accessories;
     public GameObject head;
     public GameObject weaponSkin;
+    public GameObject tail;
     public float price;
     public string status;
     public string param;

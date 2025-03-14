@@ -11,9 +11,6 @@ public class TableColor : MonoBehaviour
     {
         ComponentOptColor.OnChangePart += ChangCurrentNum;
     }
-    private void OnEnable()
-    {
-    }
 
     private void TakeColor(object sender, WeaponShop e)
     {
@@ -37,13 +34,7 @@ public class TableColor : MonoBehaviour
         currentPart[current_num_choose].GetComponent<ColorComponent>().ChangeColor(selectedColor);
         string hexColor = "#" + ColorUtility.ToHtmlStringRGB(selectedColor);
         PlayerPrefs.SetString("Color_" + PurchaseCustomWeapon.lastWeaponShop.nameWeapon + "_custom_" + current_num_choose.ToString(), hexColor);
-        Debug.Log("Color_" + PurchaseCustomWeapon.lastWeaponShop.nameWeapon + "_custom_" + current_num_choose.ToString());
-        Debug.Log("num choose" + current_num_choose);
         PlayerPrefs.Save();
     }
-    /*    private void OnDisable()
-        {
-            ComponentOptColor.OnChangePart -= ChangCurrentNum;
-        }*/
 }
 

@@ -16,6 +16,7 @@ MonoBehaviour:
   accessories: {fileID: 4085114602362425771, guid: 62a8e341a2c57fb44863d578e49a864b, type: 3}
   head: {fileID: 652129508005626680, guid: da2e7bea44e1f104e8dfb89f1cf86c55, type: 3}
   weaponSkin: {fileID: 5233162901920761726, guid: 23b38eb30107e3d40bec290f7b6c8d32, type: 3}
+  tail: {fileID: 0}
   price: 2500
-  status: NotPurchase
+  status: Purchase
   param: 11% move speed

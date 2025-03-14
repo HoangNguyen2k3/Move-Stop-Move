@@ -17,7 +17,8 @@ MonoBehaviour:
   beginRange: 0.5
   skin_current_weapon: {fileID: 11400000, guid: 552306f6528720f4681ab64671936d9f, type: 2}
   skinClother:
-  - {fileID: 11400000, guid: 074abda7c3ad4aa44bc159c25c6e3458, type: 2}
-  - {fileID: 11400000, guid: e95baf2c97ceff44589c8f63c0396925, type: 2}
-  - {fileID: 11400000, guid: 1220667e93e416545bc0b07516192f43, type: 2}
+  - {fileID: 11400000, guid: 11b0705ffbdf9e549b51543c7817a29d, type: 2}
+  - {fileID: 11400000, guid: 123b85cfbabaaed4f9fc0aa13e741fa7, type: 2}
+  - {fileID: 11400000, guid: cd867d6ff3d2f9042beb6dde0edc06de, type: 2}
   - {fileID: 11400000, guid: 7e155d93aaa5b644fb7085a1d287d950, type: 2}
+  fullSkinPlayer: {fileID: 0}

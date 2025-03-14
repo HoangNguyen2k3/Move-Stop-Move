@@ -41,19 +41,31 @@ public class GenerateEnemyType : MonoBehaviour
         }
 
         GameObject hair_h = enemyRandomObj.hairs[Random.Range(0, enemyRandomObj.hairs.Length)];
-        if (hair != null && hair_h != null)
-        {
-            MeshFilter hairFilter = hair.GetComponent<MeshFilter>();
-            MeshRenderer hairRenderer = hair.GetComponent<MeshRenderer>();
+        /*        if (hair != null && hair_h != null)
+                {
+                    MeshFilter hairFilter = hair.GetComponent<MeshFilter>();
+                    MeshRenderer hairRenderer = hair.GetComponent<MeshRenderer>();
 
-            if (hairFilter != null && hairRenderer != null)
-            {
-                hairFilter.mesh = hair_h.GetComponent<MeshFilter>().sharedMesh;
-                hairRenderer.materials = hair_h.GetComponent<MeshRenderer>().sharedMaterials;
-            }
-        }
+                    if (hairFilter != null && hairRenderer != null)
+                    {
+                        hairFilter.mesh = hair_h.GetComponent<MeshFilter>().sharedMesh;
+                        hairRenderer.materials = hair_h.GetComponent<MeshRenderer>().sharedMaterials;
+                    }
+                }*/
+        SetSkinEnemy(hair_h);
         nameEnemy.text = enemyRandomObj.nameEnemy[Random.Range(0, enemyRandomObj.nameEnemy.Length)];
         nameEnemy.GetComponent<TextMeshProUGUI>().color = skin.material.color;
         image.GetComponent<Image>().color = skin.material.color;
+    }
+    public void SetSkinEnemy(GameObject hair_new)
+    {
+        if (hair != null && hair_new != null)
+        {
+            foreach (Transform item in hair.transform)
+            {
+                Destroy(item.gameObject);
+            }
+            Instantiate(hair_new, hair.transform);
+        }
     }
 }

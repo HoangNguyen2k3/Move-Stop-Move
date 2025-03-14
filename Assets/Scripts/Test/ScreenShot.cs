@@ -10,7 +10,6 @@ public class ScreenShot : MonoBehaviour
 
     private void Start()
     {
-        // T?o th? m?c "Images" n?u ch?a có
         folderPath = Path.Combine(Application.dataPath, "Images");
         if (!Directory.Exists(folderPath))
         {

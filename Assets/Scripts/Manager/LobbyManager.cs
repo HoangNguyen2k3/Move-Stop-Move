@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class LobbyManager : Singleton<LobbyManager>
     [SerializeField] private GameObject GameManager;
     [SerializeField] private GameObject UILobbyGame;
     [SerializeField] private CinemachineCamera cam;
+    [SerializeField] private ScreenShotAndShow show;
     public bool currentinLobby = true;
 
     private PlayerController playerControl;
@@ -26,8 +28,10 @@ public class LobbyManager : Singleton<LobbyManager>
         SetActiveFalseGameUI();
         UILobbyGame.SetActive(true);
     }
-    public void InGame()
+    public async void InGame()
     {
+        show.TakePictureAndShow();
+        await Task.Delay(50);
         currentinLobby = false;
         cam.GetComponent<CinemachineCamera>().Priority = -1;
         SetActiveTrueGameUI();

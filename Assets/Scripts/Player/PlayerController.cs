@@ -32,15 +32,27 @@ public class PlayerController : MonoBehaviour
 
 
     public GameObject[] skinPlayerObject;
+    public GameObject[] fullSkinPlayObject;
+
+    private Material begin_Material;
 
     private void Start()
     {
+        begin_Material = current_Mesh.material;
         transform.localScale = new Vector3(characterPlayer.beginRange, characterPlayer.beginRange, characterPlayer.beginRange);
         animator = GetComponent<Animator>();
         circleTarget.SetActive(false);
         TakeInfoHoldWeapon();
-        TakeInfoCloth();
+        if (characterPlayer.fullSkinPlayer)
+        {
+            TakeInfoFullSkin();
+        }
+        else
+        {
+            TakeInfoCloth();
+        }
     }
+    //Skin set up
     public void TakeInfoCloth()
     {
         for (int i = 0; i < skinPlayerObject.Length; i++)
@@ -53,6 +65,10 @@ public class PlayerController : MonoBehaviour
     }
     public void SettingSkin(ClotherShop skin, int index)
     {
+        if (characterPlayer.fullSkinPlayer != null) { return; }
+        current_Mesh.material = begin_Material;
+        SetActiveOnSmt(skinPlayerObject, true);
+        SetActiveOffSmt(fullSkinPlayObject);
         switch (index)
         {
             case 0:
@@ -71,25 +87,54 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-    /*    public void TakeColorWeaponFromDatabase()
+
+    //Full skin set up
+    public void SettingFullSkin(FullSkinObject skin)
+    {
+        SetActiveOffSmt(skinPlayerObject, true);
+        SetActiveOnSmt(fullSkinPlayObject);
+        fullSkinPlayObject[0].GetComponent<SkinnedMeshRenderer>().material = skin.skin;
+        setupSomething(skin.accessories, 1);
+        setupSomething(skin.head, 2);
+        setupSomething(skin.weaponSkin, 3);
+        setupSomething(skin.tail, 4);
+    }
+    private void setupSomething(GameObject obj, int index)
+    {
+
+        foreach (Transform child in fullSkinPlayObject[index].transform)
         {
-            if (!PlayerPrefs.HasKey("EquipCurrentWeapon")) { return; }
-            string name_weapon = PlayerPrefs.GetString("EquipCurrentWeapon");
-            for (int i = 0; i < characterPlayer.current_Weapon.weaponThrow.GetComponent<MeshRenderer>().sharedMaterials.Length; i++)
-            {
-                string key = "Color_" + name_weapon + "_custom_" + i;
-                string hexColor = PlayerPrefs.GetString(key);
+            Destroy(child.gameObject);
+        }
+        if (obj == null) { return; }
+        Instantiate(obj, fullSkinPlayObject[index].transform);
 
-                if (ColorUtility.TryParseHtmlString(hexColor, out Color newColor))
-                {
-                    characterPlayer.skin_current_weapon.material[i].color = newColor;
-                }
-            }
-
-        }*/
+    }
+    public void TakeInfoFullSkin()
+    {
+        if (characterPlayer.fullSkinPlayer)
+            SettingFullSkin(characterPlayer.fullSkinPlayer);
+    }
+    //something misc
+    private void SetActiveOffSmt(GameObject[] gameObject, bool ignore_first = false)
+    {
+        if (ignore_first == true) { gameObject[0].SetActive(false); }
+        for (int i = 1; i < gameObject.Length; i++)
+        {
+            gameObject[i].SetActive(false);
+        }
+    }
+    private void SetActiveOnSmt(GameObject[] gameObject, bool ignore_first = false)
+    {
+        if (ignore_first == true) { gameObject[0].SetActive(true); }
+        for (int i = 1; i < gameObject.Length; i++)
+        {
+            gameObject[i].SetActive(true);
+        }
+    }
+    //Weapon set up
     public void TakeInfoHoldWeapon()
     {
-        //TakeColorWeaponFromDatabase();
         for (int i = 0; i < characterPlayer.current_Weapon.weaponHold.GetComponent<MeshRenderer>().sharedMaterials.Length; i++)
         {
             characterPlayer.current_Weapon.weaponHold.GetComponent<MeshRenderer>().sharedMaterials[i].color = characterPlayer.skin_current_weapon.material[i].color;
@@ -128,6 +173,9 @@ public class PlayerController : MonoBehaviour
         }
         //       Movement();
     }
+
+
+
     private IEnumerator DiePlayer()
     {
         ParticleSystem temp = Instantiate(take_damage_FX, transform.position, Quaternion.identity);

@@ -16,6 +16,7 @@ MonoBehaviour:
   accessories: {fileID: 0}
   head: {fileID: 5996543389877023962, guid: ea5d581e8cd44e04c9817acf787a1385, type: 3}
   weaponSkin: {fileID: 235274019735555714, guid: f7bc5cf2ce5ee3f48b2841c716003707, type: 3}
+  tail: {fileID: 0}
   price: 2500
-  status: NotPurchase
+  status: Purchase
   param: 50% Gold

@@ -7,9 +7,11 @@ public class UIManager : MonoBehaviour
     public string nameEnemyWin;
     private GameObject player;
     [SerializeField] private GameObject gameOver;
-    [SerializeField] private TextMeshProUGUI earnCoinlose;
-    [SerializeField] private TextMeshProUGUI textNameEnemy;
-    [SerializeField] private TextMeshProUGUI num_rank_lose_txt;
+    [SerializeField] private TextMeshProUGUI[] earnCoinlose;
+    [SerializeField] private TextMeshProUGUI[] textNameEnemy;
+    [SerializeField] private TextMeshProUGUI[] num_rank_lose_txt;
+    [SerializeField] private TextMeshProUGUI[] name_player_txt;
+
     private bool iswin = false;
     private void Start()
     {
@@ -26,12 +28,34 @@ public class UIManager : MonoBehaviour
             gameOver.SetActive(true);
             iswin = true;
             GetComponent<UIGeneratePress>().ShowAndHiddenGameObject();
-            textNameEnemy.text = nameEnemyWin;
             GameManager.Instance.islose = true;
-            earnCoinlose.text = GameManager.Instance.num_coin.ToString();
-            num_rank_lose_txt.text = "#" + GameManager.Instance.enemy_remain.ToString();
+            ProcessEndGame();
         }
     }
+
+    public void ProcessEndGame()
+    {
+        for (int i = 0; i < textNameEnemy.Length; i++)
+        {
+            textNameEnemy[i].text = nameEnemyWin;
+        }
+
+        for (int i = 0; i < earnCoinlose.Length; i++)
+        {
+            earnCoinlose[i].text = GameManager.Instance.num_coin.ToString();
+        }
+        for (int i = 0; i < num_rank_lose_txt.Length; i++)
+        {
+            float temp = GameManager.Instance.enemy_remain;
+            temp += 1;
+            num_rank_lose_txt[i].text = "#" + temp.ToString();
+        }
+        for (int i = 0; i < name_player_txt.Length; i++)
+        {
+            name_player_txt[i].text = PlayerPrefs.GetString("NamePlayer", "YOU");
+        }
+    }
+
     public void RestartScene()
     {
         GameManager.Instance.gameObject.GetComponent<CoinManager>().AddingCoin();

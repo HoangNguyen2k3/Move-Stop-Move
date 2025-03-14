@@ -20,8 +20,11 @@ public class GameManager : Singleton<GameManager>
     //    private bool firstTime = false;
     private string enemy_text = "ALIVE: ";
     private Vector3 randomPoint;
+    private UIGeneratePress ui_generate;
+    [SerializeField] private UIManager uiManager;
     private void Start()
     {
+        ui_generate = GetComponent<UIGeneratePress>();
         if (PlayerPrefs.HasKey("num_enemy_level"))
         {
             enemy_remain = PlayerPrefs.GetFloat("num_enemy_level");
@@ -37,9 +40,11 @@ public class GameManager : Singleton<GameManager>
         {
             iswinning = true;
             enemy_alive.text = quickAddText(0);
+            uiManager.ProcessEndGame();
             winningGame.SetActive(true);
             earnCoinwin.text = num_coin.ToString();
             playerController.animator.SetBool("IsWin", true);
+            ui_generate.ShowAndHiddenGameObject();
             playerController.isWinning = true;
         }
         if (playerController == null && enemy_remain == 1 && !iswinning)

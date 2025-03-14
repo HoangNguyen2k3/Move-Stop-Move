@@ -12,7 +12,10 @@ public class ChooseType : MonoBehaviour
     [SerializeField] private GameObject buttonAds;
     private Vector3 begin;
     [SerializeField] private RectTransform center;
-
+    private void OnEnable()
+    {
+        SetActiveChooseWeaponType(0);
+    }
     private void Start()
     {
         begin = buttonPurchase.GetComponent<RectTransform>().anchoredPosition;

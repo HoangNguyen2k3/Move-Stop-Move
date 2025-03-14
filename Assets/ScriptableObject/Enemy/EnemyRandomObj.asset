@@ -46,6 +46,7 @@ MonoBehaviour:
   - {fileID: 839023233600481435, guid: 2b8529394b89b474088d3f3bbca47eb6, type: 3}
   - {fileID: 5808698619149925164, guid: 5372348307dcb47488e06c6df13d04f2, type: 3}
   - {fileID: 8011913918697605686, guid: ee5f9b5ad312edf48859db224c4823eb, type: 3}
+  - {fileID: 3146213775905627499, guid: 2ab2ee6ff3edde749bc00f734ea2b93a, type: 3}
   weapon_throw:
   - {fileID: 2662976395196642379, guid: ce0bae8528ad06e48bbc2d7731c5a8bb, type: 3}
   - {fileID: 2661551747254017551, guid: 3fdb7f0035a685148800959324211998, type: 3}
@@ -54,10 +55,17 @@ MonoBehaviour:
   - {fileID: 2053064001698601882, guid: e6e14cc3a0ac41b4c8c847b92f52cb2f, type: 3}
   - {fileID: 1718460876696729877, guid: 5aed32fd2e96e5e4882b8623cc3bd589, type: 3}
   - {fileID: 7149454222310069375, guid: 55b1bf5d1a02de1449ab9fa8063ed929, type: 3}
+  - {fileID: 2661551747254017551, guid: 5f8f1da48a4a6084cb9fa1b9596656d1, type: 3}
   hairs:
+  - {fileID: 931388021536839608, guid: 37a2f60787304c14ca89325689995870, type: 3}
+  - {fileID: 7843177770021598918, guid: 919a370cfa2b60d47b1c3bddc3e18800, type: 3}
+  - {fileID: 1304311453956072208, guid: c7fc1f4a7ba024c4a82fef082a965bde, type: 3}
+  - {fileID: 1148914932921400564, guid: 0533d3afa99fb6d4da749f954ddc0b90, type: 3}
   - {fileID: 2172496136216055461, guid: 8d3d93908401f9c4b930eb23dce693d8, type: 3}
   - {fileID: 624366586449451079, guid: 5b3e6d90bcef86647b1f7ccc4016473f, type: 3}
-  - {fileID: 1148914932921400564, guid: 0533d3afa99fb6d4da749f954ddc0b90, type: 3}
+  - {fileID: 6714307609021304453, guid: 98d7889e99190a748893e4d04005cfa7, type: 3}
+  - {fileID: 7704606671002611510, guid: 06d7494ada60b3345a1b48ab28655f2e, type: 3}
+  - {fileID: 7421400502523488817, guid: 8b5cead3badc8604797c4e03ee570b18, type: 3}
   nameEnemy:
   - Bob
   - Nam
@@ -69,3 +77,12 @@ MonoBehaviour:
   - Vegeta
   - Luffy
   - Grant
+  - Cap
+  - Alex
+  - Mutex
+  - Cute
+  - John
+  - Sena
+  - HN1610
+  - Upmoon
+  - Negaxy

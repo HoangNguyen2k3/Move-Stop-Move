@@ -16,6 +16,7 @@ MonoBehaviour:
   accessories: {fileID: 1140963803456170425, guid: 9b6cce9ce55f5bd4b94997a5e22183d8, type: 3}
   head: {fileID: 4262517044736019066, guid: 3360a9fffd7f6a74fbb9ee950ea9b901, type: 3}
   weaponSkin: {fileID: 0}
+  tail: {fileID: 2430629505475242888, guid: 6682e431b8d09a942975bd8231b1c722, type: 3}
   price: 2500
   status: NotPurchase
   param: 8% range

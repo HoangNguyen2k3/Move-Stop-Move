@@ -9,4 +9,5 @@ public class CharaterObj : ScriptableObject
 
     public DataCurrentWeapon skin_current_weapon;
     public ClotherShop[] skinClother;
+    public FullSkinObject fullSkinPlayer;
 }
