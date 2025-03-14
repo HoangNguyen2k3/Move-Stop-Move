@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5df086396902c044cb7ffb39f33458c7, type: 3}
+  m_Name: Skin3
+  m_EditorClassIdentifier: 
+  skin: {fileID: 2100000, guid: ef419ee32fe14c343ab5edf4e1b44129, type: 2}
+  accessories: {fileID: 0}
+  head: {fileID: 5996543389877023962, guid: ea5d581e8cd44e04c9817acf787a1385, type: 3}
+  weaponSkin: {fileID: 235274019735555714, guid: f7bc5cf2ce5ee3f48b2841c716003707, type: 3}
+  price: 2500
+  status: NotPurchase
+  param: 50% Gold
