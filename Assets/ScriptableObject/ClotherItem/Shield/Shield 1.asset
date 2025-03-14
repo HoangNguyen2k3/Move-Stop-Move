@@ -15,5 +15,6 @@ MonoBehaviour:
   nameClothShop: shield2
   skin: {fileID: 2727679856859405488, guid: 349f352b6719e1244aed28ae1c5ff7e1, type: 3}
   paramCloth: 25% gold
-  status: NotPurchase
+  status: Purchase
+  price: 500
   clothType: 2

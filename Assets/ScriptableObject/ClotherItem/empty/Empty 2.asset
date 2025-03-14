@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a14199eb0710d574591c2e863528b75f, type: 3}
-  m_Name: Shield
+  m_Name: Empty 2
   m_EditorClassIdentifier: 
-  nameClothShop: shield1
-  skin: {fileID: 6834413115697061241, guid: bf536d4f28cc40d4398fdf2c08f2122f, type: 3}
-  paramCloth: 25% gold
-  status: Selected
-  price: 500
+  nameClothShop: 
+  skin: {fileID: 576463581188231111, guid: 44a3384eccfee0847907e4e66b391149, type: 3}
+  paramCloth: 
+  status: Purchase
+  price: 0
   clothType: 2

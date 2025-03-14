@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Hat1 8
   m_EditorClassIdentifier: 
   nameClothShop: Hat8
-  skin: {fileID: 632879823210298824, guid: 6e15ba8c93a8ff54894dc7682fea99c2, type: 3}
+  skin: {fileID: 7843177770021598918, guid: 919a370cfa2b60d47b1c3bddc3e18800, type: 3}
   paramCloth: 5% Range
   status: NotPurchase
+  price: 500
+  clothType: 0

@@ -39,17 +39,36 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         circleTarget.SetActive(false);
         TakeInfoHoldWeapon();
+        TakeInfoCloth();
+    }
+    public void TakeInfoCloth()
+    {
+        for (int i = 0; i < skinPlayerObject.Length; i++)
+        {
+            if (characterPlayer.skinClother[i] != null)
+            {
+                SettingSkin(characterPlayer.skinClother[i], i);
+            }
+        }
     }
     public void SettingSkin(ClotherShop skin, int index)
     {
-        if (index != 1)
+        switch (index)
         {
-            skinPlayerObject[index].GetComponent<MeshFilter>().mesh = skin.skin.GetComponentInChildren<MeshFilter>().sharedMesh;
-            skinPlayerObject[index].GetComponent<MeshRenderer>().materials = skin.skin.GetComponentInChildren<MeshRenderer>().sharedMaterials;
-        }
-        else
-        {
-            skinPlayerObject[index].GetComponent<SkinnedMeshRenderer>().materials = skin.skin.GetComponentInChildren<MeshRenderer>().sharedMaterials;
+            case 0:
+                foreach (Transform child in skinPlayerObject[index].transform)
+                {
+                    Destroy(child.gameObject);
+                }
+                Instantiate(skin.skin, skinPlayerObject[index].transform);
+                break;
+            case 1:
+                skinPlayerObject[index].GetComponent<SkinnedMeshRenderer>().materials = skin.skin.GetComponentInChildren<MeshRenderer>().sharedMaterials;
+                break;
+            case 2:
+                goto case 0;
+            case 3: break;
+
         }
     }
     /*    public void TakeColorWeaponFromDatabase()

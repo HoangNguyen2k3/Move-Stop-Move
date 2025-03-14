@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 711429314669359134}
   - component: {fileID: 7406573193311432941}
   - component: {fileID: 3162076822030617407}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hat_Cap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 624366586449451079}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.26321805, y: 0.64533263, z: -0.2547011, w: 0.67036515}
-  m_LocalPosition: {x: 0.06, y: 2.45, z: 3.35}
+  m_LocalRotation: {x: 0.000000016349075, y: -0.000000058542348, z: -3.7834982e-10, w: 1}
+  m_LocalPosition: {x: 0, y: -0.243, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -1.385, y: 88.365, z: -42.954}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7406573193311432941
 MeshFilter:
   m_ObjectHideFlags: 0

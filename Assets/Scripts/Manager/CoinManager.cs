@@ -13,6 +13,7 @@ public class CoinManager : MonoBehaviour
         {
             PlayerPrefs.SetFloat("Coin", 0);
         }
+        PlayerPrefs.SetFloat("Coin", 2500);
     }
     private void OnEnable()
     {
@@ -41,6 +42,20 @@ public class CoinManager : MonoBehaviour
         numCurrentCoin += addCurrentCoin;
         numCoinUI.text = numCurrentCoin.ToString();
         PlayerPrefs.SetFloat("Coin", numCurrentCoin);
+    }
+    public bool PurchaseSomething(float price)
+    {
+        if (numCurrentCoin >= price)
+        {
+            numCurrentCoin -= price;
+            PlayerPrefs.SetFloat("Coin", numCurrentCoin);
+            numCoinUI.text = numCurrentCoin.ToString();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     private void OnDisable()
     {

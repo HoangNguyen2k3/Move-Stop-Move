@@ -7,6 +7,7 @@ public class ClotherShop : ScriptableObject
     public GameObject skin;
     public string paramCloth;
     public string status;
+    public float price;
     public int clothType;
     /*    public enum typeClother
         {

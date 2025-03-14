@@ -16,4 +16,5 @@ MonoBehaviour:
   skin: {fileID: 5748607898416214624, guid: 3081f362885a73e42b5c668dedb60529, type: 3}
   paramCloth: 8% move speed
   status: NotPurchase
+  price: 500
   clothType: 1

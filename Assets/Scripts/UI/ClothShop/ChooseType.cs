@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,7 +6,7 @@ public class ChooseType : MonoBehaviour
 {
     [SerializeField] private Button[] button;
     [SerializeField] private GameObject[] list_item;
-
+    public static EventHandler<int> OnChangeTypeClothes;
     private void Start()
     {
         SetActiveChooseWeaponType(0);
@@ -15,6 +16,7 @@ public class ChooseType : MonoBehaviour
             button[i].onClick.AddListener(() =>
             {
                 SetActiveChooseWeaponType(index);
+                OnChangeTypeClothes?.Invoke(null, index);
             });
         }
 

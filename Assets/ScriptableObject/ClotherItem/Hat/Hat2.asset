@@ -16,3 +16,5 @@ MonoBehaviour:
   skin: {fileID: 7704606671002611510, guid: 06d7494ada60b3345a1b48ab28655f2e, type: 3}
   paramCloth: 5% Range
   status: NotPurchase
+  price: 500
+  clothType: 0

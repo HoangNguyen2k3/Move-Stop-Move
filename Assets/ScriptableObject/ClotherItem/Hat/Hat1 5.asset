@@ -15,4 +15,6 @@ MonoBehaviour:
   nameClothShop: Hat5
   skin: {fileID: 624366586449451079, guid: 5b3e6d90bcef86647b1f7ccc4016473f, type: 3}
   paramCloth: 5% Range
-  status: NotPurchase
+  status: Purchase
+  price: 500
+  clothType: 0
