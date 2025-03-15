@@ -17,8 +17,8 @@ public class ChooseClother : MonoBehaviour
     [SerializeField] private CoinManager coinManager;
     [SerializeField] private TextMeshProUGUI paramText;
     private int current_index = 0;
-    private int num_page = 0;
-
+    public int num_page = 0;
+    public int current_num_page;
     [SerializeField] private FullSkinObject[] fullSkinShop;
     private void OnEnable()
     {
@@ -53,10 +53,6 @@ public class ChooseClother : MonoBehaviour
                 SetParamSkin(index);
             });
         }
-        button_Purchase.onClick.AddListener(() =>
-        {
-            PurchaseOrSelectWeapon();
-        });
         exit_button.onClick.AddListener(() =>
         {
             ExitBtn();
@@ -81,8 +77,13 @@ public class ChooseClother : MonoBehaviour
             player.TakeInfoCloth();
         }
     }
-    public void PurchaseOrSelectWeapon()
+    public bool PurchaseOrSelectWeapon()
     {
+        Debug.Log(num_page);
+        if (num_page != 3 && CheckCurrentFullSkin())
+        {
+            return false;
+        }
         if (num_page != 3 && !CheckCurrentFullSkin())
         {
             if (clothShop[current_index].status == "NotPurchase")
@@ -106,11 +107,13 @@ public class ChooseClother : MonoBehaviour
                 CheckButtonStatus(current_index);
                 SetClotherStatus("Selected");
             }
+
         }
         else if (num_page == 3)
         {
             PurchaseOrSelectFullSkin();
         }
+        return true;
     }
     public void PurchaseOrSelectFullSkin()
     {
@@ -135,7 +138,7 @@ public class ChooseClother : MonoBehaviour
             CheckButtonStatus(current_index);
             SetClotherStatus("Selected");
         }
-        else if (fullSkinShop[current_index].status == "Selected")
+        else if (fullSkinShop[current_index].status == "Selected" && CheckCurrentFullSkin())
         {
             SetRemainClothes("Purchase");
             fullSkinShop[current_index].status = "Purchase";

@@ -198,7 +198,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -1372625422
   m_Radius: 0.5
-  m_Speed: 3
+  m_Speed: 2.7
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 150
@@ -6388,6 +6388,7 @@ GameObject:
   - component: {fileID: 7986885830202160378}
   - component: {fileID: 6405443684527089406}
   - component: {fileID: 2554178535390189672}
+  - component: {fileID: 6600788208504759523}
   m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
@@ -6478,6 +6479,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6600788208504759523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3464125873300529368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57fdb05f5905d4747812fc87ed7db1b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  child: {fileID: 2012358796653049468}
 --- !u!1 &3553874845114961515
 GameObject:
   m_ObjectHideFlags: 0
@@ -6536,13 +6550,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3600664242054018284}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.91251326, y: 0.04880865, z: 0.24106848, w: 0.32683828}
+  m_LocalRotation: {x: -0.06617011, y: -0.32511148, z: -0.9414967, w: -0.059229396}
   m_LocalPosition: {x: 0.07411933, y: 0.054123517, z: -0.0051781447}
   m_LocalScale: {x: 34.999977, y: 35, z: 35}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6163149132389384882}
-  m_LocalEulerAnglesHint: {x: -22.939, y: 20.775, z: 83.962}
+  m_LocalEulerAnglesHint: {x: -37.182, y: 371.813, z: 168.814}
 --- !u!33 &7238768427801525822
 MeshFilter:
   m_ObjectHideFlags: 0

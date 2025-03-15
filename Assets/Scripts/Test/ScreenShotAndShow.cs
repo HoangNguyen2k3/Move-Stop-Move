@@ -31,8 +31,8 @@ public class ScreenShotAndShow : MonoBehaviour
         int startX = (Screen.width - captureWidth) / 2;
         int startY = (Screen.height - captureHeight) / 2;
 
-        croppedTexture = new Texture2D(captureWidth, captureHeight + 500);
-        croppedTexture.SetPixels(screenshot.GetPixels(startX, startY, captureWidth, captureHeight + 500));
+        croppedTexture = new Texture2D(captureWidth, captureHeight + 400);
+        croppedTexture.SetPixels(screenshot.GetPixels(startX, startY, captureWidth, captureHeight + 400));
         croppedTexture.Apply();
 
         displayImages.texture = croppedTexture;

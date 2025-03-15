@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponThrow: {fileID: 0}
   weaponHold: {fileID: 0}
   touchSomething: {fileID: 5373022685450965240, guid: 16447b7419e22dc4380b9d8d5a1bfc8d, type: 3}
-  speedMove: 5
+  speedMove: 4.5
   speedRotate: 0
   isTurning: 0
-  range: 12
+  range: 10

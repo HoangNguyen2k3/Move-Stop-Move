@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03f550d3080d114f8ddc418449d85ef, type: 3}
+  m_Name: Hammer 1
+  m_EditorClassIdentifier: 
+  weaponThrow: {fileID: 2053064001698601882, guid: 3f2595952dc45da48b606d451619a434, type: 3}
+  weaponHold: {fileID: 3258785322813870200, guid: a696e8715d0e0014c90554a2cf2b3e37, type: 3}
+  touchSomething: {fileID: 5373022685450965240, guid: 16447b7419e22dc4380b9d8d5a1bfc8d, type: 3}
+  speedMove: 4
+  speedRotate: 700
+  isTurning: 1
+  range: 7

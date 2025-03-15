@@ -75,7 +75,7 @@ public class LevelManager : MonoBehaviour
 
             if (cam.Lens.FieldOfView <= maxCam)
             {
-                cam.Lens.FieldOfView += 10;
+                cam.Lens.FieldOfView += 5;
             }
         }
         for (int i = 0; i < floating.Length; i++)

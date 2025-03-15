@@ -68,13 +68,9 @@ public class FirstPageShop : MonoBehaviour
             }
         }
     }
-
-
-    public void OnChangeType()
+    public void SetColorButton(int num)
     {
-        if (num_weapon != 3 && num_weapon != 4)
-            custom.CheckEqippedWeapon(num_weapon);
-        if (num_weapon == 3 || num_weapon == 4)
+        if (num == 3 || num == 4)
         {
             image_ads.SetActive(true);
             text.text = "Unlock";
@@ -85,6 +81,13 @@ public class FirstPageShop : MonoBehaviour
             text.color = Color.black;
             image_ads.SetActive(false);
         }
+    }
+
+    public void OnChangeType()
+    {
+        if (num_weapon != 3 && num_weapon != 4)
+            custom.CheckEqippedWeapon(num_weapon);
+        SetColorButton(num_weapon);
         PurchaseCustomWeapon.num_weap = num_weapon;
         Mesh mesh = current_GameObjectChoose.GetComponent<MeshFilter>().mesh;
         Material[] materials = current_GameObjectChoose.GetComponent<MeshRenderer>().materials;

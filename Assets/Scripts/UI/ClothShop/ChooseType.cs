@@ -12,6 +12,11 @@ public class ChooseType : MonoBehaviour
     [SerializeField] private GameObject buttonAds;
     private Vector3 begin;
     [SerializeField] private RectTransform center;
+    [SerializeField] private ChooseClother[] chooseClother;
+    [SerializeField] private Button button_Purchase;
+    private int num;
+
+    [SerializeField] private GameObject textWarning;
     private void OnEnable()
     {
         SetActiveChooseWeaponType(0);
@@ -28,13 +33,31 @@ public class ChooseType : MonoBehaviour
                 SettingButton(index);
                 SetActiveChooseWeaponType(index);
                 OnChangeTypeClothes?.Invoke(null, index);
-
             });
         }
+        button_Purchase.onClick.AddListener(() =>
+        {
+            PurchaseOrSelectWeapon();
+        });
 
+    }
+    public void PurchaseOrSelectWeapon()
+    {
+        chooseClother[num].num_page = num;
+        if (!chooseClother[num].PurchaseOrSelectWeapon())
+        {
+            Instantiate(textWarning, gameObject.transform.parent);
+            Debug.Log("hehe");
+        }
+        else
+        {
+            Debug.Log("haha");
+        }
+        //chooseClother[num].PurchaseOrSelectWeapon();
     }
     public void SetActiveChooseWeaponType(int index)
     {
+        num = index;
         for (int i = 0; i < button.Length; i++)
         {
             if (i == index)

@@ -7,11 +7,20 @@ public class OffScreenIndicator : MonoBehaviour
     //    public Image indicatorImage;
     public float edgeOffset = 50f;
     public GameObject indicatorObject;
+    private LobbyManager lobby;
+    private void Start()
+    {
+        lobby = FindFirstObjectByType<LobbyManager>();
+    }
     private void Update()
     {
         if (target == null)
         {
             Destroy(gameObject);
+            return;
+        }
+        if (lobby.currentinLobby)
+        {
             return;
         }
         Vector3 screenPos = mainCamera.WorldToScreenPoint(target.position);

@@ -25,6 +25,7 @@ public class FloatingText : MonoBehaviour
     }
     public void AddOffset(float offsetAdd)
     {
+        if (unit == null) { return; }
         unit.position += new Vector3(0, offsetAdd, 0);
     }
 }

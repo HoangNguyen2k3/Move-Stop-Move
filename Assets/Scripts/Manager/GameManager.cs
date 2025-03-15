@@ -17,11 +17,13 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private TextMeshProUGUI earnCoinwin;
     public bool iswinning = false;
     public bool islose = false;
-    //    private bool firstTime = false;
+    private bool firstTime = true;
     private string enemy_text = "ALIVE: ";
     private Vector3 randomPoint;
     private UIGeneratePress ui_generate;
     [SerializeField] private UIManager uiManager;
+
+    private float rangeSpawn = 25f;
     private void Start()
     {
         ui_generate = GetComponent<UIGeneratePress>();
@@ -51,10 +53,13 @@ public class GameManager : Singleton<GameManager>
         {
             iswinning = true;
             EnemyAI enemy_win = FindFirstObjectByType<EnemyAI>();
-            //            name_enemy_win = enemy_win.GetComponent<GenerateEnemyType>().nameEnemy.ToString();
             enemy_win.animator.SetBool("IsWin", true);
             enemy_win.iswinning = true;
         }
+    }
+    public void LoopSpawn()
+    {
+        InvokeRepeating(nameof(SpawnEnemy), 0, 2.5f);
     }
     private string quickAddText(float num)
     {
@@ -62,15 +67,16 @@ public class GameManager : Singleton<GameManager>
     }
     public void MinusEnemy()
     {
-        /*        Debug.Log(enemy_remain + "con lai");
-                Debug.Log(enemy_not_spawn_num + "chuan bi spawn");*/
         enemy_remain--;
         enemy_alive.text = quickAddText(enemy_remain);
     }
     private void SpawnEnemy()
     {
+        if (LobbyManager.Instance.currentinLobby && firstTime == true)
+        {
+            SpawnEnemyFirstTime();
+        }
         if (LobbyManager.Instance.currentinLobby) { return; }
-        //        firstTime = true;
         if (enemy_not_spawn_num == 0)
         {
             return;
@@ -86,14 +92,22 @@ public class GameManager : Singleton<GameManager>
             SpawnEnemyPerTime(enemy_not_spawn_num);
             enemy_not_spawn_num = 0;
         }
-
+    }
+    private void SpawnEnemyFirstTime()
+    {
+        firstTime = false;
+        rangeSpawn = 7f;
+        SpawnEnemyPerTime(2);
+        enemy_not_spawn_num -= 2;
+        rangeSpawn = 25f;
+        CancelInvoke(nameof(SpawnEnemy));
     }
     private void SpawnEnemyPerTime(float a)
     {
         for (int i = 0; i < a; i++)
         {
             int random_enemy = Random.Range(0, enemy.Length);
-            Instantiate(enemy[random_enemy], GetRandomNavMeshPosition(transform.position, 100f), Quaternion.identity);
+            Instantiate(enemy[random_enemy], GetRandomNavMeshPosition(transform.position, rangeSpawn), Quaternion.identity);
         }
     }
     private Vector3 GetRandomNavMeshPosition(Vector3 origin, float radius)

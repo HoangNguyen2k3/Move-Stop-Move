@@ -35,9 +35,11 @@ public class PlayerController : MonoBehaviour
     public GameObject[] fullSkinPlayObject;
 
     private Material begin_Material;
+    private LobbyManager lobby;
 
     private void Start()
     {
+        lobby = FindFirstObjectByType<LobbyManager>();
         begin_Material = current_Mesh.material;
         transform.localScale = new Vector3(characterPlayer.beginRange, characterPlayer.beginRange, characterPlayer.beginRange);
         animator = GetComponent<Animator>();
@@ -261,7 +263,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag(ApplicationVariable.ENEMY_TAG) && !isCoolDown && firstEnemy == other.transform && direct == Vector3.zero)
+        if (other.CompareTag(ApplicationVariable.ENEMY_TAG) && !isCoolDown && firstEnemy == other.transform && direct == Vector3.zero && !lobby.currentinLobby)
         {
             StartCoroutine(Attack());
             if (other.gameObject.GetComponentInChildren<TargetPos>())
