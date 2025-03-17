@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CheckStatusGame : MonoBehaviour
+public class CheckStatusIndicator : MonoBehaviour
 {
     private LobbyManager lobby;
     [SerializeField] private GameObject child;
@@ -17,10 +17,6 @@ public class CheckStatusGame : MonoBehaviour
         if (lobby.currentinLobby && child.activeSelf == true)
         {
             child.SetActive(false);
-        }
-        else if (!lobby.currentinLobby && child.activeSelf == false)
-        {
-            child.SetActive(true);
         }
 
     }
