@@ -7,6 +7,7 @@ public class PurchaseCustomWeapon : MonoBehaviour
     [SerializeField] private GameObject image_weapon;
     [SerializeField] private GameObject[] active_weapon;
     [SerializeField] private TextMeshProUGUI param_Weapon;
+    [SerializeField] private TextMeshProUGUI nameWeapon;
 
     [SerializeField] private ComponentOptColor component;
     [SerializeField] private GameObject purchaseButton;
@@ -40,6 +41,7 @@ public class PurchaseCustomWeapon : MonoBehaviour
             else { active_weapon[i].SetActive(false); }
         }
         param_Weapon.text = weapon.param_Attack.ToString();
+        nameWeapon.text = weapon.nameWeapon.ToString();
         component.ChangeComponent(weapon.imageWeapon.GetComponent<MeshRenderer>().sharedMaterials.Length);
         TableColor.SetActive(false);
         custom.GetColorCustom(lastWeaponShop.imageWeapon.GetComponent<MeshRenderer>().sharedMaterials.Length);

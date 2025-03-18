@@ -7,7 +7,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textlevel;
     [Header("If is Player")]
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private float maxCam = 84;
+    [SerializeField] private float maxCam = 200;
     [SerializeField] private ParticleSystem levelup;
     [Header("Floating text")]
     [SerializeField] private float numAddingOffset = 0.05f;
@@ -23,19 +23,21 @@ public class LevelManager : MonoBehaviour
     private float addingLevel = 1;
     [SerializeField] private CinemachineCamera cam;
     private bool isPlayer = false;
+
+    [SerializeField] private bool zombieMode = false;
     private void Start()
     {
+        if (zombieMode) { temp = 2f; }
         if (gameObject.GetComponent<PlayerController>())
         {
             isPlayer = true;
         }
         current_level = startLevel;
         textlevel.text = current_level.ToString();
-        //        cam = FindFirstObjectByType<CinemachineCamera>();
     }
     private void Update()
     {
-        if (isPlayer)
+        if (isPlayer && GameManager.Instance)
         {
             GameManager.Instance.num_coin = current_level;
         }
@@ -70,12 +72,12 @@ public class LevelManager : MonoBehaviour
         if (playerController)
         {
             textAnnouceDistance.SetActive(true);
-            textAnnouceDistance.GetComponent<TextMeshProUGUI>().text = (transform.localScale.x * 10).ToString() + " m";
+            textAnnouceDistance.GetComponent<TextMeshProUGUI>().text = (transform.localScale.x * 10).ToString("F2") + " m";
             textAnnouceDistance.GetComponent<Animator>().Play("TextAnouce");
 
             if (cam.Lens.FieldOfView <= maxCam)
             {
-                cam.Lens.FieldOfView += 5;
+                cam.Lens.FieldOfView += 2.5f;
             }
         }
         for (int i = 0; i < floating.Length; i++)
@@ -87,9 +89,16 @@ public class LevelManager : MonoBehaviour
         {
             levelup.Play();
         }
-        temp++;
+        if (zombieMode)
+        {
+            temp += 2;
+        }
+        else
+        {
+            temp++;
+        }
         addingLevel++;
-        transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
+        transform.localScale += new Vector3(0.025f, 0.025f, 0.025f);
 
         if (playerController)
         {

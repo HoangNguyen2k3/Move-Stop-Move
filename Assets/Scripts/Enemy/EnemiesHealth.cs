@@ -9,6 +9,7 @@ public class EnemiesHealth : MonoBehaviour
     private Collider currentCollider;
     public bool isAlive = true;
     private Animator animator;
+    public bool isZombie = false;
     private void Start()
     {
         currentCollider = GetComponent<Collider>();
@@ -22,10 +23,28 @@ public class EnemiesHealth : MonoBehaviour
             if (other.GetComponent<ThrowWeapon>().who_throw == "Enemy") { return; }
             //   ParticleSystem temp = Instantiate(take_damage_FX, other.transform.position, Quaternion.identity);
             ParticleSystem temp = Instantiate(take_damage_FX, pos_particle.position, Quaternion.identity);
-            temp.GetComponent<ParticleSystemRenderer>().material = current_Mesh.material;
             isAlive = false;
-            Die();
+            if (isZombie)
+            {
+                ZombieEnemy();
+                temp.GetComponentInChildren<ParticleSystemRenderer>().material = current_Mesh.material;
+            }
+            else
+            {
+                temp.GetComponent<ParticleSystemRenderer>().material = current_Mesh.material;
+                Die();
+            }
         }
+    }
+
+    private void ZombieEnemy()
+    {
+        PlayerController player = FindFirstObjectByType<PlayerController>();
+        if (player != null)
+        {
+            player.GetComponent<PlayerController>().RemoveEnemyFromList(transform);
+        }
+        Destroy(currentCollider); Destroy(gameObject);
     }
 
     public void Die()

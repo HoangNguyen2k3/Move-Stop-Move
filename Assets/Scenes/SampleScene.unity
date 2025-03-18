@@ -768,8 +768,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -105.3, y: -4}
-  m_SizeDelta: {x: 200, y: 74.9349}
+  m_AnchoredPosition: {x: -113.78371, y: -4}
+  m_SizeDelta: {x: 253.1644, y: 74.9349}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &11662788
 MonoBehaviour:
@@ -14489,6 +14489,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 1302919455}
   unit: {fileID: 1924404936}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!114 &317570787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21981,7 +21986,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 1079
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 1
@@ -30191,6 +30196,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 1302919455}
   unit: {fileID: 1617412350}
+  isSameColor: 0
+  player: {fileID: 1302919453}
+  text: {fileID: 0}
+  image: {fileID: 767424483}
+  isImage: 1
 --- !u!1 &770061938
 GameObject:
   m_ObjectHideFlags: 0
@@ -36529,6 +36539,7 @@ GameObject:
   - component: {fileID: 1013422930}
   - component: {fileID: 1013422929}
   - component: {fileID: 1013422928}
+  - component: {fileID: 1013422931}
   m_Layer: 5
   m_Name: ZombieCity
   m_TagString: Untagged
@@ -36598,7 +36609,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1013422929}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1013422931}
+        m_TargetAssemblyTypeName: EnterToOtherScene, Assembly-CSharp
+        m_MethodName: EnterToScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1013422929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36637,6 +36660,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013422926}
   m_CullTransparentMesh: 1
+--- !u!114 &1013422931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013422926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a1f71602965444dad7d27e590f363a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  num_Secene: 1
 --- !u!1 &1016315444
 GameObject:
   m_ObjectHideFlags: 0
@@ -44737,6 +44773,7 @@ MonoBehaviour:
   startLevel: 4
   current_level: 0
   cam: {fileID: 453336133}
+  zombieMode: 0
 --- !u!136 &1302919451
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -44820,6 +44857,7 @@ MonoBehaviour:
   - {fileID: 999198563}
   - {fileID: 1514496706}
   - {fileID: 36249695}
+  InZombieMode: 0
 --- !u!95 &1302919454
 Animator:
   serializedVersion: 7
@@ -49918,6 +49956,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 1302919455}
   unit: {fileID: 1617412350}
+  isSameColor: 0
+  player: {fileID: 1302919453}
+  text: {fileID: 1464566376}
+  image: {fileID: 0}
+  isImage: 0
 --- !u!1 &1468805876 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2478480624632788458, guid: 589747f83667bf244a1d8f747d45b0f7, type: 3}
@@ -50848,6 +50891,7 @@ MonoBehaviour:
   isWinning: 0
   skinPlayerObject: []
   fullSkinPlayObject: []
+  InZombieMode: 0
 --- !u!1 &1498762388
 GameObject:
   m_ObjectHideFlags: 0
@@ -54662,6 +54706,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 1302919455}
   unit: {fileID: 1924404936}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!114 &1632633708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69912,6 +69961,7 @@ MonoBehaviour:
   current_Mesh: {fileID: 1904708366526272292}
   pos_particle: {fileID: 0}
   isAlive: 1
+  isZombie: 0
 --- !u!4 &176702895779747151
 Transform:
   m_ObjectHideFlags: 0
@@ -70394,6 +70444,7 @@ MonoBehaviour:
   isWinning: 0
   skinPlayerObject: []
   fullSkinPlayObject: []
+  InZombieMode: 0
 --- !u!114 &367217628382409071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71636,6 +71687,7 @@ MonoBehaviour:
   current_Mesh: {fileID: 3142612149916307559}
   pos_particle: {fileID: 0}
   isAlive: 1
+  isZombie: 0
 --- !u!224 &1118902927270609521
 RectTransform:
   m_ObjectHideFlags: 0
@@ -74273,6 +74325,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!4 &2469407783988352674
 Transform:
   m_ObjectHideFlags: 0
@@ -74410,6 +74467,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!1 &2600992385474362337
 GameObject:
   m_ObjectHideFlags: 0
@@ -74719,6 +74781,7 @@ MonoBehaviour:
   isWinning: 0
   skinPlayerObject: []
   fullSkinPlayObject: []
+  InZombieMode: 0
 --- !u!222 &2722080398835703890
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -74955,6 +75018,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!1 &2900641291581802627
 GameObject:
   m_ObjectHideFlags: 0
@@ -80062,6 +80130,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!1 &3134699569109248039
 GameObject:
   m_ObjectHideFlags: 0
@@ -80113,6 +80186,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!137 &3142612149916307559
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -80384,6 +80462,7 @@ MonoBehaviour:
   startLevel: 0
   current_level: 0
   cam: {fileID: 0}
+  zombieMode: 0
 --- !u!1 &3256028524649470463
 GameObject:
   m_ObjectHideFlags: 0
@@ -88170,6 +88249,7 @@ MonoBehaviour:
   startLevel: 4
   current_level: 0
   cam: {fileID: 453336133}
+  zombieMode: 0
 --- !u!4 &4930840984589668414
 Transform:
   m_ObjectHideFlags: 0
@@ -88200,6 +88280,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!1 &4953852650020237701
 GameObject:
   m_ObjectHideFlags: 0
@@ -90130,6 +90215,7 @@ MonoBehaviour:
   startLevel: 0
   current_level: 0
   cam: {fileID: 0}
+  zombieMode: 0
 --- !u!1 &6316795428107150905
 GameObject:
   m_ObjectHideFlags: 0
@@ -90754,6 +90840,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!1001 &6702905554207656767
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -91855,6 +91946,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!4 &7349931641475651550
 Transform:
   m_ObjectHideFlags: 0
@@ -98307,6 +98403,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!114 &8299652818103379386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98321,6 +98422,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!136 &8314233427171700844
 CapsuleCollider:
   m_ObjectHideFlags: 0

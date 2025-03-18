@@ -18,4 +18,4 @@ MonoBehaviour:
   speedMove: 5
   speedRotate: 700
   isTurning: 1
-  range: 7
+  range: 6

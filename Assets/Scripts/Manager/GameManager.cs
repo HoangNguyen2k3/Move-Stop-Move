@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager>
     private UIGeneratePress ui_generate;
     [SerializeField] private UIManager uiManager;
 
-    private float rangeSpawn = 25f;
+    private float rangeSpawn = 30f;
     private void Start()
     {
         ui_generate = GetComponent<UIGeneratePress>();
@@ -117,7 +117,12 @@ public class GameManager : Singleton<GameManager>
             Vector3 randomDirection = Random.insideUnitSphere * radius + origin;
             if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, NavMesh.AllAreas))
             {
+
                 randomPoint = hit.position;
+                if (Vector3.Distance(randomPoint, playerController.gameObject.transform.position) < 6.1f)
+                {
+                    continue;
+                }
                 return hit.position;
             }
         }

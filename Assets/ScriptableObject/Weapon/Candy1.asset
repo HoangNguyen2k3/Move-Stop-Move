@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e03f550d3080d114f8ddc418449d85ef, type: 3}
   m_Name: Candy1
   m_EditorClassIdentifier: 
-  weaponThrow: {fileID: 0}
-  weaponHold: {fileID: 0}
+  weaponThrow: {fileID: 7149454222310069375, guid: 83befa62ec78e0c488e8d66bd07b3421, type: 3}
+  weaponHold: {fileID: 416045400530278918, guid: b54cbbf13c7ef3e44918c95951d5ec9c, type: 3}
   touchSomething: {fileID: 5373022685450965240, guid: 16447b7419e22dc4380b9d8d5a1bfc8d, type: 3}
   speedMove: 4.5
   speedRotate: 0
   isTurning: 0
-  range: 7
+  range: 6

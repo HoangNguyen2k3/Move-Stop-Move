@@ -7,6 +7,7 @@ public class ChooseClother : MonoBehaviour
     [SerializeField] private Button[] button;
     [SerializeField] private GameObject[] activeButton;
     [SerializeField] private ClotherShop[] clothShop;
+    [SerializeField] private GameObject[] lock_item;
     [SerializeField] private PlayerController player;
 
     [SerializeField] private Button button_Purchase;
@@ -16,6 +17,8 @@ public class ChooseClother : MonoBehaviour
 
     [SerializeField] private CoinManager coinManager;
     [SerializeField] private TextMeshProUGUI paramText;
+
+
     private int current_index = 0;
     public int num_page = 0;
     public int current_num_page;
@@ -28,7 +31,15 @@ public class ChooseClother : MonoBehaviour
     private void ChangeTyeClother(object sender, int e)
     {
         num_page = e;
-        CheckButtonStatus(0);
+        for (int i = 0; i < lock_item.Length; i++)
+        {
+            CheckButtonStatus(i);
+
+        }
+        if (current_num_page == e)
+        {
+            button[0].onClick.Invoke();
+        }
         SetActiveCurrentClothes(0);
         if (!CheckCurrentFullSkin())
         {
@@ -196,14 +207,17 @@ public class ChooseClother : MonoBehaviour
             if (clothShop[index].status == "NotPurchase")
             {
                 SetButtonStatus(true, clothShop[index].price.ToString(), true);
+                lock_item[index].SetActive(true);
             }
             else if (clothShop[index].status == "Purchase")
             {
                 SetButtonStatus(true, "SELECT", false);
+                lock_item[index].SetActive(false);
             }
             else if (clothShop[index].status == "Selected")
             {
                 SetButtonStatus(false, "SELECTED", false);
+                lock_item[index].SetActive(false);
             }
         }
         else
@@ -217,14 +231,17 @@ public class ChooseClother : MonoBehaviour
         if (status == "NotPurchase")
         {
             SetButtonStatus(true, fullSkinShop[index].price.ToString(), true);
+            lock_item[index].SetActive(true);
         }
         else if (status == "Purchase")
         {
             SetButtonStatus(true, "SELECT", false);
+            lock_item[index].SetActive(false);
         }
         else if (status == "Selected")
         {
             SetButtonStatus(true, "UNSELECT", false);
+            lock_item[index].SetActive(false);
         }
     }
     private void SetButtonStatus(bool status_btn, string status, bool coin_status)

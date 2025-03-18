@@ -5530,7 +5530,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1369380346
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8843,6 +8843,7 @@ MonoBehaviour:
   current_Mesh: {fileID: 1904708366526272292}
   pos_particle: {fileID: 0}
   isAlive: 1
+  isZombie: 0
 --- !u!4 &176702895779747151
 Transform:
   m_ObjectHideFlags: 0
@@ -9067,6 +9068,7 @@ MonoBehaviour:
   isWinning: 0
   skinPlayerObject: []
   fullSkinPlayObject: []
+  InZombieMode: 0
 --- !u!114 &367217628382409071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9815,6 +9817,7 @@ MonoBehaviour:
   current_Mesh: {fileID: 3142612149916307559}
   pos_particle: {fileID: 0}
   isAlive: 1
+  isZombie: 0
 --- !u!224 &1118902927270609521
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11759,6 +11762,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!4 &2469407783988352674
 Transform:
   m_ObjectHideFlags: 0
@@ -11864,6 +11872,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!1 &2629512670383970025
 GameObject:
   m_ObjectHideFlags: 0
@@ -12220,6 +12233,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!1 &2900641291581802627
 GameObject:
   m_ObjectHideFlags: 0
@@ -17169,6 +17187,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!1 &3134699569109248039
 GameObject:
   m_ObjectHideFlags: 0
@@ -17379,6 +17402,7 @@ MonoBehaviour:
   startLevel: 0
   current_level: 0
   cam: {fileID: 0}
+  zombieMode: 0
 --- !u!1 &3256028524649470463
 GameObject:
   m_ObjectHideFlags: 0
@@ -24356,6 +24380,7 @@ MonoBehaviour:
   startLevel: 4
   current_level: 0
   cam: {fileID: 0}
+  zombieMode: 0
 --- !u!4 &4930840984589668414
 Transform:
   m_ObjectHideFlags: 0
@@ -24386,6 +24411,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!4 &4981641342136109345
 Transform:
   m_ObjectHideFlags: 0
@@ -25439,6 +25469,7 @@ MonoBehaviour:
   startLevel: 0
   current_level: 0
   cam: {fileID: 0}
+  zombieMode: 0
 --- !u!224 &6336742254564838821
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25776,6 +25807,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!1 &6706183550023033947
 GameObject:
   m_ObjectHideFlags: 0
@@ -26774,6 +26810,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!4 &7349931641475651550
 Transform:
   m_ObjectHideFlags: 0
@@ -32460,6 +32501,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!114 &8299652818103379386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32474,6 +32520,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!136 &8314233427171700844
 CapsuleCollider:
   m_ObjectHideFlags: 0

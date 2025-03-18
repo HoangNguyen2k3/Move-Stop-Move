@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public CharaterObj characterPlayer;
 
     [SerializeField] private ParticleSystem take_damage_FX;
-    [SerializeField] private SkinnedMeshRenderer current_Mesh;
+    [SerializeField] public SkinnedMeshRenderer current_Mesh;
 
     public float addingScale = 0;
     private bool isCoolDown = false;
@@ -36,9 +36,10 @@ public class PlayerController : MonoBehaviour
 
     private Material begin_Material;
     private LobbyManager lobby;
-
+    public bool InZombieMode = false;
     private void Start()
     {
+        //   PlayerPrefs.SetFloat("Coin", 1000f);
         lobby = FindFirstObjectByType<LobbyManager>();
         begin_Material = current_Mesh.material;
         transform.localScale = new Vector3(characterPlayer.beginRange, characterPlayer.beginRange, characterPlayer.beginRange);
@@ -153,6 +154,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         if (isDead && !isAnimationDead) { StartCoroutine(DiePlayer()); }
+        if (isDead) { return; }
         direct.x = my_joyStick.Horizontal;
         direct.z = my_joyStick.Vertical;
         Movement();
@@ -184,7 +186,7 @@ public class PlayerController : MonoBehaviour
         temp.GetComponent<ParticleSystemRenderer>().material = current_Mesh.material;
         isAnimationDead = true;
         animator.SetBool(ApplicationVariable.IS_DEAD_STATE, true);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
         cam_end.Priority = 10;
         Destroy(gameObject);
     }
@@ -263,7 +265,19 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag(ApplicationVariable.ENEMY_TAG) && !isCoolDown && firstEnemy == other.transform && direct == Vector3.zero && !lobby.currentinLobby)
+        if (InZombieMode)
+        {
+            if (other.CompareTag(ApplicationVariable.ENEMY_TAG) && !isCoolDown && firstEnemy == other.transform && direct == Vector3.zero && !isDead)
+            {
+                StartCoroutine(Attack());
+                if (other.gameObject.GetComponentInChildren<TargetPos>())
+                {
+                    ThrowWeapon(other.gameObject.GetComponentInChildren<TargetPos>().transform.position);
+                }
+            }
+            return;
+        }
+        if (other.CompareTag(ApplicationVariable.ENEMY_TAG) && !isCoolDown && firstEnemy == other.transform && direct == Vector3.zero && !lobby.currentinLobby && !isDead)
         {
             StartCoroutine(Attack());
             if (other.gameObject.GetComponentInChildren<TargetPos>())

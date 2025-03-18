@@ -23,6 +23,7 @@ public class ChooseType : MonoBehaviour
     }
     private void Start()
     {
+        OnChangeTypeClothes?.Invoke(null, 0);
         begin = buttonPurchase.GetComponent<RectTransform>().anchoredPosition;
         SetActiveChooseWeaponType(0);
         for (int i = 0; i < button.Length; i++)

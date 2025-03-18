@@ -7,6 +7,7 @@ public class EnemyAI : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent enemy;
     [SerializeField] public Animator animator;
+    [SerializeField] private Transform targetIndicator;
 
     [SerializeField] private float wanderRadius = 10f;
     [SerializeField] private float wanderInterval = 3f;
@@ -31,6 +32,7 @@ public class EnemyAI : MonoBehaviour
     private LevelManager levelManager;
 
     private bool dontMove = false;
+
 
     private void Awake()
     {
@@ -85,8 +87,9 @@ public class EnemyAI : MonoBehaviour
 
         if (target != null && Vector3.Distance(transform.position, target.position) <= attackRange)
         {
-            CancelInvoke(nameof(Wander));
             StopAndAttack();
+            CancelInvoke(nameof(Wander));
+
         }
         else
         {
@@ -124,22 +127,22 @@ public class EnemyAI : MonoBehaviour
         }*/
     private void StopAndAttack()
     {
-        transform.LookAt(target);
-
-        //        enemy.ResetPath();
-
+        enemy.SetDestination(transform.position);
         if (!isAttacking)
         {
+            enemy.isStopped = true;
             StartCoroutine(Attack());
         }
+        transform.LookAt(target);
     }
 
     private IEnumerator Attack()
     {
         //        enemy.isStopped = true;
-        enemy.isStopped = true;
+        //   enemy.isStopped = true;
         isAttacking = true;
         weapon.SetActive(false);
+        //   yield return new WaitForSeconds(0.1f);
         animator.SetBool("IsAttack", true);
 
 
@@ -165,19 +168,9 @@ public class EnemyAI : MonoBehaviour
     {
         if (!health.isAlive || iswinning || LobbyManager.Instance.currentinLobby) { return; }
         if (enemy.isStopped) { enemy.isStopped = false; }
-
-        //       else
-        //        {
         animator.SetBool("IsIdle", false);
         enemy.SetDestination(GetRandomNavMeshPosition(transform.position, wanderRadius));
-        //       }
     }
-    /*    private IEnumerator WaitForSetNewDes()
-        {
-            yield return new WaitForSeconds(0.5f);
-            animator.SetBool("IsIdle", false);
-            enemy.SetDestination(GetRandomNavMeshPosition(transform.position, wanderRadius));
-        }*/
     private Vector3 GetRandomNavMeshPosition(Vector3 origin, float radius)
     {
         for (int i = 0; i < 30; i++)

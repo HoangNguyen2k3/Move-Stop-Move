@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Candy Cane
   m_EditorClassIdentifier: 
   nameWeapon: CandyCane
-  status: NotPurchased
+  status: Purchased
   weapon: {fileID: 11400000, guid: 66fe0c54177e9ab40838eea0684a3126, type: 2}
   required_item: 
-  imageWeapon: {fileID: 2611023300772851564, guid: df76dbfe9c320a948a684918849806b5, type: 3}
+  imageWeapon: {fileID: 2611023300772851564, guid: db919871fa0c8fb44863343f996cf64a, type: 3}
   param_Attack: + 3 Speed
   price: 500
   skinWeapon:

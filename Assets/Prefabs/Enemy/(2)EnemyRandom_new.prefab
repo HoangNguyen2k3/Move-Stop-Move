@@ -177,6 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 1211043119330286530}
   animator: {fileID: 3744203413144381992}
+  targetIndicator: {fileID: 500093357584258339}
   wanderRadius: 10
   wanderInterval: 3
   attackRange: 3
@@ -201,10 +202,10 @@ NavMeshAgent:
   m_Speed: 2.7
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 150
+  m_AngularSpeed: 300
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
@@ -236,6 +237,7 @@ MonoBehaviour:
   startLevel: 0
   current_level: 0
   cam: {fileID: 0}
+  zombieMode: 0
 --- !u!114 &1823227571649523185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5649,6 +5651,7 @@ MonoBehaviour:
   current_Mesh: {fileID: 7741239414352611590}
   pos_particle: {fileID: 7609956700582007191}
   isAlive: 1
+  isZombie: 0
 --- !u!1 &2012358796653049468
 GameObject:
   m_ObjectHideFlags: 0
@@ -6376,6 +6379,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 0}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!1 &3464125873300529368
 GameObject:
   m_ObjectHideFlags: 0
@@ -7477,6 +7485,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 5944405451153578044}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!1 &5915026805090430506
 GameObject:
   m_ObjectHideFlags: 0
@@ -7899,7 +7912,7 @@ Transform:
   m_GameObject: {fileID: 7314796511229765941}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.46, z: 0}
+  m_LocalPosition: {x: 0, y: 1.878, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8692,6 +8705,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 0}
   unit: {fileID: 5944405451153578044}
+  isSameColor: 0
+  player: {fileID: 0}
+  text: {fileID: 0}
+  image: {fileID: 0}
+  isImage: 1
 --- !u!1 &8973025825757948025
 GameObject:
   m_ObjectHideFlags: 0
