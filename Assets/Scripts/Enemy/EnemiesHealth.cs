@@ -21,6 +21,7 @@ public class EnemiesHealth : MonoBehaviour
         if (other.GetComponent<ThrowWeapon>() && isAlive)
         {
             if (other.GetComponent<ThrowWeapon>().who_throw == "Enemy") { return; }
+            //  if (other.gameObject == enemy) { return; }
             //   ParticleSystem temp = Instantiate(take_damage_FX, other.transform.position, Quaternion.identity);
             ParticleSystem temp = Instantiate(take_damage_FX, pos_particle.position, Quaternion.identity);
             isAlive = false;
@@ -36,7 +37,13 @@ public class EnemiesHealth : MonoBehaviour
             }
         }
     }
-
+    public void TakeColorMaterial()
+    {
+        ParticleSystem temp = Instantiate(take_damage_FX, pos_particle.position, Quaternion.identity);
+        isAlive = false;
+        temp.GetComponent<ParticleSystemRenderer>().material = current_Mesh.material;
+        //Die();
+    }
     private void ZombieEnemy()
     {
         PlayerController player = FindFirstObjectByType<PlayerController>();

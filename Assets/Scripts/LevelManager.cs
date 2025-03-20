@@ -9,10 +9,10 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private float maxCam = 200;
     [SerializeField] private ParticleSystem levelup;
-    [Header("Floating text")]
-    [SerializeField] private float numAddingOffset = 0.05f;
-    public float offset_floatingtext = 0f;
-    public FloatingText[] floating;
+    // [Header("Floating text")]
+    //  [SerializeField] private float numAddingOffset = 0.05f;
+    /*    public float offset_floatingtext = 0f;
+        public GameObject[] floating;*/
     [SerializeField] private GameObject textAdding;
     [SerializeField] private GameObject textAnnouceDistance;
 
@@ -80,11 +80,11 @@ public class LevelManager : MonoBehaviour
                 cam.Lens.FieldOfView += 2.5f;
             }
         }
-        for (int i = 0; i < floating.Length; i++)
-        {
-            floating[i].AddOffset(numAddingOffset);
+        /*        for (int i = 0; i < floating.Length; i++)
+                {
+                    floating[i].AddOffset(numAddingOffset);
 
-        }
+                }*/
         if (!levelup.isPlaying)
         {
             levelup.Play();

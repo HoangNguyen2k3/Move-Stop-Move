@@ -86,7 +86,9 @@ public class FirstPageShop : MonoBehaviour
     public void OnChangeType()
     {
         if (num_weapon != 3 && num_weapon != 4)
+        {
             custom.CheckEqippedWeapon(num_weapon);
+        }
         SetColorButton(num_weapon);
         PurchaseCustomWeapon.num_weap = num_weapon;
         Mesh mesh = current_GameObjectChoose.GetComponent<MeshFilter>().mesh;

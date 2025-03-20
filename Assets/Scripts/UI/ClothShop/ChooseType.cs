@@ -45,16 +45,16 @@ public class ChooseType : MonoBehaviour
     public void PurchaseOrSelectWeapon()
     {
         chooseClother[num].num_page = num;
-        if (!chooseClother[num].PurchaseOrSelectWeapon())
-        {
-            Instantiate(textWarning, gameObject.transform.parent);
-            Debug.Log("hehe");
-        }
-        else
-        {
-            Debug.Log("haha");
-        }
-        //chooseClother[num].PurchaseOrSelectWeapon();
+        /*        if (!chooseClother[num].PurchaseOrSelectWeapon())
+                {
+                    Instantiate(textWarning, gameObject.transform.parent);
+                    Debug.Log("hehe");
+                }
+                else
+                {
+                    Debug.Log("haha");
+                }*/
+        chooseClother[num].PurchaseOrSelectWeapon();
     }
     public void SetActiveChooseWeaponType(int index)
     {

@@ -119,7 +119,7 @@ public class GameManager : Singleton<GameManager>
             {
 
                 randomPoint = hit.position;
-                if (Vector3.Distance(randomPoint, playerController.gameObject.transform.position) < 6.1f)
+                if (playerController && Vector3.Distance(randomPoint, playerController.gameObject.transform.position) < 6.1f)
                 {
                     continue;
                 }

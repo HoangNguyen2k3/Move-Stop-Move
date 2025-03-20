@@ -10,4 +10,6 @@ public static class ApplicationVariable
     public static string eqquipped_status = "Equipped";
     public static string notPurchase_status = "NotPurchased";
     public static string COIN = "Coin";
+    public static string PATH_CLOTHES_SAVE = "Clothes";
+    public static string PATH_CLOTHES_PLAYER = "Player_Clothes";
 }

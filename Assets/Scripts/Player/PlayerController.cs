@@ -58,6 +58,8 @@ public class PlayerController : MonoBehaviour
     //Skin set up
     public void TakeInfoCloth()
     {
+
+        current_Mesh.material = begin_Material;
         for (int i = 0; i < skinPlayerObject.Length; i++)
         {
             if (characterPlayer.skinClother[i] != null)
@@ -68,7 +70,7 @@ public class PlayerController : MonoBehaviour
     }
     public void SettingSkin(ClotherShop skin, int index)
     {
-        if (characterPlayer.fullSkinPlayer != null) { return; }
+        //if (characterPlayer.fullSkinPlayer != null) { return; }
         current_Mesh.material = begin_Material;
         SetActiveOnSmt(skinPlayerObject, true);
         SetActiveOffSmt(fullSkinPlayObject);
@@ -119,6 +121,11 @@ public class PlayerController : MonoBehaviour
             SettingFullSkin(characterPlayer.fullSkinPlayer);
     }
     //something misc
+    public void Ahaha()
+    {
+        SetActiveOnSmt(skinPlayerObject, true);
+        SetActiveOffSmt(fullSkinPlayObject);
+    }
     private void SetActiveOffSmt(GameObject[] gameObject, bool ignore_first = false)
     {
         if (ignore_first == true) { gameObject[0].SetActive(false); }

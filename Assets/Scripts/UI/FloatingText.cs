@@ -65,4 +65,7 @@ public class FloatingText : MonoBehaviour
         if (unit == null) { return; }
         unit.position += new Vector3(0, offsetAdd, 0);
     }
+
 }
+
+

@@ -31,6 +31,14 @@ public class ChooseClother : MonoBehaviour
     private void ChangeTyeClother(object sender, int e)
     {
         num_page = e;
+        if (num_page == 3)
+        {
+            player.TakeInfoFullSkin();
+        }
+        else
+        {
+            player.TakeInfoCloth();
+        }
         for (int i = 0; i < lock_item.Length; i++)
         {
             CheckButtonStatus(i);
@@ -88,14 +96,13 @@ public class ChooseClother : MonoBehaviour
             player.TakeInfoCloth();
         }
     }
-    public bool PurchaseOrSelectWeapon()
+    public void PurchaseOrSelectWeapon()
     {
-        Debug.Log(num_page);
-        if (num_page != 3 && CheckCurrentFullSkin())
-        {
-            return false;
-        }
-        if (num_page != 3 && !CheckCurrentFullSkin())
+        /*        if (num_page != 3 && CheckCurrentFullSkin())
+                {
+                    return false;
+                }*/
+        if (num_page != 3)
         {
             if (clothShop[current_index].status == "NotPurchase")
             {
@@ -104,6 +111,12 @@ public class ChooseClother : MonoBehaviour
                     SetRemainClothes("Purchase");
                     clothShop[current_index].status = "Selected";
                     player.characterPlayer.skinClother[clothShop[current_index].clothType] = clothShop[current_index];
+                    if (player.characterPlayer.fullSkinPlayer != null)
+                    {
+                        player.characterPlayer.fullSkinPlayer.status = "Purchase";
+                        player.characterPlayer.fullSkinPlayer = null;
+                        player.GetComponent<PlayerController>().Ahaha();
+                    }
                     player.TakeInfoCloth();
                     CheckButtonStatus(current_index);
                     SetClotherStatus("Selected");
@@ -114,6 +127,12 @@ public class ChooseClother : MonoBehaviour
                 SetRemainClothes("Purchase");
                 clothShop[current_index].status = "Selected";
                 player.characterPlayer.skinClother[clothShop[current_index].clothType] = clothShop[current_index];
+                if (player.characterPlayer.fullSkinPlayer != null)
+                {
+                    player.characterPlayer.fullSkinPlayer.status = "Purchase";
+                    player.characterPlayer.fullSkinPlayer = null;
+                    player.GetComponent<PlayerController>().Ahaha();
+                }
                 player.TakeInfoCloth();
                 CheckButtonStatus(current_index);
                 SetClotherStatus("Selected");
@@ -124,7 +143,7 @@ public class ChooseClother : MonoBehaviour
         {
             PurchaseOrSelectFullSkin();
         }
-        return true;
+        //  return true;
     }
     public void PurchaseOrSelectFullSkin()
     {
@@ -149,15 +168,15 @@ public class ChooseClother : MonoBehaviour
             CheckButtonStatus(current_index);
             SetClotherStatus("Selected");
         }
-        else if (fullSkinShop[current_index].status == "Selected" && CheckCurrentFullSkin())
-        {
-            SetRemainClothes("Purchase");
-            fullSkinShop[current_index].status = "Purchase";
-            player.characterPlayer.fullSkinPlayer = null;
-            player.TakeInfoCloth();
-            CheckButtonStatus(current_index);
-            SetRemainClothes("Purchase");
-        }
+        /*        else if (fullSkinShop[current_index].status == "Selected" && CheckCurrentFullSkin())
+                {
+                    SetRemainClothes("Purchase");
+                    fullSkinShop[current_index].status = "Purchase";
+                    player.characterPlayer.fullSkinPlayer = null;
+                    player.TakeInfoCloth();
+                    CheckButtonStatus(current_index);
+                    SetRemainClothes("Purchase");
+                }*/
     }
     public void SetRemainClothes(string _status)
     {
@@ -165,11 +184,13 @@ public class ChooseClother : MonoBehaviour
         {
             if (player.characterPlayer.skinClother[clothShop[current_index].clothType] != null)
                 player.characterPlayer.skinClother[clothShop[current_index].clothType].status = _status;
+            //            SavingData.SaveData(player.characterPlayer.skinClother[clothShop[current_index].clothType], ApplicationVariable.PATH_CLOTHES_PLAYER);
         }
         else
         {
             if (player.characterPlayer.fullSkinPlayer != null)
                 player.characterPlayer.fullSkinPlayer.status = _status;
+            //            SavingData.SaveData(player.characterPlayer.fullSkinPlayer, ApplicationVariable.PATH_CLOTHES_PLAYER);
         }
     }
     public void SetClotherStatus(string _status)
@@ -178,11 +199,13 @@ public class ChooseClother : MonoBehaviour
         {
             if (player.characterPlayer.skinClother[clothShop[current_index].clothType] != null)
                 player.characterPlayer.skinClother[clothShop[current_index].clothType].status = _status;
+            //            SavingData.SaveData(player.characterPlayer.skinClother[clothShop[current_index].clothType], ApplicationVariable.PATH_CLOTHES_PLAYER);
         }
         else
         {
             if (player.characterPlayer.fullSkinPlayer != null)
                 player.characterPlayer.fullSkinPlayer.status = _status;
+            //           SavingData.SaveData(player.characterPlayer.fullSkinPlayer, ApplicationVariable.PATH_CLOTHES_PLAYER);
         }
     }
     public void SetActiveCurrentClothes(int index)
@@ -240,7 +263,7 @@ public class ChooseClother : MonoBehaviour
         }
         else if (status == "Selected")
         {
-            SetButtonStatus(true, "UNSELECT", false);
+            SetButtonStatus(false, "SELECTED", false);
             lock_item[index].SetActive(false);
         }
     }

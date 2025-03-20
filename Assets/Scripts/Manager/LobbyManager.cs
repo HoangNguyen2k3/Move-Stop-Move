@@ -33,6 +33,7 @@ public class LobbyManager : Singleton<LobbyManager>
         show.TakePictureAndShow();
         await Task.Delay(50);
         currentinLobby = false;
+        Debug.Log(currentinLobby + "hhhh");
         cam.GetComponent<CinemachineCamera>().Priority = -1;
         SetActiveTrueGameUI();
         UILobbyGame.SetActive(false);

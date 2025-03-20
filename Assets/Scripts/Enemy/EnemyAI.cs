@@ -32,6 +32,7 @@ public class EnemyAI : MonoBehaviour
     private LevelManager levelManager;
 
     private bool dontMove = false;
+    private bool isFirst = true;
 
 
     private void Awake()
@@ -43,7 +44,7 @@ public class EnemyAI : MonoBehaviour
     }
     private void Start()
     {
-        InvokeRepeating(nameof(Wander), 0f, wanderInterval);
+        //    InvokeRepeating(nameof(Wander), 0f, wanderInterval);
         Indicator();
     }
 
@@ -53,10 +54,8 @@ public class EnemyAI : MonoBehaviour
         indicator.GetComponent<IndicatorObj>().arrow.color = skinnedMeshRenderer.material.color;
         indicator.GetComponent<IndicatorObj>().backGround.color = skinnedMeshRenderer.material.color;
         indicator.GetComponent<IndicatorObj>().numEnemyLevel.text = levelManager.current_level.ToString();
-        //       indicator.GetComponent<Image>().color = skinnedMeshRenderer.material.color;
-        //        Debug.Log(skinnedMeshRenderer.material.color);
-        //       Debug.Log(indicator.GetComponent<Image>().color);
-        indicator.GetComponent<OffScreenIndicator>().target = enemy.transform;
+        //indicator.GetComponent<OffScreenIndicator>().target = enemy.transform;
+        indicator.GetComponent<OffScreenIndicator>().target = posStartThrow;
         indicator.GetComponent<OffScreenIndicator>().mainCamera = Camera.main;
     }
 
@@ -66,6 +65,15 @@ public class EnemyAI : MonoBehaviour
         {
             return;
         }
+        if (!LobbyManager.Instance.currentinLobby && isFirst)
+        {
+            isFirst = false;
+            InvokeRepeating(nameof(Wander), 0f, wanderInterval);
+        }
+        /*        if (!LobbyManager.Instance.currentinLobby && isFirst)
+                {
+                    Wander();
+                }*/
         if (indicator)
             indicator.GetComponent<IndicatorObj>().numEnemyLevel.text = levelManager.current_level.ToString();
         if (!health.isAlive || iswinning)
@@ -146,6 +154,7 @@ public class EnemyAI : MonoBehaviour
         animator.SetBool("IsAttack", true);
 
 
+        yield return new WaitForSeconds(0.1f);
         GameObject throwWeapon = Instantiate(weaponThrow, posStartThrow.position, Quaternion.identity);
         throwWeapon.GetComponent<ThrowWeapon>().who_throw_obj = transform.GetChild(1).gameObject;
         throwWeapon.GetComponent<ThrowWeapon>().currentlevelObject = GetComponent<LevelManager>();
@@ -153,12 +162,14 @@ public class EnemyAI : MonoBehaviour
         throwWeapon.GetComponent<ThrowWeapon>().target = target.GetComponentInChildren<TargetPos>().transform.position;
 
         //        yield return new WaitForSeconds(timeCoolDown / 2.5f);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.55f);
         enemy.isStopped = false;
         weapon.SetActive(true);
         animator.SetBool("IsAttack", false);
+        animator.SetBool("IsIdle", true);
         //        enemy.isStopped = false;
-        yield return new WaitForSeconds(timeCoolDown / 5);
+        yield return new WaitForSeconds(timeCoolDown / 3);
+        animator.SetBool("IsIdle", false);
         target = null;
         FindNearestTarget();
         isAttacking = false;

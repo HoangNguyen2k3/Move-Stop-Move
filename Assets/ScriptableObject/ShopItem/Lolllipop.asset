@@ -16,12 +16,12 @@ MonoBehaviour:
   status: Purchased
   weapon: {fileID: 11400000, guid: e170f449ef91f8b4391affe6acc3c2cd, type: 2}
   required_item: 
-  imageWeapon: {fileID: 2417238474674903134, guid: 8f67a88d606ae1841bb18443fdd49d7f, type: 3}
+  imageWeapon: {fileID: 2417238474674903134, guid: 00d85539f2c1ba74d9b79e494244afc4, type: 3}
   param_Attack: +3 Range
   price: 50
   skinWeapon:
-  - {fileID: 848821403876111888, guid: 339ce87fb885e39478093ea2814df0c4, type: 3}
   - {fileID: 6178012049125945725, guid: fb7af3a74db532f41b23a66d151b2453, type: 3}
+  - {fileID: 848821403876111888, guid: 339ce87fb885e39478093ea2814df0c4, type: 3}
   - {fileID: 2417238474674903134, guid: 8f67a88d606ae1841bb18443fdd49d7f, type: 3}
   - {fileID: 1099132090200711701, guid: e1bb2f33b3ecc5d46918482f6e2c62cf, type: 3}
   - {fileID: 7467828593969568844, guid: d4f1bd97afcf2fa4d9597c52ed0fdf1e, type: 3}

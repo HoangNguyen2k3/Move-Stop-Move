@@ -73,7 +73,16 @@ public class WeaponShopUI : MonoBehaviour
                 current_page = i; break;
             }
         }
-        start_page = current_page;
+        if (current_page == 0)
+        {
+            start_page = -1;
+            current_page = max_page - 1;
+        }
+        else
+        {
+
+            start_page = current_page;
+        }
         SettingShopUI();
     }
     private void LoadWeaponStatus()
@@ -266,6 +275,10 @@ public class WeaponShopUI : MonoBehaviour
                     {
                         PlayerPrefs.SetString(weapon_check.nameWeapon + " select_button" + i, "UnEquip");
                     }
+                }
+                else
+                {
+                    PlayerPrefs.SetString(weapon_check.nameWeapon + " select_button" + i, "UnEquip");
                 }
             }
         }

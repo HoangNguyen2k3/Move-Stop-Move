@@ -80,6 +80,7 @@ public class ThrowWeapon : MonoBehaviour
             {
                 other.gameObject.GetComponent<EnemiesHealth>().isAlive = false;
                 currentlevelObject.AddLevel();
+                other.gameObject.GetComponent<EnemiesHealth>().TakeColorMaterial();
                 other.gameObject.GetComponent<EnemiesHealth>().Die();
                 Destroy(gameObject);
             }

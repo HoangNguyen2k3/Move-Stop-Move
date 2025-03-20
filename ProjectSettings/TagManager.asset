@@ -8,6 +8,7 @@ TagManager:
   - Ignore
   - CanvasWorldSpace
   - CanvasOverlay
+  - FloatingText
   layers:
   - Default
   - TransparentFX
