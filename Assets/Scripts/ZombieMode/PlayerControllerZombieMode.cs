@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerControllerZombieMode : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private float angle = 5f;
@@ -36,14 +36,8 @@ public class PlayerController : MonoBehaviour
 
     private Material begin_Material;
     private LobbyManager lobby;
-
-    [Header("Zombie Mode")]
-    public bool InZombieMode = false;
-    public float num_throw_attack = 1f;
-    [SerializeField] private Transform[] posStartZombie;
     private void Start()
     {
-        //   PlayerPrefs.SetFloat("Coin", 1000f);
         lobby = FindFirstObjectByType<LobbyManager>();
         begin_Material = current_Mesh.material;
         transform.localScale = new Vector3(characterPlayer.beginRange, characterPlayer.beginRange, characterPlayer.beginRange);
@@ -59,7 +53,6 @@ public class PlayerController : MonoBehaviour
             TakeInfoCloth();
         }
     }
-    //Skin set up
     public void TakeInfoCloth()
     {
 
@@ -198,8 +191,7 @@ public class PlayerController : MonoBehaviour
         isAnimationDead = true;
         animator.SetBool(ApplicationVariable.IS_DEAD_STATE, true);
         yield return new WaitForSeconds(0.5f);
-        /*        if (!InZombieMode)
-                    cam_end.Priority = 10;*/
+        cam_end.Priority = 10;
         Destroy(gameObject);
     }
     private void Movement()
@@ -277,42 +269,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (InZombieMode)
-        {
-            if (other.CompareTag(ApplicationVariable.ENEMY_TAG) && !isCoolDown && firstEnemy == other.transform && direct == Vector3.zero && !isDead)
-            {
-                StartCoroutine(Attack());
-                if (other.gameObject.GetComponentInChildren<TargetPos>())
-                {
-                    /*                    float spacing = 0.5f;
-                                        Vector3 basePos = posStart.position;
-                                        int mid = (int)num_throw_attack / 2;
-                                        Vector3 targetPosBegin = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-                                        // Vector3 targetPos;
-                                        for (int i = 0; i < num_throw_attack; i++)
-                                        {
-                                            //float offset = (i - mid) * spacing;
-                                            float offsetX = (i - mid) * spacing;
-                                            float offsetZ = (i % 2 == 0 ? 1 : -1) * spacing;
-                                            //   Vector3 throwPosition = basePos + new Vector3(offset, 0, 0);
-                                            Vector3 throwPosition = basePos + new Vector3(offsetX, 0, offsetZ);
-                                            Vector3 targetPos = targetPosBegin + new Vector3(offsetX, 0, offsetZ);
-                                            //   targetPos = targetPosBegin + new Vector3(offset, 0, 0);
-                                            ThrowWeapon(targetPos, throwPosition);
-                                        }*/
-                }
-            }
-            return;
-        }
-        if (other.CompareTag(ApplicationVariable.ENEMY_TAG) && !isCoolDown && firstEnemy == other.transform && direct == Vector3.zero && !lobby.currentinLobby && !isDead)
+        if (other.CompareTag(ApplicationVariable.ENEMY_TAG) && !isCoolDown && firstEnemy == other.transform && direct == Vector3.zero && !isDead)
         {
             StartCoroutine(Attack());
-
             if (other.gameObject.GetComponentInChildren<TargetPos>())
             {
-                ThrowWeapon(other.gameObject.GetComponentInChildren<TargetPos>().transform.position, posStart.position);
+                ThrowWeapon(other.gameObject.GetComponentInChildren<TargetPos>().transform.position);
             }
-
         }
     }
 
@@ -329,7 +292,7 @@ public class PlayerController : MonoBehaviour
         isCoolDown = false;
     }
 
-    public void ThrowWeapon(Vector3 target, Vector3 startPos)
+    public void ThrowWeapon(Vector3 target)
     {
         if (firstEnemy != null)
         {
@@ -339,10 +302,12 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angle * 10);
         }
 
-        GameObject throwWeaponPrefab = Instantiate(characterPlayer.current_Weapon.weaponThrow, startPos, Quaternion.identity);
+        GameObject throwWeaponPrefab = Instantiate(characterPlayer.current_Weapon.weaponThrow, posStart.position, Quaternion.identity);
         throwWeaponPrefab.transform.localScale += Vector3.one * addingScale;
         throwWeaponPrefab.GetComponent<ThrowWeapon>().currentlevelObject = GetComponent<LevelManager>();
+        //  target.y = posStart.position.y;
         throwWeaponPrefab.GetComponent<ThrowWeapon>().target = target;
+        // throwWeaponPrefab.GetComponent<ThrowWeapon>().target = target.GetComponentInChildren<TargetPos>().transform.position;
     }
     public void RemoveEnemyFromList(Transform enemy)
     {

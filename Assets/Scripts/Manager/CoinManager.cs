@@ -13,19 +13,12 @@ public class CoinManager : MonoBehaviour
         {
             PlayerPrefs.SetFloat("Coin", 0);
         }
-        //   PlayerPrefs.SetFloat("Coin", 5500);
+        PlayerPrefs.SetFloat("Coin", 5500);
     }
     private void OnEnable()
     {
         WeaponShopUI.OnWeaponPurchase += WeaponShopUI_OnWeaponPurchase;
     }
-
-    private void WeaponShopUI_OnWeaponPurchase(object sender, WeaponObject weapon)
-    {
-        numCurrentCoin = PlayerPrefs.GetFloat("Coin");
-        numCoinUI.text = numCurrentCoin.ToString();
-    }
-
     private void Start()
     {
         if (!PlayerPrefs.HasKey("Coin"))
@@ -35,10 +28,17 @@ public class CoinManager : MonoBehaviour
         numCurrentCoin = PlayerPrefs.GetFloat("Coin");
         numCoinUI.text = numCurrentCoin.ToString();
     }
+
+    private void WeaponShopUI_OnWeaponPurchase(object sender, WeaponObject weapon)
+    {
+        numCurrentCoin = PlayerPrefs.GetFloat("Coin");
+        numCoinUI.text = numCurrentCoin.ToString();
+    }
+
     public void AddingCoin()
     {
         numCurrentCoin = PlayerPrefs.GetFloat("Coin");
-        addCurrentCoin = GameManager.Instance.num_coin;
+        addCurrentCoin = ZombieManager.Instance.num_coin;
         numCurrentCoin += addCurrentCoin;
         numCoinUI.text = numCurrentCoin.ToString();
         PlayerPrefs.SetFloat("Coin", numCurrentCoin);
@@ -56,6 +56,12 @@ public class CoinManager : MonoBehaviour
         {
             return false;
         }
+    }
+    public void MinusCoin(float price)
+    {
+        numCurrentCoin -= price;
+        PlayerPrefs.SetFloat("Coin", numCurrentCoin);
+        numCoinUI.text = numCurrentCoin.ToString();
     }
     private void OnDisable()
     {

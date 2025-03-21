@@ -9,22 +9,22 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private float maxCam = 200;
     [SerializeField] private ParticleSystem levelup;
-    // [Header("Floating text")]
-    //  [SerializeField] private float numAddingOffset = 0.05f;
-    /*    public float offset_floatingtext = 0f;
-        public GameObject[] floating;*/
+
     [SerializeField] private GameObject textAdding;
     [SerializeField] private GameObject textAnnouceDistance;
 
     public float startLevel = 0f;
     private float temp = 1;
-    //   private float start_level = 0;
     public float current_level;
     private float addingLevel = 1;
     [SerializeField] private CinemachineCamera cam;
     private bool isPlayer = false;
 
+    [Header("ZombieMode")]
+
     [SerializeField] private bool zombieMode = false;
+    [SerializeField] private PermParamAdd addingItem;
+    public float current_num_weapon_throw = 1f;
     private void Start()
     {
         if (zombieMode) { temp = 2f; }
@@ -71,6 +71,13 @@ public class LevelManager : MonoBehaviour
     {
         if (playerController)
         {
+            //Zombie Mode
+            if (zombieMode && current_num_weapon_throw < addingItem.num_max_throw)
+            {
+                current_num_weapon_throw++;
+                playerController.num_throw_attack = current_num_weapon_throw;
+            }
+            //
             textAnnouceDistance.SetActive(true);
             textAnnouceDistance.GetComponent<TextMeshProUGUI>().text = (transform.localScale.x * 10).ToString("F2") + " m";
             textAnnouceDistance.GetComponent<Animator>().Play("TextAnouce");
@@ -80,11 +87,6 @@ public class LevelManager : MonoBehaviour
                 cam.Lens.FieldOfView += 2.5f;
             }
         }
-        /*        for (int i = 0; i < floating.Length; i++)
-                {
-                    floating[i].AddOffset(numAddingOffset);
-
-                }*/
         if (!levelup.isPlaying)
         {
             levelup.Play();

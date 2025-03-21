@@ -92,8 +92,6 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   edgeOffset: 40
   indicatorObject: {fileID: 1103002668369239127}
-  player: {fileID: 0}
-  rotate: {fileID: 9079622925518876930}
 --- !u!114 &2226565093451711025
 MonoBehaviour:
   m_ObjectHideFlags: 0

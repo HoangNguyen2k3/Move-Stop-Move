@@ -9,11 +9,4 @@ public class ClotherShop : ScriptableObject
     public string status;
     public float price;
     public int clothType;
-    /*    public enum typeClother
-        {
-            Hair,
-            Pant,
-            Shield,
-            Full_Skin
-        }*/
 }

@@ -7786,7 +7786,7 @@ NavMeshAgent:
   m_Speed: 2.7
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 300
+  m_AngularSpeed: 500
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
@@ -7811,7 +7811,6 @@ MonoBehaviour:
   playerController: {fileID: 0}
   maxCam: 84
   levelup: {fileID: 6242503706745327118}
-  numAddingOffset: 0.05
   textAdding: {fileID: 0}
   textAnnouceDistance: {fileID: 0}
   startLevel: 0

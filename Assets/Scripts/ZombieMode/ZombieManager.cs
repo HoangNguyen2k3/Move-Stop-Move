@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,18 +19,27 @@ public class ZombieManager : Singleton<ZombieManager>
     public bool iswinning = false;
     public bool islose = false;
     private bool temp = false;
+    private bool startingGame = false;
     private Vector3 randomPoint;
 
     private float rangeSpawn = 25f;
+    [Header("ZombieMode")]
+    [SerializeField] private CinemachineCamera camWinning;
+    public bool currentInLobbyZombie = false;
     private void Start()
     {
         enemy_not_spawn_num = enemy_remain;
         enemy_alive.text = quickAddText(enemy_remain);
-        InvokeRepeating(nameof(SpawnEnemy), 0, 2.5f);
+        //InvokeRepeating(nameof(SpawnEnemy), 0, 2.5f);
+        SpawnEnemy();
     }
     private void Update()
     {
-
+        if (!startingGame && playerController.gameObject.activeSelf == true)
+        {
+            startingGame = true;
+            InvokeRepeating(nameof(SpawnEnemy), 0, 2.5f);
+        }
         if (islose && !temp)
         {
             temp = true;
@@ -42,6 +52,7 @@ public class ZombieManager : Singleton<ZombieManager>
             iswinning = true;
             enemy_alive.text = quickAddText(0);
             winningGame.SetActive(true);
+            camWinning.Priority = 10;
             //    earnCoinwin.text = num_coin.ToString();
             playerController.animator.SetBool("IsWin", true);
             playerController.isWinning = true;
