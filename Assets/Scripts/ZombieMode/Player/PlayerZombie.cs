@@ -1,50 +1,46 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Cinemachine;
+using System.Threading.Tasks;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerZombie : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
+    [SerializeField] public float speed = 5f;
     [SerializeField] private float angle = 5f;
     [SerializeField] private Joystick my_joyStick;
     [SerializeField] private GameObject hold_weapon;
     [SerializeField] private Transform posStart;
     [SerializeField] private GameObject circleTarget;
-    [SerializeField] private CinemachineCamera cam_end;
-
     public CharaterObj characterPlayer;
-
     [SerializeField] private ParticleSystem take_damage_FX;
     [SerializeField] public SkinnedMeshRenderer current_Mesh;
-
     public float addingScale = 0;
     private bool isCoolDown = false;
-    private bool isEnemyInRange = false;
     [HideInInspector] public Animator animator;
     [HideInInspector] public Vector3 direct;
-    private Transform firstEnemy = null;
-    private List<Transform> enemiesInRange = new List<Transform>();
-
     public bool isDead = false;
     private bool isAnimationDead = false;
     [HideInInspector] public bool isWinning = false;
-
-
     public GameObject[] skinPlayerObject;
     public GameObject[] fullSkinPlayObject;
 
     private Material begin_Material;
-    private LobbyManager lobby;
 
     [Header("Zombie Mode")]
-    public bool InZombieMode = false;
     public float num_throw_attack = 1f;
-    [SerializeField] private Transform[] posStartZombie;
+    private float angle_attack = 25f;
+    public CircleRange range;
+    public int num_alive_player = 0;
+    public bool canAttack = true;
+    public GameObject[] shields;
+    public PermParamAdd permParam;
+    public GameObject shieldObj;
+    private void OnEnable()
+    {
+        num_alive_player = permParam.num_add_shield;
+        speed = speed + speed * permParam.num_add_speed / 200;
+    }
     private void Start()
     {
-        //   PlayerPrefs.SetFloat("Coin", 1000f);
-        lobby = FindFirstObjectByType<LobbyManager>();
         begin_Material = current_Mesh.material;
         transform.localScale = new Vector3(characterPlayer.beginRange, characterPlayer.beginRange, characterPlayer.beginRange);
         animator = GetComponent<Animator>();
@@ -96,8 +92,6 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-
-    //Full skin set up
     public void SettingFullSkin(FullSkinObject skin)
     {
         SetActiveOffSmt(skinPlayerObject, true);
@@ -170,24 +164,8 @@ public class PlayerController : MonoBehaviour
         direct.z = my_joyStick.Vertical;
         Movement();
         RotateCharacter();
-        if (isEnemyInRange)
-        {
-            if (firstEnemy)
-            {
-                circleTarget.transform.position = firstEnemy.position;
-            }
-
-        }
     }
 
-    private void FixedUpdate()
-    {
-        if (isWinning)
-        {
-            return;
-        }
-        //       Movement();
-    }
 
 
 
@@ -198,8 +176,6 @@ public class PlayerController : MonoBehaviour
         isAnimationDead = true;
         animator.SetBool(ApplicationVariable.IS_DEAD_STATE, true);
         yield return new WaitForSeconds(0.5f);
-        /*        if (!InZombieMode)
-                    cam_end.Priority = 10;*/
         Destroy(gameObject);
     }
     private void Movement()
@@ -222,99 +198,59 @@ public class PlayerController : MonoBehaviour
         Quaternion rot = Quaternion.LookRotation(direct.normalized);
         transform.rotation = Quaternion.RotateTowards(this.transform.rotation, rot, angle);
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag(ApplicationVariable.ENEMY_TAG))
+    /*    public void AttackEnemy(GameObject other)
         {
-            Transform enemy = other.transform;
-            if (!enemiesInRange.Contains(enemy))
-                enemiesInRange.Add(enemy);
-
-            if (firstEnemy == null)
-            {
-                firstEnemy = enemy;
-                UpdateCircleTarget();
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag(ApplicationVariable.ENEMY_TAG))
-        {
-            Transform enemy = other.transform;
-            enemiesInRange.Remove(enemy);
-
-            if (enemy == firstEnemy)
-            {
-                firstEnemy = enemiesInRange.Count > 0 ? enemiesInRange[0] : null;
-                UpdateCircleTarget();
-            }
-        }
-    }
-
-    private void UpdateCircleTarget()
-    {
-        if (firstEnemy != null)
-        {
-            if (firstEnemy.GetComponent<EnemiesHealth>().isAlive == false)
-            {
-                isEnemyInRange = false;
-                circleTarget.SetActive(false);
-                return;
-            }
-            circleTarget.SetActive(true);
-            isEnemyInRange = true;
-            circleTarget.transform.position = firstEnemy.position;
-        }
-        else
-        {
-            isEnemyInRange = false;
-            circleTarget.SetActive(false);
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (InZombieMode)
-        {
-            if (other.CompareTag(ApplicationVariable.ENEMY_TAG) && !isCoolDown && firstEnemy == other.transform && direct == Vector3.zero && !isDead)
+            if (!isCoolDown && direct == Vector3.zero && !isDead)
             {
                 StartCoroutine(Attack());
-                /*                if (other.gameObject.GetComponentInChildren<TargetPos>())
-                                {
-                                    float spacing = 0.5f;
-                                    Vector3 basePos = posStart.position;
-                                    int mid = (int)num_throw_attack / 2;
-                                    Vector3 targetPosBegin = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-                                    // Vector3 targetPos;
-                                    for (int i = 0; i < num_throw_attack; i++)
-                                    {
-                                        //float offset = (i - mid) * spacing;
-                                        float offsetX = (i - mid) * spacing;
-                                        float offsetZ = (i % 2 == 0 ? 1 : -1) * spacing;
-                                        //   Vector3 throwPosition = basePos + new Vector3(offset, 0, 0);
-                                        Vector3 throwPosition = basePos + new Vector3(offsetX, 0, offsetZ);
-                                        Vector3 targetPos = targetPosBegin + new Vector3(offsetX, 0, offsetZ);
-                                        //   targetPos = targetPosBegin + new Vector3(offset, 0, 0);
-                                        ThrowWeapon(targetPos, throwPosition);
-                                    }
-                                }*/
+
+                if (other.gameObject.GetComponentInChildren<TargetPos>())
+                {
+                    Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
+                    Vector3 dir = (target - posStart.position).normalized;
+                    float total_angle = angle_attack * num_throw_attack;
+                    float start_angle = -total_angle / 2;
+                    ThrowWeapon(target, posStart.position, dir, true);
+                    for (int i = 0; i < (num_throw_attack - 1); i++)
+                    {
+                        float angle = start_angle + i * (total_angle);
+                        if (angle == 0) { continue; }
+                        Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                        ThrowWeapon(target, posStart.position, dir_throw);
+                    }
+                }
             }
-            return;
-        }
-        if (other.CompareTag(ApplicationVariable.ENEMY_TAG) && !isCoolDown && firstEnemy == other.transform && direct == Vector3.zero && !lobby.currentinLobby && !isDead)
+        }*/
+
+    public void AttackEnemy(GameObject other)
+    {
+        if (!isCoolDown && direct == Vector3.zero && !isDead)
         {
             StartCoroutine(Attack());
 
             if (other.gameObject.GetComponentInChildren<TargetPos>())
             {
-                ThrowWeapon(other.gameObject.GetComponentInChildren<TargetPos>().transform.position, posStart.position);
-            }
+                Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
+                Vector3 dir = (target - posStart.position).normalized;
 
+                float total_angle = angle_attack * num_throw_attack;
+                float start_angle = -total_angle / 2;
+
+                ThrowWeapon(target, posStart.position, dir, true);
+
+
+                for (int i = 0; i < (num_throw_attack - 1); i++)
+                {
+                    float angle = start_angle + i * (total_angle / (num_throw_attack - 1));
+                    if (angle == 0) continue;
+
+                    Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                    ThrowWeapon(target, posStart.position, dir_throw, false);
+                }
+            }
         }
     }
+
 
     private IEnumerator Attack()
     {
@@ -329,36 +265,58 @@ public class PlayerController : MonoBehaviour
         isCoolDown = false;
     }
 
-    public void ThrowWeapon(Vector3 target, Vector3 startPos)
+    public void ThrowWeapon(Vector3 target, Vector3 startPos, Vector3 dir, bool first = false)
     {
-        if (firstEnemy != null)
+        if (range.firstEnemy != null)
         {
-            Vector3 directionToEnemy = firstEnemy.position - transform.position;
+            Vector3 directionToEnemy = range.firstEnemy.position - transform.position;
             directionToEnemy.y = 0;
             Quaternion targetRotation = Quaternion.LookRotation(directionToEnemy);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angle * 10);
         }
-
         GameObject throwWeaponPrefab = Instantiate(characterPlayer.current_Weapon.weaponThrow, startPos, Quaternion.identity);
         throwWeaponPrefab.transform.localScale += Vector3.one * addingScale;
         throwWeaponPrefab.GetComponent<ThrowWeapon>().currentlevelObject = GetComponent<LevelManager>();
         throwWeaponPrefab.GetComponent<ThrowWeapon>().target = target;
+        throwWeaponPrefab.GetComponent<ThrowWeapon>().isZombieMode = true;
+        throwWeaponPrefab.GetComponent<ThrowWeapon>().dir = dir.normalized;
+        if (first) { throwWeaponPrefab.GetComponent<ThrowWeapon>().isFirst = true; }
     }
-    public void RemoveEnemyFromList(Transform enemy)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (enemiesInRange.Contains(enemy))
+        if (collision.collider && collision.gameObject.CompareTag("Enemy") && num_alive_player == 0 && canAttack)
         {
-            enemiesInRange.Remove(enemy);
-
-            if (enemy == firstEnemy)
-            {
-                firstEnemy = enemiesInRange.Count > 0 ? enemiesInRange[0] : null;
-                UpdateCircleTarget();
-            }
+            isDead = true;
+            ZombieManager.Instance.islose = true;
+        }
+        else if (collision.collider && collision.gameObject.CompareTag("Enemy") && num_alive_player >= 1 && canAttack)
+        {
+            WaitToPlayerShield();
         }
     }
-    private void OnDestroy()
+    public async void WaitToPlayerShield()
     {
-        Destroy(circleTarget);
+        shieldObj.SetActive(true);
+        Debug.Log("something good " + num_alive_player);
+        num_alive_player--;
+        CheckShieldIcon(num_alive_player, permParam.max_shield);
+
+        canAttack = false;
+        await Task.Delay(1000);
+        Debug.Log("something not good " + num_alive_player);
+        canAttack = true;
+        shieldObj.SetActive(false);
+    }
+
+    public void CheckShieldIcon(int current, int max)
+    {
+        for (int i = 0; i < (current); i++)
+        {
+            shields[i].SetActive(true);
+        }
+        for (int i = current; i < max; i++)
+        {
+            shields[i].SetActive(false);
+        }
     }
 }

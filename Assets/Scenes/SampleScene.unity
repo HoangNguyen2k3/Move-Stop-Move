@@ -30865,6 +30865,7 @@ MonoBehaviour:
   unit: {fileID: 1617412350}
   isSameColor: 0
   player: {fileID: 1302919453}
+  playerZombie: {fileID: 0}
   text: {fileID: 0}
   image: {fileID: 767424483}
   isImage: 1
@@ -45374,7 +45375,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textlevel: {fileID: 115103925}
   playerController: {fileID: 1302919453}
-  maxCam: 84
+  playerZombie: {fileID: 0}
+  maxCam: 200
   levelup: {fileID: 96881586}
   textAdding: {fileID: 1937881580}
   textAnnouceDistance: {fileID: 493974207}
@@ -45382,6 +45384,9 @@ MonoBehaviour:
   current_level: 0
   cam: {fileID: 453336133}
   zombieMode: 0
+  addingItem: {fileID: 0}
+  current_num_weapon_throw: 1
+  circle: {fileID: 0}
 --- !u!136 &1302919451
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -45466,6 +45471,8 @@ MonoBehaviour:
   - {fileID: 1514496706}
   - {fileID: 36249695}
   InZombieMode: 0
+  num_throw_attack: 1
+  posStartZombie: []
 --- !u!95 &1302919454
 Animator:
   serializedVersion: 7
@@ -50648,6 +50655,7 @@ MonoBehaviour:
   unit: {fileID: 1617412350}
   isSameColor: 0
   player: {fileID: 1302919453}
+  playerZombie: {fileID: 0}
   text: {fileID: 1464566376}
   image: {fileID: 0}
   isImage: 0
@@ -51582,6 +51590,8 @@ MonoBehaviour:
   skinPlayerObject: []
   fullSkinPlayObject: []
   InZombieMode: 0
+  num_throw_attack: 1
+  posStartZombie: []
 --- !u!1 &1498762388
 GameObject:
   m_ObjectHideFlags: 0
@@ -70405,6 +70415,7 @@ MonoBehaviour:
   unit: {fileID: 0}
   isSameColor: 0
   player: {fileID: 0}
+  playerZombie: {fileID: 0}
   text: {fileID: 0}
   image: {fileID: 0}
   isImage: 1
@@ -71706,6 +71717,8 @@ MonoBehaviour:
   skinPlayerObject: []
   fullSkinPlayObject: []
   InZombieMode: 0
+  num_throw_attack: 1
+  posStartZombie: []
 --- !u!114 &367217628382409071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80889,6 +80902,7 @@ MonoBehaviour:
   unit: {fileID: 0}
   isSameColor: 0
   player: {fileID: 0}
+  playerZombie: {fileID: 0}
   text: {fileID: 0}
   image: {fileID: 0}
   isImage: 1
@@ -81101,6 +81115,7 @@ MonoBehaviour:
   unit: {fileID: 0}
   isSameColor: 0
   player: {fileID: 0}
+  playerZombie: {fileID: 0}
   text: {fileID: 0}
   image: {fileID: 0}
   isImage: 1
@@ -81318,6 +81333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textlevel: {fileID: 4922616363076023828}
   playerController: {fileID: 0}
+  playerZombie: {fileID: 0}
   maxCam: 84
   levelup: {fileID: 2355844507836994576}
   textAdding: {fileID: 0}
@@ -81326,6 +81342,9 @@ MonoBehaviour:
   current_level: 0
   cam: {fileID: 0}
   zombieMode: 0
+  addingItem: {fileID: 0}
+  current_num_weapon_throw: 1
+  circle: {fileID: 0}
 --- !u!1 &2688411256024114980
 GameObject:
   m_ObjectHideFlags: 0
@@ -81452,6 +81471,8 @@ MonoBehaviour:
   skinPlayerObject: []
   fullSkinPlayObject: []
   InZombieMode: 0
+  num_throw_attack: 1
+  posStartZombie: []
 --- !u!222 &2722080398835703890
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -81722,6 +81743,7 @@ MonoBehaviour:
   unit: {fileID: 0}
   isSameColor: 0
   player: {fileID: 0}
+  playerZombie: {fileID: 0}
   text: {fileID: 0}
   image: {fileID: 0}
   isImage: 1
@@ -86970,6 +86992,7 @@ MonoBehaviour:
   unit: {fileID: 0}
   isSameColor: 0
   player: {fileID: 0}
+  playerZombie: {fileID: 0}
   text: {fileID: 0}
   image: {fileID: 0}
   isImage: 1
@@ -87026,6 +87049,7 @@ MonoBehaviour:
   unit: {fileID: 0}
   isSameColor: 0
   player: {fileID: 0}
+  playerZombie: {fileID: 0}
   text: {fileID: 0}
   image: {fileID: 0}
   isImage: 1
@@ -87322,6 +87346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textlevel: {fileID: 3699272182871949642}
   playerController: {fileID: 0}
+  playerZombie: {fileID: 0}
   maxCam: 84
   levelup: {fileID: 3064328930754058201}
   textAdding: {fileID: 0}
@@ -87330,6 +87355,9 @@ MonoBehaviour:
   current_level: 0
   cam: {fileID: 0}
   zombieMode: 0
+  addingItem: {fileID: 0}
+  current_num_weapon_throw: 1
+  circle: {fileID: 0}
 --- !u!1 &3256028524649470463
 GameObject:
   m_ObjectHideFlags: 0
@@ -88470,6 +88498,7 @@ MonoBehaviour:
   unit: {fileID: 34643894945878415}
   isSameColor: 0
   player: {fileID: 0}
+  playerZombie: {fileID: 0}
   text: {fileID: 0}
   image: {fileID: 0}
   isImage: 1
@@ -96251,6 +96280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textlevel: {fileID: 9083908970518625950}
   playerController: {fileID: 349323858635187314}
+  playerZombie: {fileID: 0}
   maxCam: 84
   levelup: {fileID: 4895413635533569119}
   textAdding: {fileID: 1262666136}
@@ -96259,6 +96289,9 @@ MonoBehaviour:
   current_level: 0
   cam: {fileID: 453336133}
   zombieMode: 0
+  addingItem: {fileID: 0}
+  current_num_weapon_throw: 1
+  circle: {fileID: 0}
 --- !u!114 &4922616363076023828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96398,6 +96431,7 @@ MonoBehaviour:
   unit: {fileID: 0}
   isSameColor: 0
   player: {fileID: 0}
+  playerZombie: {fileID: 0}
   text: {fileID: 0}
   image: {fileID: 0}
   isImage: 1
@@ -98998,6 +99032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textlevel: {fileID: 1993026619621173592}
   playerController: {fileID: 0}
+  playerZombie: {fileID: 0}
   maxCam: 84
   levelup: {fileID: 7689173541369668352}
   textAdding: {fileID: 0}
@@ -99006,6 +99041,9 @@ MonoBehaviour:
   current_level: 0
   cam: {fileID: 0}
   zombieMode: 0
+  addingItem: {fileID: 0}
+  current_num_weapon_throw: 1
+  circle: {fileID: 0}
 --- !u!1 &6316795428107150905
 GameObject:
   m_ObjectHideFlags: 0
@@ -99745,6 +99783,7 @@ MonoBehaviour:
   unit: {fileID: 0}
   isSameColor: 0
   player: {fileID: 0}
+  playerZombie: {fileID: 0}
   text: {fileID: 0}
   image: {fileID: 0}
   isImage: 1
@@ -101291,6 +101330,7 @@ MonoBehaviour:
   unit: {fileID: 0}
   isSameColor: 0
   player: {fileID: 0}
+  playerZombie: {fileID: 0}
   text: {fileID: 0}
   image: {fileID: 0}
   isImage: 1
@@ -108199,6 +108239,7 @@ MonoBehaviour:
   unit: {fileID: 0}
   isSameColor: 0
   player: {fileID: 0}
+  playerZombie: {fileID: 0}
   text: {fileID: 0}
   image: {fileID: 0}
   isImage: 1
@@ -108226,6 +108267,7 @@ MonoBehaviour:
   unit: {fileID: 0}
   isSameColor: 0
   player: {fileID: 0}
+  playerZombie: {fileID: 0}
   text: {fileID: 0}
   image: {fileID: 0}
   isImage: 1
@@ -108826,6 +108868,7 @@ MonoBehaviour:
   unit: {fileID: 34643894945878415}
   isSameColor: 0
   player: {fileID: 0}
+  playerZombie: {fileID: 0}
   text: {fileID: 0}
   image: {fileID: 0}
   isImage: 1

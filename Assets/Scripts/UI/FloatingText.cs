@@ -8,6 +8,7 @@ public class FloatingText : MonoBehaviour
     public Transform unit;
     public bool isSameColor = false;
     public PlayerController player;
+    public PlayerZombie playerZombie;
     public TextMeshProUGUI text;
     public Image image;
     public bool isImage = true;
@@ -30,9 +31,13 @@ public class FloatingText : MonoBehaviour
         {
             root = GetComponentInParent<EnemiesHealth>().transform;
         }
-        else
+        else if (GetComponentInParent<PlayerController>())
         {
             root = GetComponentInParent<PlayerController>().transform;
+        }
+        else if (GetComponentInParent<PlayerZombie>())
+        {
+            root = GetComponentInParent<PlayerZombie>().transform;
         }
     }
     private void Update()
@@ -42,16 +47,38 @@ public class FloatingText : MonoBehaviour
 
             if (isImage)
             {
-                if (image.color != player.current_Mesh.sharedMaterial.color)
+                if (player)
                 {
-                    image.color = player.current_Mesh.sharedMaterial.color;
+                    if (image.color != player.current_Mesh.sharedMaterial.color)
+                    {
+                        image.color = player.current_Mesh.sharedMaterial.color;
+                    }
+
+                }
+                else
+                {
+                    if (image.color != playerZombie.current_Mesh.sharedMaterial.color)
+                    {
+                        image.color = playerZombie.current_Mesh.sharedMaterial.color;
+                    }
                 }
             }
             else
             {
-                if (text.color != player.current_Mesh.sharedMaterial.color)
+                if (player)
                 {
-                    text.color = player.current_Mesh.sharedMaterial.color;
+                    if (text.color != player.current_Mesh.sharedMaterial.color)
+                    {
+                        text.color = player.current_Mesh.sharedMaterial.color;
+                    }
+
+                }
+                else
+                {
+                    if (text.color != playerZombie.current_Mesh.sharedMaterial.color)
+                    {
+                        text.color = playerZombie.current_Mesh.sharedMaterial.color;
+                    }
                 }
             }
         }

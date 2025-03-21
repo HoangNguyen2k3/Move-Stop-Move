@@ -3,12 +3,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PermParamAdd", menuName = "ScriptableObject/ZombieMode/PermParamAdd")]
 public class PermParamAdd : ScriptableObject
 {
-    public float num_add_shield;
+    public int num_add_shield;
     public float num_add_speed;
     public float num_add_range;
     public float num_max_throw;
 
-    public float max_shield = 4f;
+    public int max_shield = 4;
     public float max_speed = 100f;
     public float max_range = 100f;
     public float max_throw = 10f;

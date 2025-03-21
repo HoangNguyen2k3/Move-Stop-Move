@@ -38,7 +38,15 @@ public class CoinManager : MonoBehaviour
     public void AddingCoin()
     {
         numCurrentCoin = PlayerPrefs.GetFloat("Coin");
-        addCurrentCoin = ZombieManager.Instance.num_coin;
+        if (ZombieManager.Instance != null)
+        {
+            addCurrentCoin = ZombieManager.Instance.num_coin;
+
+        }
+        else
+        {
+            addCurrentCoin = GameManager.Instance.num_coin;
+        }
         numCurrentCoin += addCurrentCoin;
         numCoinUI.text = numCurrentCoin.ToString();
         PlayerPrefs.SetFloat("Coin", numCurrentCoin);

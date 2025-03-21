@@ -12,7 +12,7 @@ public class ZombieManager : Singleton<ZombieManager>
 
     [SerializeField] private float enemy_spawn_pertime;
     [SerializeField] public float enemy_remain;
-    public PlayerController playerController;
+    public PlayerZombie playerController;
     private float enemy_not_spawn_num;
     [HideInInspector] public string name_enemy_win;
     [HideInInspector] public float num_coin = 0;

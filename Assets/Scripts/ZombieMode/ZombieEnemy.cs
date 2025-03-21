@@ -16,6 +16,9 @@ public class ZombieEnemy : MonoBehaviour
     public SkinnedMeshRenderer skinnedMeshRenderer;
     private Transform canvasTransform;
     [SerializeField] private Transform posStartThrow;
+
+    public float num_alive_player = 1;
+    public bool canAttack = true;
     private void Awake()
     {
         if (target == null)
@@ -73,14 +76,25 @@ public class ZombieEnemy : MonoBehaviour
         {
         }
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider && collision.gameObject.CompareTag("Player"))
+    /*    private void OnCollisionEnter(Collision collision)
         {
-            collision.gameObject.GetComponent<PlayerController>().isDead = true;
-            ZombieManager.Instance.islose = true;
+            if (collision.collider && collision.gameObject.CompareTag("Player") && num_alive_player == 1 && canAttack)
+            {
+                collision.gameObject.GetComponent<PlayerZombie>().isDead = true;
+                ZombieManager.Instance.islose = true;
+            }
+            else if (collision.collider && collision.gameObject.CompareTag("Player") && num_alive_player > 1 && canAttack)
+            {
+                WaitToPlayerShield();
+            }
         }
-    }
+        public async void WaitToPlayerShield()
+        {
+            canAttack = false;
+            await Task.Delay(2000);
+            canAttack = true;
+            num_alive_player--;
+        }*/
     private void OnDestroy()
     {
         manager.MinusEnemy();

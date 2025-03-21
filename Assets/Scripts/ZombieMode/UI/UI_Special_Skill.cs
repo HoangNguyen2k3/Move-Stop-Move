@@ -10,10 +10,12 @@ public class UI_Special_Skill : MonoBehaviour
     [SerializeField] private PermParamAdd permParam;
     [SerializeField] private CoinManager coinManager;
     private float current_coin;
+    public GameObject player;
 
     private void Start()
     {
         CheckAllWeapon();
+        player.GetComponent<PlayerZombie>().CheckShieldIcon(permParam.num_add_shield, permParam.max_shield);
     }
     public void PurchaseShield()
     {
@@ -23,6 +25,8 @@ public class UI_Special_Skill : MonoBehaviour
             coinManager.MinusCoin(permParam.price_current_shield);
             permParam.price_current_shield *= 2;
             permParam.num_add_shield += 1;
+            player.GetComponent<PlayerZombie>().CheckShieldIcon(permParam.num_add_shield, permParam.max_shield);
+
         }
         CheckAllWeapon();
     }
@@ -34,6 +38,7 @@ public class UI_Special_Skill : MonoBehaviour
             coinManager.MinusCoin(permParam.price_current_speed);
             permParam.price_current_speed *= 2;
             permParam.num_add_speed += 10;
+            player.GetComponent<PlayerZombie>().speed += 0.1f * player.GetComponent<PlayerZombie>().speed;
         }
         CheckAllWeapon();
     }
@@ -45,6 +50,7 @@ public class UI_Special_Skill : MonoBehaviour
             coinManager.MinusCoin(permParam.price_current_range);
             permParam.price_current_range *= 2;
             permParam.num_add_range += 10;
+            player.GetComponent<LevelManager>().LevelUpRange();
         }
         CheckAllWeapon();
     }
@@ -93,4 +99,5 @@ public class UI_Special_Skill : MonoBehaviour
         paramSkill[3].text = "Max: " + permParam.num_max_throw;
         price[3].text = permParam.price_current_throw.ToString();
     }
+
 }

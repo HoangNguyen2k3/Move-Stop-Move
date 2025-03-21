@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textlevel;
     [Header("If is Player")]
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private PlayerZombie playerZombie;
     [SerializeField] private float maxCam = 200;
     [SerializeField] private ParticleSystem levelup;
 
@@ -25,12 +26,28 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private bool zombieMode = false;
     [SerializeField] private PermParamAdd addingItem;
     public float current_num_weapon_throw = 1f;
+    public GameObject circle;
+
+    private void OnEnable()
+    {
+        if (zombieMode)
+            LevelUpRangeSetUp();
+    }
     private void Start()
     {
-        if (zombieMode) { temp = 2f; }
-        if (gameObject.GetComponent<PlayerController>())
+
+        if (zombieMode && playerZombie)
         {
+            temp = 2f;
             isPlayer = true;
+        }
+        else
+        {
+            if (gameObject.GetComponent<PlayerController>())
+            {
+                isPlayer = true;
+            }
+
         }
         current_level = startLevel;
         textlevel.text = current_level.ToString();
@@ -71,13 +88,7 @@ public class LevelManager : MonoBehaviour
     {
         if (playerController)
         {
-            //Zombie Mode
-            if (zombieMode && current_num_weapon_throw < addingItem.num_max_throw)
-            {
-                current_num_weapon_throw++;
-                playerController.num_throw_attack = current_num_weapon_throw;
-            }
-            //
+
             textAnnouceDistance.SetActive(true);
             textAnnouceDistance.GetComponent<TextMeshProUGUI>().text = (transform.localScale.x * 10).ToString("F2") + " m";
             textAnnouceDistance.GetComponent<Animator>().Play("TextAnouce");
@@ -85,6 +96,14 @@ public class LevelManager : MonoBehaviour
             if (cam.Lens.FieldOfView <= maxCam)
             {
                 cam.Lens.FieldOfView += 2.5f;
+            }
+        }
+        if (zombieMode && playerZombie)
+        {
+            if (zombieMode && current_num_weapon_throw < addingItem.num_max_throw)
+            {
+                current_num_weapon_throw++;
+                playerZombie.num_throw_attack = current_num_weapon_throw;
             }
         }
         if (!levelup.isPlaying)
@@ -107,6 +126,28 @@ public class LevelManager : MonoBehaviour
 
             playerController.addingScale += 2.5f;
         }
+        if (zombieMode && playerZombie)
+        {
+            playerZombie.addingScale += 2.5f;
+        }
 
+    }
+    public void LevelUpRange()
+    {
+        if (cam.Lens.FieldOfView <= maxCam)
+        {
+            cam.Lens.FieldOfView += 2.5f / 2;
+        }
+        circle.transform.localScale += new Vector3(0.025f * 2, 0.025f * 2, 0.025f * 2);
+    }
+    public void LevelUpRangeSetUp()
+    {
+        float temp = addingItem.num_add_range;
+        if (cam.Lens.FieldOfView <= maxCam)
+        {
+            cam.Lens.FieldOfView += 2.5f * temp / 10;
+        }
+        float temp_1 = 0.025f * temp / 10 * 2;
+        circle.transform.localScale += new Vector3(temp_1, temp_1, temp_1);
     }
 }

@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58de6464e5de402449a16d4aec202920, type: 3}
   m_Name: PermParamAdd
   m_EditorClassIdentifier: 
-  num_add_shield: 2
-  num_add_speed: 10
-  num_add_range: 10
+  num_add_shield: 0
+  num_add_speed: 0
+  num_add_range: 30
   num_max_throw: 2
   max_shield: 4
   max_speed: 100
   max_range: 100
   max_throw: 10
-  price_current_shield: 4000
-  price_current_speed: 500
-  price_current_range: 500
+  price_current_shield: 1000
+  price_current_speed: 250
+  price_current_range: 2000
   price_current_throw: 500

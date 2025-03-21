@@ -8,19 +8,35 @@ public class ThrowWeapon : MonoBehaviour
     [HideInInspector] public string who_throw = "Player";
     [HideInInspector] public LevelManager currentlevelObject;
     [HideInInspector] public Vector3 target;
+    [HideInInspector] public Vector3 dir;
     private Vector3 startPosition;
+
+    public float fixY;
+    public bool isZombieMode = false;
+    public bool isFirst = false;
     private void Start()
     {
         if (!weapon.isTurning)
         {
+            // if (!isZombieMode)
             transform.LookAt(target);
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x - 90f, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         }
         startPosition = transform.position;
+        if (isZombieMode)
+        {
+            target.y = fixY;
+            //  if (isFirst && !weapon.isTurning) { transform.LookAt(target); }
+        }
     }
     private void Update()
     {
         if (currentlevelObject == null) { Destroy(gameObject); }
+        MainWeapon();
+
+    }
+    private void MainWeapon()
+    {
         Vector3 newPosition = FindNewPosition();
         transform.position = newPosition;
         if (Vector3.Distance(startPosition, transform.position) >= weapon.range)
@@ -35,8 +51,17 @@ public class ThrowWeapon : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(90f, transform.rotation.eulerAngles.y + (weapon.speedRotate * Time.deltaTime), 0f);
         }
-        Vector3 direction = (target - startPosition).normalized;
-        Vector3 newPosition = transform.position + direction * weapon.speedMove * Time.deltaTime;
+        Vector3 direction;
+        if (!isZombieMode)
+        {
+            direction = (target - transform.position).normalized;
+
+        }
+        else
+        {
+            direction = dir;
+        }
+        Vector3 newPosition = transform.position + dir * weapon.speedMove * Time.deltaTime;
 
         return newPosition;
     }

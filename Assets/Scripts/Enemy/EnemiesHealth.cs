@@ -46,10 +46,10 @@ public class EnemiesHealth : MonoBehaviour
     }
     private void ZombieEnemy()
     {
-        PlayerController player = FindFirstObjectByType<PlayerController>();
+        CircleRange player = FindFirstObjectByType<CircleRange>();
         if (player != null)
         {
-            player.GetComponent<PlayerController>().RemoveEnemyFromList(transform);
+            player.GetComponent<CircleRange>().RemoveEnemyFromList(transform);
         }
         Destroy(currentCollider); Destroy(gameObject);
     }
