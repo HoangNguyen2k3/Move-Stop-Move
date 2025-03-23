@@ -9,6 +9,7 @@ TagManager:
   - CanvasWorldSpace
   - CanvasOverlay
   - FloatingText
+  - ThrowWeapon
   layers:
   - Default
   - TransparentFX

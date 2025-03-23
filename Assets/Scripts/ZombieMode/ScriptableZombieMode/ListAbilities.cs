@@ -24,8 +24,9 @@ public class ListAbilities : ScriptableObject
         /*        ability1.sprite = spriteAbilities[current_rand_1];
                 ability2.sprite = spriteAbilities[current_rand_2];*/
     }
-    public void ChooseAbilities(int num_choice)
+    public void Abilities()
     {
+
     }
 
 }

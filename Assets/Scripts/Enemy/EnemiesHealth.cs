@@ -18,23 +18,29 @@ public class EnemiesHealth : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<ThrowWeapon>() && isAlive)
+        if (!isZombie)
         {
-            if (other.GetComponent<ThrowWeapon>().who_throw == "Enemy") { return; }
+            if (other.GetComponent<ThrowWeapon>() && isAlive)
+            {
+                if (other.GetComponent<ThrowWeapon>().who_throw == "Enemy") { return; }
+                //  if (other.gameObject == enemy) { return; }
+                //   ParticleSystem temp = Instantiate(take_damage_FX, other.transform.position, Quaternion.identity);
+                ParticleSystem temp = Instantiate(take_damage_FX, pos_particle.position, Quaternion.identity);
+                isAlive = false;
+                temp.GetComponent<ParticleSystemRenderer>().material = current_Mesh.material;
+                Die();
+            }
+            return;
+        }
+        if ((other.CompareTag("ThrowWeapon") || other.GetComponent<ThrowWeapon>()) && isAlive)
+        {
+
             //  if (other.gameObject == enemy) { return; }
             //   ParticleSystem temp = Instantiate(take_damage_FX, other.transform.position, Quaternion.identity);
             ParticleSystem temp = Instantiate(take_damage_FX, pos_particle.position, Quaternion.identity);
             isAlive = false;
-            if (isZombie)
-            {
-                ZombieEnemy();
-                temp.GetComponentInChildren<ParticleSystemRenderer>().material = current_Mesh.material;
-            }
-            else
-            {
-                temp.GetComponent<ParticleSystemRenderer>().material = current_Mesh.material;
-                Die();
-            }
+            ZombieEnemy();
+            temp.GetComponentInChildren<ParticleSystemRenderer>().material = current_Mesh.material;
         }
     }
     public void TakeColorMaterial()

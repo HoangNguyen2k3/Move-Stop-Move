@@ -5,9 +5,11 @@ public class TouchToObjectEnv : MonoBehaviour
     [SerializeField] private Material transparent_material;
     private Material begin_material;
     private bool isInCircle = false;
+    public bool isTouch = true;
     private void Start()
     {
         begin_material = GetComponent<MeshRenderer>().material;
+        if (!isTouch) { return; }
     }
 
     /*    private void OnCollisionEnter(Collision collision)
@@ -20,6 +22,7 @@ public class TouchToObjectEnv : MonoBehaviour
         }*/
     private void OnTriggerEnter(Collider other)
     {
+        if (!isTouch) { return; }
         if (other.CompareTag("Player") && other.isTrigger)
         {
             isInCircle = true;
@@ -35,6 +38,7 @@ public class TouchToObjectEnv : MonoBehaviour
         }*/
     private void OnTriggerExit(Collider other)
     {
+        if (!isTouch) { return; }
         if (other.CompareTag("Player") && other.isTrigger)
         {
             isInCircle = false;
@@ -52,6 +56,11 @@ public class TouchToObjectEnv : MonoBehaviour
     {
         //if (GetComponent<MeshRenderer>().material != begin_material)
         //{
+        if (!isTouch)
+        {
+            GetComponent<MeshRenderer>().material = begin_material;
+            return;
+        }
         if (!isInCircle)
         {
             GetComponent<MeshRenderer>().material = begin_material;

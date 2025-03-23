@@ -27,20 +27,26 @@ public class PlayerZombie : MonoBehaviour
 
     [Header("Zombie Mode")]
     public float num_throw_attack = 1f;
-    private float angle_attack = 25f;
+    private float angle_attack = 15f;
     public CircleRange range;
     public int num_alive_player = 0;
     public bool canAttack = true;
     public GameObject[] shields;
     public PermParamAdd permParam;
     public GameObject shieldObj;
+    public Vector3 currentPosAttack;
+    private Rigidbody rb;
+
+    [Header("-------Abilities Temp-------")]
+    public int num_choose = 0;
+    public GameObject orbitWeapon;
     private void OnEnable()
     {
-        num_alive_player = permParam.num_add_shield;
-        speed = speed + speed * permParam.num_add_speed / 200;
+        InitPlayerAbilities();
     }
     private void Start()
     {
+        rb = GetComponent<Rigidbody>();
         begin_Material = current_Mesh.material;
         transform.localScale = new Vector3(characterPlayer.beginRange, characterPlayer.beginRange, characterPlayer.beginRange);
         animator = GetComponent<Animator>();
@@ -54,6 +60,7 @@ public class PlayerZombie : MonoBehaviour
         {
             TakeInfoCloth();
         }
+        //       OrbitWeapon();
     }
     //Skin set up
     public void TakeInfoCloth()
@@ -70,7 +77,6 @@ public class PlayerZombie : MonoBehaviour
     }
     public void SettingSkin(ClotherShop skin, int index)
     {
-        //if (characterPlayer.fullSkinPlayer != null) { return; }
         current_Mesh.material = begin_Material;
         SetActiveOnSmt(skinPlayerObject, true);
         SetActiveOffSmt(fullSkinPlayObject);
@@ -165,10 +171,6 @@ public class PlayerZombie : MonoBehaviour
         Movement();
         RotateCharacter();
     }
-
-
-
-
     private IEnumerator DiePlayer()
     {
         ParticleSystem temp = Instantiate(take_damage_FX, transform.position, Quaternion.identity);
@@ -182,7 +184,8 @@ public class PlayerZombie : MonoBehaviour
     {
         if (direct != Vector3.zero)
         {
-            transform.position += direct.normalized * speed * Time.deltaTime;
+            rb.MovePosition(transform.position + direct.normalized * speed * Time.deltaTime);
+            // transform.position += direct.normalized * speed * Time.deltaTime;
             animator.SetBool(ApplicationVariable.IDLE_PLAYER_STATE, false);
         }
         else
@@ -198,58 +201,29 @@ public class PlayerZombie : MonoBehaviour
         Quaternion rot = Quaternion.LookRotation(direct.normalized);
         transform.rotation = Quaternion.RotateTowards(this.transform.rotation, rot, angle);
     }
-    /*    public void AttackEnemy(GameObject other)
-        {
-            if (!isCoolDown && direct == Vector3.zero && !isDead)
-            {
-                StartCoroutine(Attack());
-
-                if (other.gameObject.GetComponentInChildren<TargetPos>())
-                {
-                    Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-                    Vector3 dir = (target - posStart.position).normalized;
-                    float total_angle = angle_attack * num_throw_attack;
-                    float start_angle = -total_angle / 2;
-                    ThrowWeapon(target, posStart.position, dir, true);
-                    for (int i = 0; i < (num_throw_attack - 1); i++)
-                    {
-                        float angle = start_angle + i * (total_angle);
-                        if (angle == 0) { continue; }
-                        Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
-                        ThrowWeapon(target, posStart.position, dir_throw);
-                    }
-                }
-            }
-        }*/
 
     public void AttackEnemy(GameObject other)
     {
         if (!isCoolDown && direct == Vector3.zero && !isDead)
         {
-            StartCoroutine(Attack());
-
-            if (other.gameObject.GetComponentInChildren<TargetPos>())
+            switch (num_choose)
             {
-                Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-                Vector3 dir = (target - posStart.position).normalized;
-
-                float total_angle = angle_attack * num_throw_attack;
-                float start_angle = -total_angle / 2;
-
-                ThrowWeapon(target, posStart.position, dir, true);
-
-
-                for (int i = 0; i < (num_throw_attack - 1); i++)
-                {
-                    float angle = start_angle + i * (total_angle / (num_throw_attack - 1));
-                    if (angle == 0) continue;
-
-                    Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
-                    ThrowWeapon(target, posStart.position, dir_throw, false);
-                }
+                case 0: BaseAttack(other); break;
+                case 1: BehindAttack(other); break;
+                /*                case 2: OrbitWeapon(); break;*/
+                case 3: BulletPlus(other); break;
+                case 4: ChaseAttack(other); break;
+                case 5: ContinuousAttack(other); break;
+                case 6: CrossAttack(other); break;
+                case 7: DiagonAttack(other); break;
+                case 8: break;
+                case 9: GrowingAttack(other); break;
+                case 14: TripleAttack(other); break;
             }
+
         }
     }
+
 
 
     private IEnumerator Attack()
@@ -264,8 +238,7 @@ public class PlayerZombie : MonoBehaviour
         yield return new WaitForSeconds(characterPlayer.coolDownAttack / 2);
         isCoolDown = false;
     }
-
-    public void ThrowWeapon(Vector3 target, Vector3 startPos, Vector3 dir, bool first = false)
+    public void ThrowWeapon(Vector3 target, Vector3 startPos, Vector3 dir, Transform target_trans = null, bool upscale = false)
     {
         if (range.firstEnemy != null)
         {
@@ -274,14 +247,19 @@ public class PlayerZombie : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(directionToEnemy);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angle * 10);
         }
+        startPos.y = transform.position.y + 0.6f;
         GameObject throwWeaponPrefab = Instantiate(characterPlayer.current_Weapon.weaponThrow, startPos, Quaternion.identity);
         throwWeaponPrefab.transform.localScale += Vector3.one * addingScale;
         throwWeaponPrefab.GetComponent<ThrowWeapon>().currentlevelObject = GetComponent<LevelManager>();
         throwWeaponPrefab.GetComponent<ThrowWeapon>().target = target;
-        throwWeaponPrefab.GetComponent<ThrowWeapon>().isZombieMode = true;
         throwWeaponPrefab.GetComponent<ThrowWeapon>().dir = dir.normalized;
-        if (first) { throwWeaponPrefab.GetComponent<ThrowWeapon>().isFirst = true; }
+        throwWeaponPrefab.GetComponent<ThrowWeapon>().isZombieMode = true;
+        throwWeaponPrefab.GetComponent<ThrowWeapon>().target_transform = target_trans;
+        throwWeaponPrefab.GetComponent<ThrowWeapon>().who_throw_obj = transform.gameObject;
+        throwWeaponPrefab.GetComponent<ThrowWeapon>().upScaleWeapon = upscale;
+        throwWeaponPrefab.transform.rotation = Quaternion.LookRotation(dir);
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider && collision.gameObject.CompareTag("Enemy") && num_alive_player == 0 && canAttack)
@@ -294,6 +272,8 @@ public class PlayerZombie : MonoBehaviour
             WaitToPlayerShield();
         }
     }
+
+    // ShieldFeature
     public async void WaitToPlayerShield()
     {
         shieldObj.SetActive(true);
@@ -317,6 +297,265 @@ public class PlayerZombie : MonoBehaviour
         for (int i = current; i < max; i++)
         {
             shields[i].SetActive(false);
+        }
+    }
+
+    //Setup speed and shield
+    public void InitPlayerAbilities()
+    {
+        num_alive_player = permParam.num_add_shield;
+        speed = speed + speed * permParam.num_add_speed / 200;
+    }
+
+    //Base Attack
+    private void BaseAttack(GameObject other)
+    {
+        StartCoroutine(Attack());
+
+        if (other.gameObject && other.gameObject.GetComponentInChildren<TargetPos>())
+        {
+            currentPosAttack = posStart.position;
+            currentPosAttack.y = transform.position.y + 0.6f;
+            Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
+            target.y = transform.position.y + 0.6f;
+            Vector3 dir = (target - currentPosAttack).normalized;
+            if (num_throw_attack == 1)
+            {
+                ThrowWeapon(target, currentPosAttack, dir);
+                return;
+            }
+            float total_angle = angle_attack * (num_throw_attack - 1);
+            float start_angle = -total_angle / 2;
+            for (int i = 0; i < num_throw_attack; i++)
+            {
+                float angle = start_angle + i * (total_angle / (num_throw_attack - 1));
+                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                ThrowWeapon(target, currentPosAttack, dir_throw);
+            }
+        }
+    }
+    //Abilities 1
+    private void BehindAttack(GameObject other)
+    {
+        StartCoroutine(Attack());
+
+        if (other.gameObject.GetComponentInChildren<TargetPos>())
+        {
+            currentPosAttack = posStart.position;
+            currentPosAttack.y = transform.position.y + 0.6f;
+            Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
+            target.y = transform.position.y + 0.6f;
+            Vector3 dir = (target - currentPosAttack).normalized;
+
+            float total_angle = angle_attack * (num_throw_attack - 1);
+            float start_angle = -total_angle / 2;
+            if (num_throw_attack == 1)
+            {
+                ThrowWeapon(target, currentPosAttack, dir);
+                float angle = 180f;
+                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                ThrowWeapon(target, currentPosAttack, dir_throw);
+                return;
+            }
+            for (int i = 0; i < num_throw_attack; i++)
+            {
+                float angle = start_angle + i * (total_angle / (num_throw_attack - 1));
+                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                ThrowWeapon(target, currentPosAttack, dir_throw);
+            }
+            for (int i = 0; i < num_throw_attack; i++)
+            {
+                float angle = start_angle + i * (total_angle / (num_throw_attack - 1)) + 180f;
+                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                ThrowWeapon(target, currentPosAttack, dir_throw);
+            }
+        }
+    }
+    //Abilities 2
+    private void OrbitWeapon()
+    {
+        orbitWeapon.SetActive(true);
+        orbitWeapon.GetComponent<OrbitWeapon>().SetUp(range.gameObject.GetComponent<CapsuleCollider>().radius, characterPlayer.current_Weapon);
+    }
+
+    //Abilities 3
+    private void BulletPlus(GameObject other)
+    {
+        float num_throw_add;
+        StartCoroutine(Attack());
+
+        if (other.gameObject.GetComponentInChildren<TargetPos>())
+        {
+            num_throw_add = num_throw_attack + 1;
+            currentPosAttack = posStart.position;
+            currentPosAttack.y = transform.position.y + 0.6f;
+            Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
+            target.y = transform.position.y + 0.6f;
+            Vector3 dir = (target - currentPosAttack).normalized;
+            float total_angle = angle_attack * (num_throw_add - 1);
+            float start_angle = -total_angle / 2;
+            for (int i = 0; i < num_throw_add; i++)
+            {
+                float angle = start_angle + i * (total_angle / (num_throw_add - 1));
+                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                ThrowWeapon(target, currentPosAttack, dir_throw);
+            }
+        }
+    }
+    //Abilities 4
+    private void ChaseAttack(GameObject other)
+    {
+        StartCoroutine(Attack());
+
+        if (other.gameObject.GetComponentInChildren<TargetPos>())
+        {
+            currentPosAttack = posStart.position;
+            currentPosAttack.y = transform.position.y + 0.6f;
+            Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
+            target.y = transform.position.y + 0.6f;
+            Vector3 dir = (target - currentPosAttack).normalized;
+            if (num_throw_attack == 1)
+            {
+                ThrowWeapon(target, currentPosAttack, dir, other.transform);
+                return;
+            }
+            float total_angle = angle_attack * (num_throw_attack - 1);
+            float start_angle = -total_angle / 2;
+            for (int i = 0; i < num_throw_attack; i++)
+            {
+                float angle = start_angle + i * (total_angle / (num_throw_attack - 1));
+                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                ThrowWeapon(target, currentPosAttack, dir_throw, other.transform);
+            }
+        }
+    }
+    //Abilities 5
+    private async void ContinuousAttack(GameObject other)
+    {
+        BaseAttack(other);
+        await Task.Delay(400);
+        BaseAttack(other);
+    }
+
+    //Abilities 6 
+    private void CrossAttack(GameObject other)
+    {
+        StartCoroutine(Attack());
+
+        if (other.gameObject.GetComponentInChildren<TargetPos>())
+        {
+            currentPosAttack = posStart.position;
+            currentPosAttack.y = transform.position.y + 0.6f;
+            Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
+            target.y = transform.position.y + 0.6f;
+            Vector3 dir = (target - currentPosAttack).normalized;
+            float total_angle = angle_attack * (num_throw_attack - 1);
+            float start_angle = -total_angle / 2;
+            if (num_throw_attack == 1)
+            {
+                ThrowWeapon(target, currentPosAttack, dir);
+                float angle = 90f;
+                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                ThrowWeapon(target, currentPosAttack, dir_throw);
+                angle = -90f;
+                dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                ThrowWeapon(target, currentPosAttack, dir_throw);
+                return;
+            }
+            for (int i = 0; i < num_throw_attack; i++)
+            {
+                float angle = start_angle + i * (total_angle / (num_throw_attack - 1));
+                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                ThrowWeapon(target, currentPosAttack, dir_throw);
+            }
+            for (int i = 0; i < num_throw_attack; i++)
+            {
+                float angle = start_angle + i * (total_angle / (num_throw_attack - 1)) + 90f;
+                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                ThrowWeapon(target, currentPosAttack, dir_throw);
+            }
+            for (int i = 0; i < num_throw_attack; i++)
+            {
+                float angle = start_angle + i * (total_angle / (num_throw_attack - 1)) - 90f;
+                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                ThrowWeapon(target, currentPosAttack, dir_throw);
+            }
+        }
+    }
+    //Abilities 7
+    private void DiagonAttack(GameObject other)
+    {
+        float num_throw_add;
+        StartCoroutine(Attack());
+
+        if (other.gameObject.GetComponentInChildren<TargetPos>())
+        {
+            num_throw_add = num_throw_attack + 2;
+            currentPosAttack = posStart.position;
+            currentPosAttack.y = transform.position.y + 0.6f;
+            Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
+            target.y = transform.position.y + 0.6f;
+            Vector3 dir = (target - currentPosAttack).normalized;
+            float total_angle = angle_attack * (num_throw_add - 1);
+            float start_angle = -total_angle / 2;
+            for (int i = 0; i < num_throw_add; i++)
+            {
+                float angle = start_angle + i * (total_angle / (num_throw_add - 1));
+                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                ThrowWeapon(target, currentPosAttack, dir_throw);
+            }
+        }
+
+    }
+    //Abilities 9
+    private void GrowingAttack(GameObject other)
+    {
+        StartCoroutine(Attack());
+
+        if (other.gameObject && other.gameObject.GetComponentInChildren<TargetPos>())
+        {
+            currentPosAttack = posStart.position;
+            currentPosAttack.y = transform.position.y + 0.6f;
+            Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
+            target.y = transform.position.y + 0.6f;
+            Vector3 dir = (target - currentPosAttack).normalized;
+            if (num_throw_attack == 1)
+            {
+                ThrowWeapon(target, currentPosAttack, dir, null, true);
+                return;
+            }
+            float total_angle = angle_attack * (num_throw_attack - 1);
+            float start_angle = -total_angle / 2;
+            for (int i = 0; i < num_throw_attack; i++)
+            {
+                float angle = start_angle + i * (total_angle / (num_throw_attack - 1));
+                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                ThrowWeapon(target, currentPosAttack, dir_throw, null, true);
+            }
+        }
+    }
+    //Abilities 14
+    private void TripleAttack(GameObject other)
+    {
+        float num_throw_add;
+        StartCoroutine(Attack());
+
+        if (other.gameObject.GetComponentInChildren<TargetPos>())
+        {
+            num_throw_add = 3 * num_throw_attack;
+            currentPosAttack = posStart.position;
+            currentPosAttack.y = transform.position.y + 0.6f;
+            Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
+            target.y = transform.position.y + 0.6f;
+            Vector3 dir = (target - currentPosAttack).normalized;
+            float total_angle = angle_attack * (num_throw_add - 1);
+            float start_angle = -total_angle / 2;
+            for (int i = 0; i < num_throw_add; i++)
+            {
+                float angle = start_angle + i * (total_angle / (num_throw_add - 1));
+                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                ThrowWeapon(target, currentPosAttack, dir_throw);
+            }
         }
     }
 }

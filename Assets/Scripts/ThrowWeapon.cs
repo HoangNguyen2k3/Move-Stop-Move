@@ -8,32 +8,106 @@ public class ThrowWeapon : MonoBehaviour
     [HideInInspector] public string who_throw = "Player";
     [HideInInspector] public LevelManager currentlevelObject;
     [HideInInspector] public Vector3 target;
-    [HideInInspector] public Vector3 dir;
+    private Vector3 startDir;
     private Vector3 startPosition;
-
-    public float fixY;
     public bool isZombieMode = false;
-    public bool isFirst = false;
+    [HideInInspector] public Vector3 dir;
+
+    [HideInInspector] public Transform target_transform;
+    private bool check = false;
+
+    public bool upScaleWeapon = false;
+    private float scaleSpeed = 3f;
+    private float maxScale = 9f;
     private void Start()
     {
+        scaleSpeed *= transform.localScale.x;
+        maxScale *= transform.localScale.x;
+        //        dir.y = 0.5f;
         if (!weapon.isTurning)
         {
-            // if (!isZombieMode)
-            transform.LookAt(target);
+            if (!isZombieMode)
+                transform.LookAt(target);
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x - 90f, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         }
         startPosition = transform.position;
-        if (isZombieMode)
-        {
-            target.y = fixY;
-            //  if (isFirst && !weapon.isTurning) { transform.LookAt(target); }
-        }
+        startDir = (target - transform.position).normalized;
     }
     private void Update()
     {
+        if (target_transform != null)
+        {
+            check = true;
+        }
         if (currentlevelObject == null) { Destroy(gameObject); }
-        MainWeapon();
+        if (upScaleWeapon)
+        {
+            Debug.Log("upppp");
+            MainWeapon();
+            IncreaseScale();
+            return;
+        }
+        if (target_transform == null && !check)
+        {
+            MainWeapon();
+        }
+        else
+        {
+            ChaseWeapon();
+        }
 
+    }
+    private void ChaseWeapon()
+    {
+        if (target_transform == null)
+        {
+            Debug.Log("heheh");
+            FindNearestTarget();
+            if (target_transform == null) return;
+        }
+        if (!weapon.isTurning)
+        {
+            transform.LookAt(target_transform);
+        }
+        if (weapon.isTurning)
+        {
+            transform.rotation = Quaternion.Euler(90f, transform.rotation.eulerAngles.y + (weapon.speedRotate * Time.deltaTime), 0f);
+        }
+        Vector3 targetPosition = target_transform.position;
+        targetPosition.y = who_throw_obj.transform.position.y + 0.6f;
+        float step = weapon.speedMove * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+        if (Vector3.Distance(startPosition, transform.position) >= weapon.range)
+        {
+            Destroy(gameObject);
+        }
+    }
+    private void IncreaseScale()
+    {
+        if (transform.localScale.x < maxScale)
+        {
+            float newScale = transform.localScale.x + (scaleSpeed * Time.deltaTime);
+            newScale = Mathf.Min(newScale, maxScale);
+            transform.localScale = new Vector3(newScale, newScale, newScale);
+        }
+    }
+    private void FindNearestTarget()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        float closestDistance = Mathf.Infinity;
+        Transform closestEnemy = null;
+
+        foreach (GameObject enemy in enemies)
+        {
+            float distance = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestEnemy = enemy.transform;
+            }
+        }
+
+        target_transform = closestEnemy;
     }
     private void MainWeapon()
     {
@@ -51,21 +125,13 @@ public class ThrowWeapon : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(90f, transform.rotation.eulerAngles.y + (weapon.speedRotate * Time.deltaTime), 0f);
         }
-        Vector3 direction;
+        Vector3 newPosition = transform.position + dir * weapon.speedMove * Time.deltaTime;
         if (!isZombieMode)
         {
-            direction = (target - transform.position).normalized;
-
+            newPosition = transform.position + startDir * weapon.speedMove * Time.deltaTime;
         }
-        else
-        {
-            direction = dir;
-        }
-        Vector3 newPosition = transform.position + dir * weapon.speedMove * Time.deltaTime;
-
         return newPosition;
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<ThrowWeapon>()) { return; }
@@ -75,17 +141,20 @@ public class ThrowWeapon : MonoBehaviour
             if (other.gameObject.GetComponentInChildren<EnemiesHealth>())
             {
                 currentlevelObject.AddLevel();
+                Debug.Log("vch");
                 Destroy(gameObject);
             }
             else
             {
                 if (!other.gameObject.CompareTag(ApplicationVariable.PLAYER_TAG))
                 {
+                    Instantiate(weapon.touchSomething, transform.position, Quaternion.identity);
                     Destroy(gameObject);
                 }
                 else if (!other.gameObject.GetComponentInChildren<EnemiesHealth>() && !other.gameObject.CompareTag(ApplicationVariable.PLAYER_TAG))
                 {
                     Instantiate(weapon.touchSomething, transform.position, Quaternion.identity);
+                    Destroy(gameObject);
                 }
             }
         }
