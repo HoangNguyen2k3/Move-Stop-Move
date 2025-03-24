@@ -138,6 +138,38 @@ public class ZombieManager : Singleton<ZombieManager>
         }
         return origin;
     }
+    private bool CheckReviveCondition(Vector3 posCheck, float distance)
+    {
+        GameObject[] enemy = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (var item in enemy)
+        {
+            float dis = Vector3.Distance(item.transform.position, posCheck);
+            if (dis < distance)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    public Vector3 GetRandomPositionRevivePlayer(float radius)
+    {
+        Vector3 origin = transform.position;
+        for (int i = 0; i < 30; i++)
+        {
+            Vector3 randomDirection = Random.insideUnitSphere * radius + origin;
+            if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, NavMesh.AllAreas))
+            {
+                randomPoint = hit.position;
+                if (CheckReviveCondition(randomPoint, 10f))
+                {
+                    if (randomPoint.y > 0.5f) { continue; }
+                    continue;
+                }
+                return hit.position;
+            }
+        }
+        return origin;
+    }
     public void SettingEnemyMaxCount(float num)
     {
         enemy_remain = num;

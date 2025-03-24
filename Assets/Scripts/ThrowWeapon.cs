@@ -134,7 +134,7 @@ public class ThrowWeapon : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<ThrowWeapon>() || other.CompareTag("ThrowWeapon")) { return; }
+        if (other.gameObject.GetComponent<ThrowWeapon>() || other.CompareTag("ThrowWeapon") || other.gameObject.layer == LayerMask.NameToLayer("Road")) { return; }
         if (who_throw == ApplicationVariable.PLAYER_TAG)
         {
             if (other.gameObject.CompareTag(ApplicationVariable.IGNORE_TAG)) { return; }

@@ -92,7 +92,7 @@ public class LevelManager : MonoBehaviour
     }
     private void LevelUp()
     {
-        if (playerController)
+        if (playerController || playerZombie)
         {
 
             textAnnouceDistance.SetActive(true);
@@ -123,7 +123,7 @@ public class LevelManager : MonoBehaviour
         }
         if (zombieMode)
         {
-            temp += 2;
+            temp += 4;
         }
         else
         {
@@ -149,7 +149,9 @@ public class LevelManager : MonoBehaviour
         {
             cam.Lens.FieldOfView += 2.5f / 2;
         }
-        circle.transform.localScale += new Vector3(0.025f * 2, 0.025f * 2, 0.025f * 2);
+        // circle.transform.localScale += new Vector3(0.025f * 2, 0.025f * 2, 0.025f * 2);
+        transform.localScale += new Vector3(0.025f, 0.025f, 0.025f);
+        playerZombie.speed += 0.3f;
     }
     public void LevelUpRangeSetUp()
     {

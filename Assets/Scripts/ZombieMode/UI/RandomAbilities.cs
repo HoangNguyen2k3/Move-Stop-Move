@@ -16,7 +16,7 @@ public class RandomAbilities : MonoBehaviour
     private int choice2;
     private Sprite ability1;
     private Sprite ability2;
-    ZombieManager zombieManager;
+    private ZombieManager zombieManager;
 
     private void Start()
     {
@@ -62,8 +62,14 @@ public class RandomAbilities : MonoBehaviour
             case 10:
                 player.UpSPeed();
                 player.num_choose = 0; break;
-            case 12: break;
-            case 13: break;
+            case 12:
+                player.GetRevive = true;
+                player.num_choose = 0;
+                break;
+            case 13:
+                player.levelManager.LevelUpRange();
+                player.num_choose = 0;
+                break;
             default: player.num_choose = choice; break;
         }
     }

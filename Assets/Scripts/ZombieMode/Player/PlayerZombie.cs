@@ -23,6 +23,7 @@ public class PlayerZombie : MonoBehaviour
     public GameObject[] skinPlayerObject;
     public GameObject[] fullSkinPlayObject;
 
+
     private Material begin_Material;
 
     [Header("Zombie Mode")]
@@ -40,12 +41,16 @@ public class PlayerZombie : MonoBehaviour
     [Header("-------Abilities Temp-------")]
     public int num_choose = 0;
     public GameObject orbitWeapon;
+    public LevelManager levelManager;
+    public bool GetRevive = false;
+    private bool check1 = false;
     private void OnEnable()
     {
         InitPlayerAbilities();
     }
     private void Start()
     {
+        levelManager = GetComponent<LevelManager>();
         rb = GetComponent<Rigidbody>();
         begin_Material = current_Mesh.material;
         transform.localScale = new Vector3(characterPlayer.beginRange, characterPlayer.beginRange, characterPlayer.beginRange);
@@ -178,19 +183,42 @@ public class PlayerZombie : MonoBehaviour
         isAnimationDead = true;
         animator.SetBool(ApplicationVariable.IS_DEAD_STATE, true);
         yield return new WaitForSeconds(0.5f);
-        Destroy(gameObject);
+        if (!GetRevive)
+        {
+            ZombieManager.Instance.islose = true;
+            Destroy(gameObject);
+        }
+        else
+        {
+            isAnimationDead = false;
+            isDead = false;
+            transform.position = ZombieManager.Instance.GetRandomPositionRevivePlayer(30f);
+            GetRevive = false;
+            animator.SetBool(ApplicationVariable.IS_DEAD_STATE, false);
+        }
+        //Destroy(gameObject);
+        //gameObject.SetActive(false);
     }
     private void Movement()
     {
         if (direct != Vector3.zero)
         {
+            rb.constraints = RigidbodyConstraints.None;
+            rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             rb.MovePosition(transform.position + direct.normalized * speed * Time.deltaTime);
-            // transform.position += direct.normalized * speed * Time.deltaTime;
             animator.SetBool(ApplicationVariable.IDLE_PLAYER_STATE, false);
         }
         else
         {
             animator.SetBool(ApplicationVariable.IDLE_PLAYER_STATE, true);
+
+            if (check1)
+            {
+                rb.constraints = RigidbodyConstraints.None;
+                rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+                return;
+            }
+            rb.constraints = RigidbodyConstraints.FreezeAll;
         }
     }
 
@@ -248,7 +276,7 @@ public class PlayerZombie : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(directionToEnemy);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angle * 10);
         }
-        startPos.y = transform.position.y + 0.7f;
+        startPos.y = transform.position.y + 0.55f;
         GameObject throwWeaponPrefab = Instantiate(characterPlayer.current_Weapon.weaponThrow, startPos, Quaternion.identity);
         throwWeaponPrefab.transform.localScale += Vector3.one * addingScale;
         throwWeaponPrefab.GetComponent<ThrowWeapon>().currentlevelObject = GetComponent<LevelManager>();
@@ -263,14 +291,25 @@ public class PlayerZombie : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            check1 = true;
+        }
         if (collision.collider && collision.gameObject.CompareTag("Enemy") && num_alive_player == 0 && canAttack)
         {
             isDead = true;
-            ZombieManager.Instance.islose = true;
+            //  ZombieManager.Instance.islose = true;
         }
         else if (collision.collider && collision.gameObject.CompareTag("Enemy") && num_alive_player >= 1 && canAttack)
         {
             WaitToPlayerShield();
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            check1 = false;
         }
     }
 
@@ -316,9 +355,9 @@ public class PlayerZombie : MonoBehaviour
         if (other.gameObject && other.gameObject.GetComponentInChildren<TargetPos>())
         {
             currentPosAttack = posStart.position;
-            currentPosAttack.y = transform.position.y + 0.7f;
+            currentPosAttack.y = transform.position.y + 0.55f;
             Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-            target.y = transform.position.y + 0.7f;
+            target.y = transform.position.y + 0.55f;
             Vector3 dir = (target - currentPosAttack).normalized;
             if (num_throw_attack == 1)
             {
@@ -343,9 +382,9 @@ public class PlayerZombie : MonoBehaviour
         if (other.gameObject.GetComponentInChildren<TargetPos>())
         {
             currentPosAttack = posStart.position;
-            currentPosAttack.y = transform.position.y + 0.7f;
+            currentPosAttack.y = transform.position.y + 0.55f;
             Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-            target.y = transform.position.y + 0.7f;
+            target.y = transform.position.y + 0.55f;
             Vector3 dir = (target - currentPosAttack).normalized;
 
             float total_angle = angle_attack * (num_throw_attack - 1);
@@ -392,9 +431,9 @@ public class PlayerZombie : MonoBehaviour
         {
             num_throw_add = num_throw_attack + 1;
             currentPosAttack = posStart.position;
-            currentPosAttack.y = transform.position.y + 0.7f;
+            currentPosAttack.y = transform.position.y + 0.55f;
             Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-            target.y = transform.position.y + 0.7f;
+            target.y = transform.position.y + 0.55f;
             Vector3 dir = (target - currentPosAttack).normalized;
             float total_angle = angle_attack * (num_throw_add - 1);
             float start_angle = -total_angle / 2;
@@ -414,9 +453,9 @@ public class PlayerZombie : MonoBehaviour
         if (other.gameObject.GetComponentInChildren<TargetPos>())
         {
             currentPosAttack = posStart.position;
-            currentPosAttack.y = transform.position.y + 0.7f;
+            currentPosAttack.y = transform.position.y + 0.55f;
             Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-            target.y = transform.position.y + 0.7f;
+            target.y = transform.position.y + 0.55f;
             Vector3 dir = (target - currentPosAttack).normalized;
             if (num_throw_attack == 1)
             {
@@ -449,9 +488,9 @@ public class PlayerZombie : MonoBehaviour
         if (other.gameObject.GetComponentInChildren<TargetPos>())
         {
             currentPosAttack = posStart.position;
-            currentPosAttack.y = transform.position.y + 0.7f;
+            currentPosAttack.y = transform.position.y + 0.55f;
             Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-            target.y = transform.position.y + 0.7f;
+            target.y = transform.position.y + 0.55f;
             Vector3 dir = (target - currentPosAttack).normalized;
             float total_angle = angle_attack * (num_throw_attack - 1);
             float start_angle = -total_angle / 2;
@@ -496,9 +535,9 @@ public class PlayerZombie : MonoBehaviour
         {
             num_throw_add = num_throw_attack + 2;
             currentPosAttack = posStart.position;
-            currentPosAttack.y = transform.position.y + 0.7f;
+            currentPosAttack.y = transform.position.y + 0.55f;
             Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-            target.y = transform.position.y + 0.7f;
+            target.y = transform.position.y + 0.55f;
             Vector3 dir = (target - currentPosAttack).normalized;
             float total_angle = angle_attack * (num_throw_add - 1);
             float start_angle = -total_angle / 2;
@@ -519,9 +558,9 @@ public class PlayerZombie : MonoBehaviour
         if (other.gameObject && other.gameObject.GetComponentInChildren<TargetPos>())
         {
             currentPosAttack = posStart.position;
-            currentPosAttack.y = transform.position.y + 0.7f;
+            currentPosAttack.y = transform.position.y + 0.55f;
             Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-            target.y = transform.position.y + 0.7f;
+            target.y = transform.position.y + 0.55f;
             Vector3 dir = (target - currentPosAttack).normalized;
             if (num_throw_attack == 1)
             {
@@ -553,9 +592,9 @@ public class PlayerZombie : MonoBehaviour
         {
             num_throw_add = 3 * num_throw_attack;
             currentPosAttack = posStart.position;
-            currentPosAttack.y = transform.position.y + 0.7f;
+            currentPosAttack.y = transform.position.y + 0.55f;
             Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-            target.y = transform.position.y + 0.7f;
+            target.y = transform.position.y + 0.55f;
             Vector3 dir = (target - currentPosAttack).normalized;
             float total_angle = angle_attack * (num_throw_add - 1);
             float start_angle = -total_angle / 2;
