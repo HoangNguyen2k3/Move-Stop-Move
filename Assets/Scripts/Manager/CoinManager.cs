@@ -13,7 +13,6 @@ public class CoinManager : MonoBehaviour
         {
             PlayerPrefs.SetFloat("Coin", 0);
         }
-        PlayerPrefs.SetFloat("Coin", 5500);
     }
     private void OnEnable()
     {
@@ -46,6 +45,22 @@ public class CoinManager : MonoBehaviour
         else
         {
             addCurrentCoin = GameManager.Instance.num_coin;
+        }
+        numCurrentCoin += addCurrentCoin;
+        numCoinUI.text = numCurrentCoin.ToString();
+        PlayerPrefs.SetFloat("Coin", numCurrentCoin);
+    }
+    public void AddingCoinXn(int times)
+    {
+        numCurrentCoin = PlayerPrefs.GetFloat("Coin");
+        if (ZombieManager.Instance != null)
+        {
+            addCurrentCoin = ZombieManager.Instance.num_coin * times;
+
+        }
+        else
+        {
+            addCurrentCoin = GameManager.Instance.num_coin * times;
         }
         numCurrentCoin += addCurrentCoin;
         numCoinUI.text = numCurrentCoin.ToString();

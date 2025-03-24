@@ -53,6 +53,10 @@ MonoBehaviour:
   who_throw: Player
   currentlevelObject: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
+  isZombieMode: 0
+  dir: {x: 0, y: 0, z: 0}
+  target_transform: {fileID: 0}
+  upScaleWeapon: 0
 --- !u!54 &7052875268443293940
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -153,7 +157,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.0049048797
-  m_Height: 0.026098557
+  m_Radius: 0.0064219995
+  m_Height: 0.026098559
   m_Direction: 1
-  m_Center: {x: -0.0036570847, y: -0.00060601486, z: -3.0752338e-18}
+  m_Center: {x: -0.0036570847, y: -0.0006060149, z: -0.0015171204}

@@ -5,7 +5,7 @@ public class OrbitWeapon : MonoBehaviour
     [SerializeField] private WeaponObject weapon;
     [SerializeField] private Transform player;
     [SerializeField] private LevelManager currentlevelObject;
-    [SerializeField] private float orbitRadius = 5f;
+    public float orbitRadius = 5f;
     [SerializeField] private float orbitSpeed = 50f;
     [SerializeField] private float heightOffset = 0.5f;
 
@@ -17,6 +17,11 @@ public class OrbitWeapon : MonoBehaviour
         {
             Debug.LogError("Ch?a gán Player!");
             return;
+        }
+        if (!weapon.isTurning)
+        {
+            transform.rotation = Quaternion.Euler(90f, transform.rotation.eulerAngles.y + (weapon.speedRotate * Time.deltaTime), 0f);
+            // transform.Rotate(Vector3.up * (weapon.speedRotate * Time.deltaTime));
         }
         // transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x - 90f, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
     }

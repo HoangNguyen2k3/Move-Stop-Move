@@ -18686,6 +18686,7 @@ MonoBehaviour:
   layerObticles:
     serializedVersion: 2
     m_Bits: 1024
+  isZombieMap: 0
 --- !u!1 &455053170
 GameObject:
   m_ObjectHideFlags: 0

@@ -134,14 +134,13 @@ public class ThrowWeapon : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<ThrowWeapon>()) { return; }
+        if (other.gameObject.GetComponent<ThrowWeapon>() || other.CompareTag("ThrowWeapon")) { return; }
         if (who_throw == ApplicationVariable.PLAYER_TAG)
         {
             if (other.gameObject.CompareTag(ApplicationVariable.IGNORE_TAG)) { return; }
             if (other.gameObject.GetComponentInChildren<EnemiesHealth>())
             {
                 currentlevelObject.AddLevel();
-                Debug.Log("vch");
                 Destroy(gameObject);
             }
             else
@@ -149,6 +148,7 @@ public class ThrowWeapon : MonoBehaviour
                 if (!other.gameObject.CompareTag(ApplicationVariable.PLAYER_TAG))
                 {
                     Instantiate(weapon.touchSomething, transform.position, Quaternion.identity);
+                    Debug.Log(other.gameObject.name);
                     Destroy(gameObject);
                 }
                 else if (!other.gameObject.GetComponentInChildren<EnemiesHealth>() && !other.gameObject.CompareTag(ApplicationVariable.PLAYER_TAG))

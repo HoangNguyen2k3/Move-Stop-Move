@@ -27,7 +27,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private PermParamAdd addingItem;
     public float current_num_weapon_throw = 1f;
     public GameObject circle;
+    public ZombieManager zombieManager;
 
+    private float addingOrbit = 0.15f;
     private void OnEnable()
     {
         if (zombieMode)
@@ -67,6 +69,10 @@ public class LevelManager : MonoBehaviour
             textAdding.GetComponent<TextMeshProUGUI>().text = "+" + addingLevel;
         }
         current_level += addingLevel;
+        if (zombieManager)
+        {
+            zombieManager.num_coin = current_level;
+        }
         textlevel.text = current_level.ToString();
         if (current_level >= 5 * temp && current_level != 0)
         {
@@ -104,6 +110,11 @@ public class LevelManager : MonoBehaviour
             {
                 current_num_weapon_throw++;
                 playerZombie.num_throw_attack = current_num_weapon_throw;
+                if (playerZombie.num_choose == 2)
+                {
+                    playerZombie.ChangeRangeOrbit(playerZombie.range.gameObject.GetComponent<CapsuleCollider>().radius + addingOrbit);
+                    addingOrbit += 0.15f;
+                }
             }
         }
         if (!levelup.isPlaying)

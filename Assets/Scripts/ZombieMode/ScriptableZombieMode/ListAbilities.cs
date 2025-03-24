@@ -4,11 +4,9 @@ using UnityEngine;
 public class ListAbilities : ScriptableObject
 {
     public Sprite[] spriteAbilities;
-    public int max_num_abilities;
+    public string[] list_name;
     public int current_rand_1;
     public int current_rand_2;
-    /*    public Image ability1;
-        public Image ability2;*/
 
     public void SetupAbilitiesInStartGame()
     {
@@ -23,10 +21,6 @@ public class ListAbilities : ScriptableObject
         }
         /*        ability1.sprite = spriteAbilities[current_rand_1];
                 ability2.sprite = spriteAbilities[current_rand_2];*/
-    }
-    public void Abilities()
-    {
-
     }
 
 }

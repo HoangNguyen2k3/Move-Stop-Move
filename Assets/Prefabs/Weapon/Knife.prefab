@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -2.643, y: 4.641, z: 0}
-  m_LocalScale: {x: 35, y: 35, z: 35}
+  m_LocalScale: {x: 36.000004, y: 36.000004, z: 36.000004}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -53,6 +53,10 @@ MonoBehaviour:
   who_throw: Player
   currentlevelObject: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
+  isZombieMode: 0
+  dir: {x: 0, y: 0, z: 0}
+  target_transform: {fileID: 0}
+  upScaleWeapon: 0
 --- !u!136 &4042034126973287688
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -72,10 +76,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.0024786105
-  m_Height: 0.025178231
+  m_Radius: 0.006237769
+  m_Height: 0.025619071
   m_Direction: 1
-  m_Center: {x: 0.0019982285, y: -0.0006495786, z: 0.0019373045}
+  m_Center: {x: 0.0013169794, y: 0.00017886028, z: -0.0028369864}
 --- !u!54 &1863815882777842058
 Rigidbody:
   m_ObjectHideFlags: 0

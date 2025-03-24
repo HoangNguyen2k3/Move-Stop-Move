@@ -27,7 +27,7 @@ public class PlayerZombie : MonoBehaviour
 
     [Header("Zombie Mode")]
     public float num_throw_attack = 1f;
-    private float angle_attack = 15f;
+    private float angle_attack = 10f;
     public CircleRange range;
     public int num_alive_player = 0;
     public bool canAttack = true;
@@ -60,7 +60,7 @@ public class PlayerZombie : MonoBehaviour
         {
             TakeInfoCloth();
         }
-        //       OrbitWeapon();
+        //OrbitWeapon();
     }
     //Skin set up
     public void TakeInfoCloth()
@@ -210,7 +210,7 @@ public class PlayerZombie : MonoBehaviour
             {
                 case 0: BaseAttack(other); break;
                 case 1: BehindAttack(other); break;
-                /*                case 2: OrbitWeapon(); break;*/
+                case 2: BaseAttack(other); break;
                 case 3: BulletPlus(other); break;
                 case 4: ChaseAttack(other); break;
                 case 5: ContinuousAttack(other); break;
@@ -218,6 +218,7 @@ public class PlayerZombie : MonoBehaviour
                 case 7: DiagonAttack(other); break;
                 case 8: break;
                 case 9: GrowingAttack(other); break;
+                case 10: BaseAttack(other); break;
                 case 14: TripleAttack(other); break;
             }
 
@@ -247,7 +248,7 @@ public class PlayerZombie : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(directionToEnemy);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angle * 10);
         }
-        startPos.y = transform.position.y + 0.6f;
+        startPos.y = transform.position.y + 0.7f;
         GameObject throwWeaponPrefab = Instantiate(characterPlayer.current_Weapon.weaponThrow, startPos, Quaternion.identity);
         throwWeaponPrefab.transform.localScale += Vector3.one * addingScale;
         throwWeaponPrefab.GetComponent<ThrowWeapon>().currentlevelObject = GetComponent<LevelManager>();
@@ -315,9 +316,9 @@ public class PlayerZombie : MonoBehaviour
         if (other.gameObject && other.gameObject.GetComponentInChildren<TargetPos>())
         {
             currentPosAttack = posStart.position;
-            currentPosAttack.y = transform.position.y + 0.6f;
+            currentPosAttack.y = transform.position.y + 0.7f;
             Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-            target.y = transform.position.y + 0.6f;
+            target.y = transform.position.y + 0.7f;
             Vector3 dir = (target - currentPosAttack).normalized;
             if (num_throw_attack == 1)
             {
@@ -342,9 +343,9 @@ public class PlayerZombie : MonoBehaviour
         if (other.gameObject.GetComponentInChildren<TargetPos>())
         {
             currentPosAttack = posStart.position;
-            currentPosAttack.y = transform.position.y + 0.6f;
+            currentPosAttack.y = transform.position.y + 0.7f;
             Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-            target.y = transform.position.y + 0.6f;
+            target.y = transform.position.y + 0.7f;
             Vector3 dir = (target - currentPosAttack).normalized;
 
             float total_angle = angle_attack * (num_throw_attack - 1);
@@ -372,12 +373,15 @@ public class PlayerZombie : MonoBehaviour
         }
     }
     //Abilities 2
-    private void OrbitWeapon()
+    public void OrbitWeapon()
     {
         orbitWeapon.SetActive(true);
         orbitWeapon.GetComponent<OrbitWeapon>().SetUp(range.gameObject.GetComponent<CapsuleCollider>().radius, characterPlayer.current_Weapon);
     }
-
+    public void ChangeRangeOrbit(float rad)
+    {
+        orbitWeapon.GetComponent<OrbitWeapon>().orbitRadius = rad;
+    }
     //Abilities 3
     private void BulletPlus(GameObject other)
     {
@@ -388,9 +392,9 @@ public class PlayerZombie : MonoBehaviour
         {
             num_throw_add = num_throw_attack + 1;
             currentPosAttack = posStart.position;
-            currentPosAttack.y = transform.position.y + 0.6f;
+            currentPosAttack.y = transform.position.y + 0.7f;
             Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-            target.y = transform.position.y + 0.6f;
+            target.y = transform.position.y + 0.7f;
             Vector3 dir = (target - currentPosAttack).normalized;
             float total_angle = angle_attack * (num_throw_add - 1);
             float start_angle = -total_angle / 2;
@@ -410,9 +414,9 @@ public class PlayerZombie : MonoBehaviour
         if (other.gameObject.GetComponentInChildren<TargetPos>())
         {
             currentPosAttack = posStart.position;
-            currentPosAttack.y = transform.position.y + 0.6f;
+            currentPosAttack.y = transform.position.y + 0.7f;
             Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-            target.y = transform.position.y + 0.6f;
+            target.y = transform.position.y + 0.7f;
             Vector3 dir = (target - currentPosAttack).normalized;
             if (num_throw_attack == 1)
             {
@@ -445,9 +449,9 @@ public class PlayerZombie : MonoBehaviour
         if (other.gameObject.GetComponentInChildren<TargetPos>())
         {
             currentPosAttack = posStart.position;
-            currentPosAttack.y = transform.position.y + 0.6f;
+            currentPosAttack.y = transform.position.y + 0.7f;
             Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-            target.y = transform.position.y + 0.6f;
+            target.y = transform.position.y + 0.7f;
             Vector3 dir = (target - currentPosAttack).normalized;
             float total_angle = angle_attack * (num_throw_attack - 1);
             float start_angle = -total_angle / 2;
@@ -492,9 +496,9 @@ public class PlayerZombie : MonoBehaviour
         {
             num_throw_add = num_throw_attack + 2;
             currentPosAttack = posStart.position;
-            currentPosAttack.y = transform.position.y + 0.6f;
+            currentPosAttack.y = transform.position.y + 0.7f;
             Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-            target.y = transform.position.y + 0.6f;
+            target.y = transform.position.y + 0.7f;
             Vector3 dir = (target - currentPosAttack).normalized;
             float total_angle = angle_attack * (num_throw_add - 1);
             float start_angle = -total_angle / 2;
@@ -515,9 +519,9 @@ public class PlayerZombie : MonoBehaviour
         if (other.gameObject && other.gameObject.GetComponentInChildren<TargetPos>())
         {
             currentPosAttack = posStart.position;
-            currentPosAttack.y = transform.position.y + 0.6f;
+            currentPosAttack.y = transform.position.y + 0.7f;
             Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-            target.y = transform.position.y + 0.6f;
+            target.y = transform.position.y + 0.7f;
             Vector3 dir = (target - currentPosAttack).normalized;
             if (num_throw_attack == 1)
             {
@@ -534,6 +538,11 @@ public class PlayerZombie : MonoBehaviour
             }
         }
     }
+    //Abilities 10
+    public void UpSPeed()
+    {
+        speed += 2f;
+    }
     //Abilities 14
     private void TripleAttack(GameObject other)
     {
@@ -544,9 +553,9 @@ public class PlayerZombie : MonoBehaviour
         {
             num_throw_add = 3 * num_throw_attack;
             currentPosAttack = posStart.position;
-            currentPosAttack.y = transform.position.y + 0.6f;
+            currentPosAttack.y = transform.position.y + 0.7f;
             Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-            target.y = transform.position.y + 0.6f;
+            target.y = transform.position.y + 0.7f;
             Vector3 dir = (target - currentPosAttack).normalized;
             float total_angle = angle_attack * (num_throw_add - 1);
             float start_angle = -total_angle / 2;
