@@ -23,6 +23,10 @@ public class ChooseClother : MonoBehaviour
     public int num_page = 0;
     public int current_num_page;
     [SerializeField] private FullSkinObject[] fullSkinShop;
+    [Header("Background Image")]
+    [SerializeField] private Image[] bgImage;
+    [SerializeField] private Color color_choose;
+    [SerializeField] private Color color_base;
     private void OnEnable()
     {
         ChooseType.OnChangeTypeClothes += ChangeTyeClother;
@@ -55,7 +59,43 @@ public class ChooseClother : MonoBehaviour
         }
         SetParamSkin(0);
     }
-
+    private void CheckChooseSkin()
+    {
+        int temp = -1;
+        if (num_page != 3)
+        {
+            for (int i = 0; i < clothShop.Length; i++)
+            {
+                if (clothShop[i].status == "Selected")
+                {
+                    temp = i;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < fullSkinShop.Length; i++)
+            {
+                if (fullSkinShop[i].status == "Selected")
+                {
+                    temp = i;
+                    break;
+                }
+            }
+        }
+        for (int i = 0; i < bgImage.Length; i++)
+        {
+            if (i == temp)
+            {
+                bgImage[i].color = color_choose;
+            }
+            else
+            {
+                bgImage[i].color = color_base;
+            }
+        }
+    }
     private void Start()
     {
         CheckButtonStatus(0);
@@ -242,10 +282,12 @@ public class ChooseClother : MonoBehaviour
                 SetButtonStatus(false, "SELECTED", false);
                 lock_item[index].SetActive(false);
             }
+            CheckChooseSkin();
         }
         else
         {
             CheckButtonStatusFullSkin(index);
+            CheckChooseSkin();
         }
     }
     private void CheckButtonStatusFullSkin(int index)

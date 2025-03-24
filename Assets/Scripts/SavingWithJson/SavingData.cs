@@ -28,6 +28,19 @@ public class WrapperFullSkin
 {
     public string[] status;
 }
+[System.Serializable]
+public class WrapperPermParm
+{
+    public int num_add_shield;
+    public float num_add_speed;
+    public float num_add_range;
+    public float num_max_throw;
+
+    public float price_current_shield;
+    public float price_current_speed;
+    public float price_current_range;
+    public float price_current_throw;
+}
 public static class SavingData
 {
     public static void SaveData<T>(T data, string filename)

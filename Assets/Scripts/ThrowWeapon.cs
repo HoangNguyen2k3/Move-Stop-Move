@@ -19,6 +19,8 @@ public class ThrowWeapon : MonoBehaviour
     public bool upScaleWeapon = false;
     private float scaleSpeed = 3f;
     private float maxScale = 9f;
+    public bool throwEnemy = false;
+    public bool throwWall = false;
     private void Start()
     {
         scaleSpeed *= transform.localScale.x;
@@ -40,9 +42,9 @@ public class ThrowWeapon : MonoBehaviour
             check = true;
         }
         if (currentlevelObject == null) { Destroy(gameObject); }
+
         if (upScaleWeapon)
         {
-            Debug.Log("upppp");
             MainWeapon();
             IncreaseScale();
             return;
@@ -68,6 +70,7 @@ public class ThrowWeapon : MonoBehaviour
         if (!weapon.isTurning)
         {
             transform.LookAt(target_transform);
+            transform.rotation = Quaternion.Euler(-90f, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         }
         if (weapon.isTurning)
         {
@@ -141,17 +144,20 @@ public class ThrowWeapon : MonoBehaviour
             if (other.gameObject.GetComponentInChildren<EnemiesHealth>())
             {
                 currentlevelObject.AddLevel();
-                Destroy(gameObject);
+                if (!throwEnemy)
+                {
+                    Destroy(gameObject);
+                }
             }
             else
             {
-                if (!other.gameObject.CompareTag(ApplicationVariable.PLAYER_TAG))
+                if (!other.gameObject.CompareTag(ApplicationVariable.PLAYER_TAG) && !throwWall)
                 {
                     Instantiate(weapon.touchSomething, transform.position, Quaternion.identity);
                     Debug.Log(other.gameObject.name);
                     Destroy(gameObject);
                 }
-                else if (!other.gameObject.GetComponentInChildren<EnemiesHealth>() && !other.gameObject.CompareTag(ApplicationVariable.PLAYER_TAG))
+                else if (!other.gameObject.GetComponentInChildren<EnemiesHealth>() && !other.gameObject.CompareTag(ApplicationVariable.PLAYER_TAG) && !throwWall)
                 {
                     Instantiate(weapon.touchSomething, transform.position, Quaternion.identity);
                     Destroy(gameObject);

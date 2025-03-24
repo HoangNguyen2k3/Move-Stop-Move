@@ -99,7 +99,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2494739196733921252}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
@@ -128,6 +128,7 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   edgeOffset: 50
   arrow: {fileID: 632173433306400032}
+  child: {fileID: 5238440495277097273}
 --- !u!1 &5238440495277097273
 GameObject:
   m_ObjectHideFlags: 0

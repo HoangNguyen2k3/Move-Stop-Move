@@ -13050,7 +13050,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &306677026
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13228,7 +13228,7 @@ MonoBehaviour:
   num_choose: 0
   orbitWeapon: {fileID: 3796206258682233618}
   levelManager: {fileID: 0}
-  GetRevive: 1
+  GetRevive: 0
 --- !u!1 &306961986 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1909238656886706, guid: c35f27d5506e6fb4ebc87c43343b7662, type: 3}
@@ -29921,6 +29921,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1000550843}
+        m_TargetAssemblyTypeName: ZombieManager, Assembly-CSharp
+        m_MethodName: ChangeInShop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 870356122}
         m_TargetAssemblyTypeName: UIGeneratePress, Assembly-CSharp
         m_MethodName: ShowAndHiddenGameObject
@@ -33385,6 +33397,7 @@ GameObject:
   - component: {fileID: 1000550844}
   - component: {fileID: 1000550843}
   - component: {fileID: 1000550845}
+  - component: {fileID: 1000550846}
   m_Layer: 0
   m_Name: GameZombieManager
   m_TagString: Untagged
@@ -33417,13 +33430,15 @@ MonoBehaviour:
   iswinning: 0
   islose: 0
   camWinning: {fileID: 1246176342}
-  currentInLobbyZombie: 0
+  currentInLobbyZombie: 1
   num_coin: 0
   coin_win: {fileID: 640992469}
   coin_lose: {fileID: 655599257}
   coin_win_x3: {fileID: 1214298438}
   coin_lose_x3: {fileID: 2084181185}
   x2GoldAbilities: 0
+  floatingTextPlayer: {fileID: 380005137}
+  CanvasIndicator: {fileID: 1176800028}
 --- !u!4 &1000550844
 Transform:
   m_ObjectHideFlags: 0
@@ -33454,6 +33469,19 @@ MonoBehaviour:
   numCurrentCoin: 0
   addCurrentCoin: 0
   numCoinUI: {fileID: 552306438}
+--- !u!114 &1000550846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000550842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0bbb78fa8edb4b45b28cc981c8da612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  permParamZombieMode: {fileID: 11400000, guid: 5a5943a71530d5041aa67a0ddb728722, type: 2}
 --- !u!1 &1003690725
 GameObject:
   m_ObjectHideFlags: 0
@@ -36411,6 +36439,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1000550843}
+        m_TargetAssemblyTypeName: ZombieManager, Assembly-CSharp
+        m_MethodName: ChangeInShop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 354966107}
         m_TargetAssemblyTypeName: RandomAbilities, Assembly-CSharp
         m_MethodName: ChooseAbilities
@@ -50926,6 +50966,10 @@ PrefabInstance:
     - target: {fileID: 1256518284918312, guid: c35f27d5506e6fb4ebc87c43343b7662, type: 3}
       propertyPath: m_Name
       value: City
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256518284918312, guid: c35f27d5506e6fb4ebc87c43343b7662, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1258628450249620, guid: c35f27d5506e6fb4ebc87c43343b7662, type: 3}
       propertyPath: m_Layer

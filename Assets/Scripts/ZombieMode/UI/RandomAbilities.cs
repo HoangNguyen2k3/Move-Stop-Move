@@ -73,5 +73,11 @@ public class RandomAbilities : MonoBehaviour
             default: player.num_choose = choice; break;
         }
     }
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            choice = 4;
+        }
+    }
 }

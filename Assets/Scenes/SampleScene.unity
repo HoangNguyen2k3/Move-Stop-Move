@@ -23546,6 +23546,11 @@ MonoBehaviour:
   num_page: 0
   current_num_page: 2
   fullSkinShop: []
+  bgImage:
+  - {fileID: 1058209994}
+  - {fileID: 225936883}
+  color_choose: {r: 0.9843137, g: 1, b: 0, a: 1}
+  color_base: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &557007369
 GameObject:
   m_ObjectHideFlags: 0
@@ -33829,6 +33834,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4f2e0ace925b1484a944865fc6c91d70, type: 2}
   - {fileID: 11400000, guid: 85bcbcb006c586d4296668b5817f7ee6, type: 2}
   - {fileID: 11400000, guid: 35dd8c48d1343414daf659983052c4b4, type: 2}
+  bgImage:
+  - {fileID: 1638284967}
+  - {fileID: 1511754936}
+  - {fileID: 389095081}
+  - {fileID: 1318084207}
+  - {fileID: 2038089112}
+  color_choose: {r: 0.9843137, g: 1, b: 0, a: 1}
+  color_base: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &885869489
 GameObject:
   m_ObjectHideFlags: 0
@@ -41119,6 +41132,18 @@ MonoBehaviour:
   num_page: 0
   current_num_page: 0
   fullSkinShop: []
+  bgImage:
+  - {fileID: 1763066711}
+  - {fileID: 2022079947}
+  - {fileID: 1368207524}
+  - {fileID: 284125392}
+  - {fileID: 1165267792}
+  - {fileID: 1723357132}
+  - {fileID: 1698591883}
+  - {fileID: 743726021}
+  - {fileID: 414261806}
+  color_choose: {r: 0.9843137, g: 1, b: 0, a: 1}
+  color_base: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1164513179
 GameObject:
   m_ObjectHideFlags: 0
@@ -45388,6 +45413,7 @@ MonoBehaviour:
   addingItem: {fileID: 0}
   current_num_weapon_throw: 1
   circle: {fileID: 0}
+  zombieManager: {fileID: 0}
 --- !u!136 &1302919451
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -47863,6 +47889,18 @@ MonoBehaviour:
   num_page: 0
   current_num_page: 1
   fullSkinShop: []
+  bgImage:
+  - {fileID: 155930460}
+  - {fileID: 2069496616}
+  - {fileID: 772683444}
+  - {fileID: 1411420686}
+  - {fileID: 666654669}
+  - {fileID: 436986813}
+  - {fileID: 599131505}
+  - {fileID: 1898707624}
+  - {fileID: 1264069987}
+  color_choose: {r: 0.9843137, g: 1, b: 0, a: 1}
+  color_base: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1375970738
 GameObject:
   m_ObjectHideFlags: 0
@@ -81346,6 +81384,7 @@ MonoBehaviour:
   addingItem: {fileID: 0}
   current_num_weapon_throw: 1
   circle: {fileID: 0}
+  zombieManager: {fileID: 0}
 --- !u!1 &2688411256024114980
 GameObject:
   m_ObjectHideFlags: 0
@@ -87359,6 +87398,7 @@ MonoBehaviour:
   addingItem: {fileID: 0}
   current_num_weapon_throw: 1
   circle: {fileID: 0}
+  zombieManager: {fileID: 0}
 --- !u!1 &3256028524649470463
 GameObject:
   m_ObjectHideFlags: 0
@@ -96293,6 +96333,7 @@ MonoBehaviour:
   addingItem: {fileID: 0}
   current_num_weapon_throw: 1
   circle: {fileID: 0}
+  zombieManager: {fileID: 0}
 --- !u!114 &4922616363076023828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99045,6 +99086,7 @@ MonoBehaviour:
   addingItem: {fileID: 0}
   current_num_weapon_throw: 1
   circle: {fileID: 0}
+  zombieManager: {fileID: 0}
 --- !u!1 &6316795428107150905
 GameObject:
   m_ObjectHideFlags: 0

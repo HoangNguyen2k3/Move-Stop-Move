@@ -247,7 +247,9 @@ public class PlayerZombie : MonoBehaviour
                 case 8: break;
                 case 9: GrowingAttack(other); break;
                 case 10: BaseAttack(other); break;
+                case 11: Piercing(other); break;
                 case 14: TripleAttack(other); break;
+                case 15: ThrowWallBreak(other); break;
             }
 
         }
@@ -267,7 +269,7 @@ public class PlayerZombie : MonoBehaviour
         yield return new WaitForSeconds(characterPlayer.coolDownAttack / 2);
         isCoolDown = false;
     }
-    public void ThrowWeapon(Vector3 target, Vector3 startPos, Vector3 dir, Transform target_trans = null, bool upscale = false)
+    public void ThrowWeapon(Vector3 target, Vector3 startPos, Vector3 dir, Transform target_trans = null, bool upscale = false, bool throwEnemy = false, bool throwWall = false)
     {
         if (range.firstEnemy != null)
         {
@@ -286,6 +288,8 @@ public class PlayerZombie : MonoBehaviour
         throwWeaponPrefab.GetComponent<ThrowWeapon>().target_transform = target_trans;
         throwWeaponPrefab.GetComponent<ThrowWeapon>().who_throw_obj = transform.gameObject;
         throwWeaponPrefab.GetComponent<ThrowWeapon>().upScaleWeapon = upscale;
+        throwWeaponPrefab.GetComponent<ThrowWeapon>().throwEnemy = throwEnemy;
+        throwWeaponPrefab.GetComponent<ThrowWeapon>().throwWall = throwWall;
         throwWeaponPrefab.transform.rotation = Quaternion.LookRotation(dir);
     }
 
@@ -446,7 +450,7 @@ public class PlayerZombie : MonoBehaviour
         }
     }
     //Abilities 4
-    private void ChaseAttack(GameObject other)
+    private async void ChaseAttack(GameObject other)
     {
         StartCoroutine(Attack());
 
@@ -469,6 +473,7 @@ public class PlayerZombie : MonoBehaviour
                 float angle = start_angle + i * (total_angle / (num_throw_attack - 1));
                 Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
                 ThrowWeapon(target, currentPosAttack, dir_throw, other.transform);
+                await Task.Delay(50);
             }
         }
     }
@@ -582,6 +587,34 @@ public class PlayerZombie : MonoBehaviour
     {
         speed += 2f;
     }
+
+    //Abilities 11
+    private void Piercing(GameObject other)
+    {
+        StartCoroutine(Attack());
+
+        if (other.gameObject && other.gameObject.GetComponentInChildren<TargetPos>())
+        {
+            currentPosAttack = posStart.position;
+            currentPosAttack.y = transform.position.y + 0.55f;
+            Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
+            target.y = transform.position.y + 0.55f;
+            Vector3 dir = (target - currentPosAttack).normalized;
+            if (num_throw_attack == 1)
+            {
+                ThrowWeapon(target, currentPosAttack, dir, null, false, true, false);
+                return;
+            }
+            float total_angle = angle_attack * (num_throw_attack - 1);
+            float start_angle = -total_angle / 2;
+            for (int i = 0; i < num_throw_attack; i++)
+            {
+                float angle = start_angle + i * (total_angle / (num_throw_attack - 1));
+                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                ThrowWeapon(target, currentPosAttack, dir_throw, null, false, true, false);
+            }
+        }
+    }
     //Abilities 14
     private void TripleAttack(GameObject other)
     {
@@ -603,6 +636,33 @@ public class PlayerZombie : MonoBehaviour
                 float angle = start_angle + i * (total_angle / (num_throw_add - 1));
                 Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
                 ThrowWeapon(target, currentPosAttack, dir_throw);
+            }
+        }
+    }
+    //Abilities 15
+    private void ThrowWallBreak(GameObject other)
+    {
+        StartCoroutine(Attack());
+
+        if (other.gameObject && other.gameObject.GetComponentInChildren<TargetPos>())
+        {
+            currentPosAttack = posStart.position;
+            currentPosAttack.y = transform.position.y + 0.55f;
+            Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
+            target.y = transform.position.y + 0.55f;
+            Vector3 dir = (target - currentPosAttack).normalized;
+            if (num_throw_attack == 1)
+            {
+                ThrowWeapon(target, currentPosAttack, dir, null, false, false, true);
+                return;
+            }
+            float total_angle = angle_attack * (num_throw_attack - 1);
+            float start_angle = -total_angle / 2;
+            for (int i = 0; i < num_throw_attack; i++)
+            {
+                float angle = start_angle + i * (total_angle / (num_throw_attack - 1));
+                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                ThrowWeapon(target, currentPosAttack, dir_throw, null, false, false, true);
             }
         }
     }

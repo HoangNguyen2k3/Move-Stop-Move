@@ -24,7 +24,7 @@ public class ZombieManager : Singleton<ZombieManager>
     private float rangeSpawn = 25f;
     [Header("ZombieMode")]
     [SerializeField] private CinemachineCamera camWinning;
-    public bool currentInLobbyZombie = false;
+    public bool currentInLobbyZombie = true;
     [Header("Coin Manager")]
     [HideInInspector] public float num_coin = 0;
     [SerializeField] private TextMeshProUGUI coin_win;
@@ -33,6 +33,9 @@ public class ZombieManager : Singleton<ZombieManager>
     [SerializeField] private TextMeshProUGUI coin_lose_x3;
     private CoinManager coinManager;
     public bool x2GoldAbilities = false;
+
+    public GameObject floatingTextPlayer;
+    public GameObject CanvasIndicator;
     private void Start()
     {
         coinManager = GetComponent<CoinManager>();
@@ -50,6 +53,9 @@ public class ZombieManager : Singleton<ZombieManager>
         }
         if (islose && !temp)
         {
+            currentInLobbyZombie = true;
+            //            floatingTextPlayer.SetActive(false);
+            CanvasIndicator.SetActive(false);
             SetUpCoin();
             temp = true;
             loseGame.SetActive(true);
@@ -58,6 +64,9 @@ public class ZombieManager : Singleton<ZombieManager>
         if (islose) { return; }
         if (enemy_remain <= 0 && !iswinning)
         {
+            currentInLobbyZombie = true;
+            CanvasIndicator.SetActive(false);
+            floatingTextPlayer.SetActive(false);
             iswinning = true;
             enemy_alive.text = quickAddText(0);
             SetUpCoin();
@@ -68,6 +77,10 @@ public class ZombieManager : Singleton<ZombieManager>
             playerController.isWinning = true;
         }
 
+    }
+    public void ChangeInShop()
+    {
+        currentInLobbyZombie = false;
     }
     public void SetUpCoin()
     {

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   num_add_shield: 0
   num_add_speed: 0
-  num_add_range: 30
+  num_add_range: 0
   num_max_throw: 2
   max_shield: 4
   max_speed: 100
@@ -22,5 +22,5 @@ MonoBehaviour:
   max_throw: 10
   price_current_shield: 1000
   price_current_speed: 250
-  price_current_range: 2000
+  price_current_range: 250
   price_current_throw: 500

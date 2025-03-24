@@ -15,7 +15,6 @@ public class OrbitWeapon : MonoBehaviour
     {
         if (player == null)
         {
-            Debug.LogError("Ch?a gán Player!");
             return;
         }
         if (!weapon.isTurning)

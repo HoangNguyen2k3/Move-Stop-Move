@@ -7,6 +7,7 @@ public class OffScreenIndicatorZombie : MonoBehaviour
     public Camera mainCamera;
     public float edgeOffset = 50f;
     public Image arrow;
+    public GameObject child;
 
 
     private void Start()
@@ -22,7 +23,14 @@ public class OffScreenIndicatorZombie : MonoBehaviour
         }
         if (ZombieManager.Instance.currentInLobbyZombie)
         {
+            if (child.activeSelf)
+                child.SetActive(false);
             return;
+        }
+        else
+        {
+            if (!child.activeSelf)
+                child.SetActive(true);
         }
 
         Vector3 screenPos = mainCamera.WorldToScreenPoint(target.position);

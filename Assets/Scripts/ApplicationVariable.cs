@@ -12,4 +12,5 @@ public static class ApplicationVariable
     public static string COIN = "Coin";
     public static string PATH_CLOTHES_SAVE = "Clothes";
     public static string PATH_CLOTHES_PLAYER = "Player_Clothes";
+    public static string PATH_PERM_PARAM = "PermParam";
 }
