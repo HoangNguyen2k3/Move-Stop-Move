@@ -23,9 +23,9 @@ public class CheckCoverObtacles : MonoBehaviour
 
     private void BaseMap()
     {
-        Vector3 direction = player.position - transform.position;
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, Mathf.Infinity, layerObticles);
-
+        Vector3 direction = -player.position + transform.position;
+        RaycastHit[] hits = Physics.RaycastAll(player.position, direction, Mathf.Infinity, layerObticles);
+        Debug.DrawRay(player.position, direction * 50f, Color.red);
         HashSet<TouchToObjectEnv> newObstacles = new HashSet<TouchToObjectEnv>();
 
         foreach (RaycastHit hit in hits)
@@ -51,8 +51,8 @@ public class CheckCoverObtacles : MonoBehaviour
     private void ZombieMap()
     {
 
-        Vector3 direction = player.position - transform.position;
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, Mathf.Infinity, layerObticles);
+        Vector3 direction = -player.position + transform.position;
+        RaycastHit[] hits = Physics.RaycastAll(player.position, direction, Mathf.Infinity, layerObticles);
 
         HashSet<TouchToObjectEnv> newObstacles = new HashSet<TouchToObjectEnv>();
 

@@ -41,6 +41,11 @@ public class PlayerController : MonoBehaviour
     public bool InZombieMode = false;
     public float num_throw_attack = 1f;
     [SerializeField] private Transform[] posStartZombie;
+
+    public bool canRevive = true;
+    public UIManager uiManager;
+    //    [Header("Sound")]
+    //    [SerializeField] private AudioClip sound_throw_weapon;
     private void Start()
     {
         //   PlayerPrefs.SetFloat("Coin", 1000f);
@@ -164,7 +169,12 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        if (isDead && !isAnimationDead) { StartCoroutine(DiePlayer()); }
+        if (isDead && !isAnimationDead)
+        {
+            if (SoundManager.Instance)
+                SoundManager.Instance.PlaySFXSound(SoundManager.Instance.dead);
+            StartCoroutine(DiePlayer());
+        }
         if (isDead) { return; }
         direct.x = my_joyStick.Horizontal;
         direct.z = my_joyStick.Vertical;
@@ -200,7 +210,29 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         /*        if (!InZombieMode)
                     cam_end.Priority = 10;*/
-        Destroy(gameObject);
+        if (canRevive)
+        {
+            uiManager.SetReviveActive();
+            gameObject.SetActive(false);
+            canRevive = false;
+
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        //Destroy(gameObject);
+    }
+    public void RevivePlayer()
+    {
+        isDead = false;
+        gameObject.transform.position = GameManager.Instance.GetRandomNavMeshPositionPlayer(25f);
+        gameObject.SetActive(true);
+        isAnimationDead = false;
+        enemiesInRange.Clear();
+        firstEnemy = null;
+        animator.SetBool(ApplicationVariable.IS_DEAD_STATE, false);
+        animator.SetBool(ApplicationVariable.IDLE_PLAYER_STATE, true);
     }
     private void Movement()
     {
@@ -331,6 +363,7 @@ public class PlayerController : MonoBehaviour
 
     public void ThrowWeapon(Vector3 target, Vector3 startPos)
     {
+        SoundManager.Instance.PlaySFXSound(SoundManager.Instance.throwWeapon);
         if (firstEnemy != null)
         {
             Vector3 directionToEnemy = firstEnemy.position - transform.position;

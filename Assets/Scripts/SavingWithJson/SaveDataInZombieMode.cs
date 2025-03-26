@@ -9,8 +9,12 @@ public class SaveDataInZombieMode : MonoBehaviour
         if (!PlayerPrefs.HasKey("firstSaveZombieMode")) { return; }
         LoadPermParam();
     }
-    private void OnApplicationQuit()
+    private void OnDisable()
     {
+        if (!PlayerPrefs.HasKey("firstSaveZombieMode"))
+        {
+            PlayerPrefs.SetInt("firstSaveZombieMode", 1);
+        }
         SavePermParam();
     }
     private void LoadPermParam()

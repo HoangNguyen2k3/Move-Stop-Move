@@ -30,6 +30,8 @@ public class ChooseClother : MonoBehaviour
     private void OnEnable()
     {
         ChooseType.OnChangeTypeClothes += ChangeTyeClother;
+        if (current_num_page == 0)
+            ChangeTyeClother(null, 0);
     }
 
     private void ChangeTyeClother(object sender, int e)
@@ -177,6 +179,22 @@ public class ChooseClother : MonoBehaviour
                 CheckButtonStatus(current_index);
                 SetClotherStatus("Selected");
             }
+            //Adding
+            else if (clothShop[current_index].status == "Selected")
+            {
+                SetRemainClothes("Purchase");
+                clothShop[current_index].status = "Selected";
+                player.characterPlayer.skinClother[clothShop[current_index].clothType] = clothShop[current_index];
+                if (player.characterPlayer.fullSkinPlayer != null)
+                {
+                    player.characterPlayer.fullSkinPlayer.status = "Purchase";
+                    player.characterPlayer.fullSkinPlayer = null;
+                    player.GetComponent<PlayerController>().Ahaha();
+                }
+                player.TakeInfoCloth();
+                CheckButtonStatus(current_index);
+                SetClotherStatus("Selected");
+            }
 
         }
         else if (num_page == 3)
@@ -279,7 +297,7 @@ public class ChooseClother : MonoBehaviour
             }
             else if (clothShop[index].status == "Selected")
             {
-                SetButtonStatus(false, "SELECTED", false);
+                SetButtonStatus(true, "SELECTED", false);
                 lock_item[index].SetActive(false);
             }
             CheckChooseSkin();

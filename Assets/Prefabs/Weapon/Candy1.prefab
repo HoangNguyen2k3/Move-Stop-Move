@@ -57,6 +57,9 @@ MonoBehaviour:
   dir: {x: 0, y: 0, z: 0}
   target_transform: {fileID: 0}
   upScaleWeapon: 0
+  throwEnemy: 0
+  throwWall: 0
+  touchSmt: {fileID: 8300000, guid: f4e59084b141a76498a865bc81ef9a8a, type: 3}
 --- !u!54 &7052875268443293940
 Rigidbody:
   m_ObjectHideFlags: 0

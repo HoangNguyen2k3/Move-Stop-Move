@@ -6,7 +6,6 @@ public class FixedSomething : MonoBehaviour
     Vector3 rotation_begin = new Vector3(0f, 0f, 0f);
     private void Start()
     {
-
     }
     void Update()
     {

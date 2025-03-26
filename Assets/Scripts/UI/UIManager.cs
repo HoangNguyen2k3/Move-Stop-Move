@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     public string nameEnemyWin;
     private GameObject player;
     [SerializeField] private GameObject gameOver;
+    [SerializeField] private GameObject gameOverReal;
     [SerializeField] private TextMeshProUGUI[] earnCoinlose;
     [SerializeField] private TextMeshProUGUI[] textNameEnemy;
     [SerializeField] private TextMeshProUGUI[] num_rank_lose_txt;
@@ -23,16 +24,22 @@ public class UIManager : MonoBehaviour
         {
             nameEnemyWin = GameManager.Instance.name_enemy_win;
         }
-        if (player == null && gameOver.activeSelf == false && !iswin)
+        //   if (player == null && gameOver.activeSelf == false && !iswin)
+        if (player == null && !iswin)
         {
-            gameOver.SetActive(true);
+            SoundManager.Instance.PlaySFXSound(SoundManager.Instance.lose_sound);
+            //gameOver.SetActive(true);
+            gameOverReal.SetActive(true);
             iswin = true;
             GetComponent<UIGeneratePress>().ShowAndHiddenGameObject();
             GameManager.Instance.islose = true;
             ProcessEndGame();
         }
     }
-
+    public void SetReviveActive()
+    {
+        gameOver.SetActive(true);
+    }
     public void ProcessEndGame()
     {
         for (int i = 0; i < textNameEnemy.Length; i++)

@@ -11,4 +11,36 @@ public class CharaterObj : ScriptableObject
     public ClotherShop[] skinClother;
     public FullSkinObject fullSkinPlayer;
     public string status_fullskin;
+
+    public ClotherShop[] hats;
+    public ClotherShop[] pants;
+    public ClotherShop[] shield;
+
+    public void InitPlayer()
+    {
+        foreach (var item in hats)
+        {
+            if (item.status == "Selected")
+            {
+                skinClother[0] = item;
+                break;
+            }
+        }
+        foreach (var item in pants)
+        {
+            if (item.status == "Selected")
+            {
+                skinClother[1] = item;
+                break;
+            }
+        }
+        foreach (var item in shield)
+        {
+            if (item.status == "Selected")
+            {
+                skinClother[2] = item;
+                break;
+            }
+        }
+    }
 }

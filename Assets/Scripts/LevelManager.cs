@@ -66,9 +66,23 @@ public class LevelManager : MonoBehaviour
         if (isPlayer && textAdding)
         {
             textAdding.SetActive(true);
-            textAdding.GetComponent<TextMeshProUGUI>().text = "+" + addingLevel;
+            if (playerZombie)
+            {
+                textAdding.GetComponent<TextMeshProUGUI>().text = "+" + 1;
+            }
+            else
+            {
+                textAdding.GetComponent<TextMeshProUGUI>().text = "+" + addingLevel;
+            }
         }
-        current_level += addingLevel;
+        if (playerZombie)
+        {
+            current_level++;
+        }
+        else
+        {
+            current_level += addingLevel;
+        }
         if (zombieManager)
         {
             zombieManager.num_coin = current_level;
@@ -94,7 +108,8 @@ public class LevelManager : MonoBehaviour
     {
         if (playerController || playerZombie)
         {
-
+            if (SoundManager.Instance)
+                SoundManager.Instance.PlaySFXSound(SoundManager.Instance.level_up);
             textAnnouceDistance.SetActive(true);
             textAnnouceDistance.GetComponent<TextMeshProUGUI>().text = (transform.localScale.x * 10).ToString("F2") + " m";
             textAnnouceDistance.GetComponent<Animator>().Play("TextAnouce");

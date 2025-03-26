@@ -40,6 +40,7 @@ public class GameManager : Singleton<GameManager>
 
         if (enemy_remain <= 0 && !iswinning)
         {
+            SoundManager.Instance.PlaySFXSound(SoundManager.Instance.win_sound);
             iswinning = true;
             enemy_alive.text = quickAddText(0);
             uiManager.ProcessEndGame();
@@ -48,6 +49,7 @@ public class GameManager : Singleton<GameManager>
             playerController.animator.SetBool("IsWin", true);
             ui_generate.ShowAndHiddenGameObject();
             playerController.isWinning = true;
+            LobbyManager.Instance.currentinLobby = true;
         }
         if (playerController == null && enemy_remain == 1 && !iswinning)
         {
@@ -56,6 +58,14 @@ public class GameManager : Singleton<GameManager>
             enemy_win.animator.SetBool("IsWin", true);
             enemy_win.iswinning = true;
         }
+    }
+    public void Revive()
+    {
+        playerController.RevivePlayer();
+    }
+    public void DestroyPlayer()
+    {
+        Destroy(playerController.gameObject);
     }
     public void LoopSpawn()
     {
@@ -127,6 +137,37 @@ public class GameManager : Singleton<GameManager>
             }
         }
         return origin;
+    }
+    private bool CheckReviveCondition(Vector3 posCheck, float distance)
+    {
+        GameObject[] enemy = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (var item in enemy)
+        {
+            float dis = Vector3.Distance(item.transform.position, posCheck);
+            if (dis < distance)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    public Vector3 GetRandomNavMeshPositionPlayer(float radius)
+    {
+        for (int i = 0; i < 30; i++)
+        {
+            Vector3 randomDirection = Random.insideUnitSphere * radius + transform.position;
+            if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, NavMesh.AllAreas))
+            {
+
+                randomPoint = hit.position;
+                if (CheckReviveCondition(randomPoint, 10f))
+                {
+                    continue;
+                }
+                return hit.position;
+            }
+        }
+        return transform.position;
     }
     public void SettingEnemyMaxCount(float num)
     {

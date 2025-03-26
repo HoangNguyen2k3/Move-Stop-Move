@@ -21,6 +21,9 @@ public class ThrowWeapon : MonoBehaviour
     private float maxScale = 9f;
     public bool throwEnemy = false;
     public bool throwWall = false;
+    private float range_attack;
+    //    [Header("Sound")]
+    //    [SerializeField] private AudioClip touchSmt;
     private void Start()
     {
         scaleSpeed *= transform.localScale.x;
@@ -34,6 +37,11 @@ public class ThrowWeapon : MonoBehaviour
         }
         startPosition = transform.position;
         startDir = (target - transform.position).normalized;
+        range_attack = weapon.range;
+        if (upScaleWeapon)
+        {
+            range_attack += 10f;
+        }
     }
     private void Update()
     {
@@ -63,7 +71,6 @@ public class ThrowWeapon : MonoBehaviour
     {
         if (target_transform == null)
         {
-            Debug.Log("heheh");
             FindNearestTarget();
             if (target_transform == null) return;
         }
@@ -80,7 +87,7 @@ public class ThrowWeapon : MonoBehaviour
         targetPosition.y = who_throw_obj.transform.position.y + 0.6f;
         float step = weapon.speedMove * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
-        if (Vector3.Distance(startPosition, transform.position) >= weapon.range)
+        if (Vector3.Distance(startPosition, transform.position) >= range_attack)
         {
             Destroy(gameObject);
         }
@@ -116,7 +123,7 @@ public class ThrowWeapon : MonoBehaviour
     {
         Vector3 newPosition = FindNewPosition();
         transform.position = newPosition;
-        if (Vector3.Distance(startPosition, transform.position) >= weapon.range)
+        if (Vector3.Distance(startPosition, transform.position) >= range_attack)
         {
             Destroy(gameObject);
         }
@@ -141,7 +148,9 @@ public class ThrowWeapon : MonoBehaviour
         if (who_throw == ApplicationVariable.PLAYER_TAG)
         {
             if (other.gameObject.CompareTag(ApplicationVariable.IGNORE_TAG)) { return; }
-            if (other.gameObject.GetComponentInChildren<EnemiesHealth>())
+            if (other.gameObject.GetComponentInChildren<EnemiesHealth>() &&
+                other.gameObject.GetComponentInChildren<EnemiesHealth>().isBoss == false
+                && other.gameObject.GetComponentInChildren<EnemiesHealth>().isScore == false)
             {
                 currentlevelObject.AddLevel();
                 if (!throwEnemy)
@@ -194,5 +203,10 @@ public class ThrowWeapon : MonoBehaviour
             }
         }
 
+    }
+    private void OnDisable()
+    {
+        if (SoundManager.Instance)
+            SoundManager.Instance.PlaySFXSound(SoundManager.Instance.hit_something);
     }
 }

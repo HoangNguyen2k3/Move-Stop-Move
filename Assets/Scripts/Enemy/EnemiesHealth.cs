@@ -9,7 +9,11 @@ public class EnemiesHealth : MonoBehaviour
     private Collider currentCollider;
     public bool isAlive = true;
     private Animator animator;
+    [Header("---------------Zombie Mode------------------")]
     public bool isZombie = false;
+    public bool isBoss = false;
+    private int hpBoss = 10;
+    public bool isScore = false;
     private void Start()
     {
         currentCollider = GetComponent<Collider>();
@@ -38,9 +42,33 @@ public class EnemiesHealth : MonoBehaviour
             //  if (other.gameObject == enemy) { return; }
             //   ParticleSystem temp = Instantiate(take_damage_FX, other.transform.position, Quaternion.identity);
             ParticleSystem temp = Instantiate(take_damage_FX, pos_particle.position, Quaternion.identity);
-            isAlive = false;
-            ZombieEnemy();
+            if (isBoss)
+            {
+                TakedDamageBoss();
+            }
+            else
+            {
+                isScore = true;
+                isAlive = false;
+                ZombieEnemy();
+            }
             temp.GetComponentInChildren<ParticleSystemRenderer>().material = current_Mesh.material;
+        }
+    }
+    private void TakedDamageBoss()
+    {
+        hpBoss -= 1;
+        if (hpBoss <= 0)
+        {
+            isAlive = false;
+            CircleRange player = FindFirstObjectByType<CircleRange>();
+            if (player != null)
+            {
+                player.GetComponent<CircleRange>().RemoveEnemyFromList(transform);
+            }
+            PlayerZombie player_z = FindFirstObjectByType<PlayerZombie>();
+            player_z.gameObject.GetComponent<LevelManager>().AddLevel();
+            Destroy(currentCollider); Destroy(gameObject);
         }
     }
     public void TakeColorMaterial()
@@ -65,6 +93,7 @@ public class EnemiesHealth : MonoBehaviour
         Destroy(currentCollider);
         if (!take_damage_FX.isPlaying && !isAlive)
         {
+            SoundManager.Instance?.PlaySFXSound(SoundManager.Instance.dead);
             animator.SetBool(ApplicationVariable.IS_DEAD_STATE, true);
             Invoke("DestroyEnemy", 1.0f);
         }

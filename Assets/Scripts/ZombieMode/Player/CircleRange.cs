@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CircleRange : MonoBehaviour
 {
-    [HideInInspector] public Transform firstEnemy = null;
+    public Transform firstEnemy = null;
     [SerializeField] private GameObject circleTarget;
     private bool isEnemyInRange = false;
     public PlayerZombie player;

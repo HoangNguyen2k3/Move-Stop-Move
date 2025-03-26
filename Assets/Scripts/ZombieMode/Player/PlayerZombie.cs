@@ -28,7 +28,7 @@ public class PlayerZombie : MonoBehaviour
 
     [Header("Zombie Mode")]
     public float num_throw_attack = 1f;
-    private float angle_attack = 10f;
+    private float angle_attack = 12f;
     public CircleRange range;
     public int num_alive_player = 0;
     public bool canAttack = true;
@@ -44,9 +44,11 @@ public class PlayerZombie : MonoBehaviour
     public LevelManager levelManager;
     public bool GetRevive = false;
     private bool check1 = false;
+    public bool ReviveAds = false;
     private void OnEnable()
     {
-        InitPlayerAbilities();
+        if (ReviveAds == false)
+            InitPlayerAbilities();
     }
     private void Start()
     {
@@ -169,12 +171,22 @@ public class PlayerZombie : MonoBehaviour
         {
             return;
         }
-        if (isDead && !isAnimationDead) { StartCoroutine(DiePlayer()); }
+        if (isDead && !isAnimationDead)
+        {
+            if (SoundManager.Instance)
+                SoundManager.Instance.PlaySFXSound(SoundManager.Instance.dead);
+            StartCoroutine(DiePlayer());
+        }
         if (isDead) { return; }
         direct.x = my_joyStick.Horizontal;
         direct.z = my_joyStick.Vertical;
-        Movement();
+        //        Movement();
         RotateCharacter();
+    }
+    public void FixedUpdate()
+    {
+        if (isDead) { return; }
+        Movement();
     }
     private IEnumerator DiePlayer()
     {
@@ -185,19 +197,41 @@ public class PlayerZombie : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if (!GetRevive)
         {
-            ZombieManager.Instance.islose = true;
-            Destroy(gameObject);
+            if (!ReviveAds)
+            {
+                ReviveAds = true;
+                gameObject.SetActive(false);
+                ZombieManager.Instance.CanRevive();
+            }
+            else
+            {
+                DeadPlayer();
+            }
         }
         else
         {
-            isAnimationDead = false;
-            isDead = false;
-            transform.position = ZombieManager.Instance.GetRandomPositionRevivePlayer(30f);
             GetRevive = false;
-            animator.SetBool(ApplicationVariable.IS_DEAD_STATE, false);
+            RevivePlayer();
         }
         //Destroy(gameObject);
         //gameObject.SetActive(false);
+    }
+
+    public void RevivePlayer()
+    {
+        isDead = false;
+        gameObject.SetActive(true);
+        isCoolDown = false;
+        range.enemiesInRange.Clear();
+        range.firstEnemy = null;
+        isAnimationDead = false;
+        transform.position = ZombieManager.Instance.GetRandomPositionRevivePlayer(50f);
+        animator.SetBool(ApplicationVariable.IS_DEAD_STATE, false);
+    }
+    public void DeadPlayer()
+    {
+        ZombieManager.Instance.islose = true;
+        Destroy(gameObject);
     }
     private void Movement()
     {
@@ -234,6 +268,8 @@ public class PlayerZombie : MonoBehaviour
     {
         if (!isCoolDown && direct == Vector3.zero && !isDead)
         {
+            if (SoundManager.Instance)
+                SoundManager.Instance.PlaySFXSound(SoundManager.Instance.throwWeapon);
             switch (num_choose)
             {
                 case 0: BaseAttack(other); break;
@@ -264,10 +300,19 @@ public class PlayerZombie : MonoBehaviour
         animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, true);
         yield return new WaitForSeconds(characterPlayer.coolDownAttack / 5);
         animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, false);
+        /*        if (direct != Vector3.zero)
+                {
+                    hold_weapon.SetActive(true);
+                    isCoolDown = false;
+                    yield return null;
+                }
+                else
+                {*/
         yield return new WaitForSeconds(characterPlayer.coolDownAttack / 2);
         hold_weapon.SetActive(true);
-        yield return new WaitForSeconds(characterPlayer.coolDownAttack / 2);
+        yield return new WaitForSeconds(characterPlayer.coolDownAttack / 6);
         isCoolDown = false;
+        // }
     }
     public void ThrowWeapon(Vector3 target, Vector3 startPos, Vector3 dir, Transform target_trans = null, bool upscale = false, bool throwEnemy = false, bool throwWall = false)
     {
@@ -355,7 +400,11 @@ public class PlayerZombie : MonoBehaviour
     private void BaseAttack(GameObject other)
     {
         StartCoroutine(Attack());
-
+        /*        await Task.Delay(((int)characterPlayer.coolDownAttack) * 1000);
+                if (direct != Vector3.zero)
+                {
+                    return;
+                }*/
         if (other.gameObject && other.gameObject.GetComponentInChildren<TargetPos>())
         {
             currentPosAttack = posStart.position;

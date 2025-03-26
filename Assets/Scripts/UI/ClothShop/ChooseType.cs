@@ -20,6 +20,9 @@ public class ChooseType : MonoBehaviour
     private void OnEnable()
     {
         SetActiveChooseWeaponType(0);
+        /*        SettingButton(0);
+                SetActiveChooseWeaponType(0);
+                OnChangeTypeClothes?.Invoke(null, 0);*/
     }
     private void Start()
     {

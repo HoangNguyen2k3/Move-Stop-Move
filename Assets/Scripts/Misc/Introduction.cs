@@ -4,6 +4,7 @@ public class Introduction : MonoBehaviour
 {
     [SerializeField] private GameObject gameIntroduction;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private PlayerZombie playerZombie;
     [SerializeField] private float timeRemain = 5f;
     private float temp_time = 0f;
     private void Update()
@@ -14,13 +15,27 @@ public class Introduction : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        if (playerController.direct == Vector3.zero)
+        if (playerController != null)
         {
-            gameIntroduction.SetActive(true);
+            if (playerController.direct == Vector3.zero)
+            {
+                gameIntroduction.SetActive(true);
+            }
+            else
+            {
+                gameIntroduction.SetActive(false);
+            }
         }
-        else
+        else if (playerZombie != null)
         {
-            gameIntroduction.SetActive(false);
+            if (playerZombie.direct == Vector3.zero)
+            {
+                gameIntroduction.SetActive(true);
+            }
+            else
+            {
+                gameIntroduction.SetActive(false);
+            }
         }
     }
 }

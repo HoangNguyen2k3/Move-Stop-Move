@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -7,8 +8,9 @@ public class ZombieManager : Singleton<ZombieManager>
 {
     [SerializeField] private TextMeshProUGUI enemy_alive;
     [SerializeField] private GameObject winningGame;
-    [SerializeField] private GameObject[] enemy;
+    [SerializeField] private List<GameObject> enemy;
     [SerializeField] private GameObject loseGame;
+    [SerializeField] private GameObject loseReal;
 
     [SerializeField] private float enemy_spawn_pertime;
     [SerializeField] public float enemy_remain;
@@ -36,8 +38,23 @@ public class ZombieManager : Singleton<ZombieManager>
 
     public GameObject floatingTextPlayer;
     public GameObject CanvasIndicator;
+
+    [SerializeField] private bool isMapBoss = false;
+    private int maxEnemyType;
+
+
+    [SerializeField] private SaveDayZombieMode saveDayZombieMode;
+
+    [SerializeField] private TextMeshProUGUI day_zombie;
     private void Start()
     {
+        saveDayZombieMode.current_day = PlayerPrefs.GetInt("DayZombieMode", 1);
+        day_zombie.text = "DAY " + saveDayZombieMode.current_day.ToString();
+        if (saveDayZombieMode.current_day == 5)
+        {
+            isMapBoss = true;
+        }
+        enemy_remain = saveDayZombieMode.num_enemy_day[saveDayZombieMode.current_day - 1];
         coinManager = GetComponent<CoinManager>();
         enemy_not_spawn_num = enemy_remain;
         enemy_alive.text = quickAddText(enemy_remain);
@@ -53,17 +70,24 @@ public class ZombieManager : Singleton<ZombieManager>
         }
         if (islose && !temp)
         {
+
             currentInLobbyZombie = true;
             //            floatingTextPlayer.SetActive(false);
             CanvasIndicator.SetActive(false);
             SetUpCoin();
             temp = true;
-            loseGame.SetActive(true);
+            loseReal.SetActive(true);
+            //           loseGame.SetActive(true);
             CancelInvoke(nameof(SpawnEnemy));
         }
         if (islose) { return; }
         if (enemy_remain <= 0 && !iswinning)
         {
+            if (saveDayZombieMode.current_day < 5)
+            {
+                saveDayZombieMode.current_day += 1;
+                PlayerPrefs.SetInt("DayZombieMode", saveDayZombieMode.current_day);
+            }
             currentInLobbyZombie = true;
             CanvasIndicator.SetActive(false);
             floatingTextPlayer.SetActive(false);
@@ -77,6 +101,18 @@ public class ZombieManager : Singleton<ZombieManager>
             playerController.isWinning = true;
         }
 
+    }
+    public void RevivePlayer()
+    {
+        playerController.RevivePlayer();
+    }
+    public void CanRevive()
+    {
+        loseGame.SetActive(true);
+    }
+    public void DeadPlayer()
+    {
+        playerController.DeadPlayer();
     }
     public void ChangeInShop()
     {
@@ -127,10 +163,28 @@ public class ZombieManager : Singleton<ZombieManager>
     }
     private void SpawnEnemyPerTime(float a)
     {
-        for (int i = 0; i < a; i++)
+        if (isMapBoss)
         {
-            int random_enemy = Random.Range(0, enemy.Length);
-            Instantiate(enemy[random_enemy], GetRandomNavMeshPosition(transform.position, rangeSpawn), Quaternion.identity);
+            for (int i = 0; i < a; i++)
+            {
+                int random_enemy = Random.Range(0, enemy.Count);
+                Instantiate(enemy[random_enemy], GetRandomNavMeshPosition(transform.position, rangeSpawn), Quaternion.identity);
+                if (isMapBoss)
+                {
+                    if (enemy[random_enemy].GetComponent<EnemiesHealth>().isBoss)
+                    {
+                        enemy.Remove(enemy[random_enemy]);
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < a; i++)
+            {
+                int random_enemy = Random.Range(0, enemy.Count - 1);
+                Instantiate(enemy[random_enemy], GetRandomNavMeshPosition(transform.position, rangeSpawn), Quaternion.identity);
+            }
         }
     }
     private Vector3 GetRandomNavMeshPosition(Vector3 origin, float radius)
@@ -143,7 +197,7 @@ public class ZombieManager : Singleton<ZombieManager>
                 randomPoint = hit.position;
                 if (Vector3.Distance(randomPoint, playerController.gameObject.transform.position) < 6.1f)
                 {
-                    if (randomPoint.y > 0.5f) { continue; }
+                    if (randomPoint.y > 0f) { continue; }
                     continue;
                 }
                 return hit.position;
@@ -175,7 +229,7 @@ public class ZombieManager : Singleton<ZombieManager>
                 randomPoint = hit.position;
                 if (CheckReviveCondition(randomPoint, 10f))
                 {
-                    if (randomPoint.y > 0.5f) { continue; }
+                    if (randomPoint.y > 0f) { continue; }
                     continue;
                 }
                 return hit.position;

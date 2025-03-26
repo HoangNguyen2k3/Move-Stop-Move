@@ -10,6 +10,7 @@ public class SaveDataManager : MonoBehaviour
 
     private void Awake()
     {
+        playerCharacter.InitPlayer();
         if (!PlayerPrefs.HasKey("firstSave")) { return; }
         LoadDataPlayerInfo();
         LoadDataFullSkin();
@@ -20,7 +21,7 @@ public class SaveDataManager : MonoBehaviour
 
         LoadDataShield();
     }
-    private void OnApplicationQuit()
+    private void OnDisable()
     {
         if (!PlayerPrefs.HasKey("firstSave"))
         {
