@@ -47,6 +47,7 @@ public class PurchaseCustomWeapon : MonoBehaviour
         custom.GetColorCustom(lastWeaponShop.imageWeapon.GetComponent<MeshRenderer>().sharedMaterials.Length);
         if (begin_Pos)
             purchaseButton.GetComponent<RectTransform>().anchoredPosition = begin_Pos.anchoredPosition;
+        num_weap = 2;
         custom.SetColorButton(2);
         CheckEqippedWeapon(2);
     }

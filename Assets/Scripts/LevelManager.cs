@@ -29,6 +29,7 @@ public class LevelManager : MonoBehaviour
     public GameObject circle;
     public ZombieManager zombieManager;
 
+
     private float addingOrbit = 0.15f;
     private void OnEnable()
     {
@@ -111,9 +112,15 @@ public class LevelManager : MonoBehaviour
             if (SoundManager.Instance)
                 SoundManager.Instance.PlaySFXSound(SoundManager.Instance.level_up);
             textAnnouceDistance.SetActive(true);
-            textAnnouceDistance.GetComponent<TextMeshProUGUI>().text = (transform.localScale.x * 10).ToString("F2") + " m";
+            if (playerController)
+            {
+                textAnnouceDistance.GetComponent<TextMeshProUGUI>().text = (transform.localScale.x * 10).ToString("F2") + " m";
+            }
+            else
+            {
+                textAnnouceDistance.GetComponent<TextMeshProUGUI>().text = "Level up";
+            }
             textAnnouceDistance.GetComponent<Animator>().Play("TextAnouce");
-
             if (cam.Lens.FieldOfView <= maxCam)
             {
                 cam.Lens.FieldOfView += 2.5f;
@@ -128,7 +135,7 @@ public class LevelManager : MonoBehaviour
                 if (playerZombie.num_choose == 2)
                 {
                     playerZombie.ChangeRangeOrbit(playerZombie.range.gameObject.GetComponent<CapsuleCollider>().radius + addingOrbit);
-                    addingOrbit += 0.15f;
+                    addingOrbit += 0.2f;
                 }
             }
         }
@@ -145,7 +152,10 @@ public class LevelManager : MonoBehaviour
             temp++;
         }
         addingLevel++;
-        transform.localScale += new Vector3(0.025f, 0.025f, 0.025f);
+        if (playerController)
+        {
+            transform.localScale += new Vector3(0.025f, 0.025f, 0.025f);
+        }
 
         if (playerController)
         {
@@ -154,7 +164,8 @@ public class LevelManager : MonoBehaviour
         }
         if (zombieMode && playerZombie)
         {
-            playerZombie.addingScale += 2.5f;
+            LevelUpRange();
+            //            playerZombie.addingScale += 2.5f;
         }
 
     }

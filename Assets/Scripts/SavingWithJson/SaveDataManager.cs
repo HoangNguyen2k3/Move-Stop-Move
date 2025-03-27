@@ -41,49 +41,101 @@ public class SaveDataManager : MonoBehaviour
 
     private void LoadDataShield()
     {
+        int temp_check = -1;
         ShieldWrap shieldWrapper = SavingData.LoadData(new ShieldWrap(), ApplicationVariable.PATH_CLOTHES_SAVE + "shield");
         if (shieldWrapper.status != null)
         {
             for (int i = 0; i < shieldWrapper.status.Length; i++)
             {
                 shield_save[i].status = shieldWrapper.status[i];
+                if (shield_save[i].status == "Selected")
+                {
+                    temp_check = i;
+                }
             }
+        }
+        if (temp_check != -1)
+        {
+            playerCharacter.skinClother[2] = shield_save[temp_check];
+        }
+        else
+        {
+            playerCharacter.skinClother[2] = null;
         }
     }
 
     private void LoadDataPants()
     {
+        int temp_check = -1;
         PantWrap pantWrapper = SavingData.LoadData(new PantWrap(), ApplicationVariable.PATH_CLOTHES_SAVE + "pants");
         if (pantWrapper.status != null)
         {
             for (int i = 0; i < pantWrapper.status.Length; i++)
             {
                 pants_save[i].status = pantWrapper.status[i];
+                if (pants_save[i].status == "Selected")
+                {
+                    temp_check = i;
+                }
             }
+        }
+        if (temp_check != -1)
+        {
+            playerCharacter.skinClother[1] = pants_save[temp_check];
+        }
+        else
+        {
+            playerCharacter.skinClother[1] = null;
         }
     }
 
     private void LoadDataHat()
     {
+        int temp_check = -1;
         HatWrap hatWrapper = SavingData.LoadData(new HatWrap(), ApplicationVariable.PATH_CLOTHES_SAVE + "hat");
         if (hatWrapper.status != null)
         {
             for (int i = 0; i < hatWrapper.status.Length; i++)
             {
                 hats_save[i].status = hatWrapper.status[i];
+                if (hats_save[i].status == "Selected")
+                {
+                    temp_check = i;
+                }
             }
+        }
+        if (temp_check != -1)
+        {
+            playerCharacter.skinClother[0] = hats_save[temp_check];
+        }
+        else
+        {
+            playerCharacter.skinClother[0] = null;
         }
     }
 
     private void LoadDataFullSkin()
     {
+        int temp_check = -1;
         WrapperFullSkin skinWrapper = SavingData.LoadData(new WrapperFullSkin(), ApplicationVariable.PATH_CLOTHES_SAVE + "fullskin");
         if (skinWrapper.status != null && skinObject.Length == skinWrapper.status.Length)
         {
             for (int i = 0; i < skinObject.Length; i++)
             {
                 skinObject[i].status = skinWrapper.status[i];
+                if (skinObject[i].status == "Selected")
+                {
+                    temp_check = i;
+                }
             }
+        }
+        if (temp_check != -1)
+        {
+            playerCharacter.fullSkinPlayer = skinObject[temp_check];
+        }
+        else
+        {
+            playerCharacter.fullSkinPlayer = null;
         }
     }
 

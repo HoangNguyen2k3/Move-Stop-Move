@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -44,8 +46,10 @@ public class PlayerController : MonoBehaviour
 
     public bool canRevive = true;
     public UIManager uiManager;
-    //    [Header("Sound")]
-    //    [SerializeField] private AudioClip sound_throw_weapon;
+
+    [SerializeField] private TextMeshProUGUI name_text;
+    [SerializeField] private Image level_bg;
+
     private void Start()
     {
         //   PlayerPrefs.SetFloat("Coin", 1000f);
@@ -63,6 +67,8 @@ public class PlayerController : MonoBehaviour
         {
             TakeInfoCloth();
         }
+        name_text.color = current_Mesh.material.color;
+        level_bg.color = current_Mesh.material.color;
     }
     //Skin set up
     public void TakeInfoCloth()

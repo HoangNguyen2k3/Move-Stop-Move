@@ -187,7 +187,11 @@ public class PlayerZombie : MonoBehaviour
     }
     public void FixedUpdate()
     {
-        if (isDead) { return; }
+        if (isDead)
+        {
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+            return;
+        }
         Movement();
     }
     private IEnumerator DiePlayer()
@@ -239,13 +243,13 @@ public class PlayerZombie : MonoBehaviour
     {
         if (direct != Vector3.zero)
         {
-            rb.constraints = RigidbodyConstraints.None;
-            rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-            rb.MovePosition(transform.position + direct.normalized * speed * Time.deltaTime);
-            animator.SetBool(ApplicationVariable.IDLE_PLAYER_STATE, false);
             isCoolDown = false;
             hold_weapon.SetActive(true);
             animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, false);
+            rb.constraints = RigidbodyConstraints.None;
+            rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            rb.MovePosition(transform.position + direct.normalized * speed * Time.fixedDeltaTime);
+            animator.SetBool(ApplicationVariable.IDLE_PLAYER_STATE, false);
         }
         else
         {
@@ -285,6 +289,7 @@ public class PlayerZombie : MonoBehaviour
 
     public void AttackType(GameObject other)
     {
+        hold_weapon.SetActive(false);
         switch (num_choose)
         {
             case 0: BaseAttack(temp_obj); break;
@@ -306,11 +311,12 @@ public class PlayerZombie : MonoBehaviour
     public void StartAttack()
     {
         isCoolDown = true;
-        hold_weapon.SetActive(false);
+
     }
     public void StopAttack()
     {
         hold_weapon.SetActive(true);
+        animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, false);
         isCoolDown = false;
     }
     public void RotateToEnemy()
@@ -488,12 +494,15 @@ public class PlayerZombie : MonoBehaviour
                 Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
                 ThrowWeapon(target, currentPosAttack, dir_throw);
             }
-            for (int i = 0; i < num_throw_attack; i++)
-            {
-                float angle = start_angle + i * (total_angle / (num_throw_attack - 1)) + 180f;
-                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
-                ThrowWeapon(target, currentPosAttack, dir_throw);
-            }
+            /*            for (int i = 0; i < num_throw_attack; i++)
+                        {
+                            float angle = start_angle + i * (total_angle / (num_throw_attack - 1)) + 180f;
+                            Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                            ThrowWeapon(target, currentPosAttack, dir_throw);
+                        }*/
+            angle = 180f;
+            Vector3 dir_throw1 = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+            ThrowWeapon(target, currentPosAttack, dir_throw1);
         }
     }
     //Abilities 2
@@ -562,7 +571,7 @@ public class PlayerZombie : MonoBehaviour
     private async void ContinuousAttack(GameObject other)
     {
         BaseAttack(other);
-        await Task.Delay(400);
+        await Task.Delay(200);
         BaseAttack(other);
     }
 
@@ -571,7 +580,7 @@ public class PlayerZombie : MonoBehaviour
     {
         //    StartCoroutine(Attack());
 
-        if (other.gameObject.GetComponentInChildren<TargetPos>())
+        if (other.gameObject && other.gameObject.GetComponentInChildren<TargetPos>())
         {
             currentPosAttack = posStart.position;
             currentPosAttack.y = transform.position.y + 0.55f;
@@ -597,18 +606,24 @@ public class PlayerZombie : MonoBehaviour
                 Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
                 ThrowWeapon(target, currentPosAttack, dir_throw);
             }
-            for (int i = 0; i < num_throw_attack; i++)
-            {
-                float angle = start_angle + i * (total_angle / (num_throw_attack - 1)) + 90f;
-                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
-                ThrowWeapon(target, currentPosAttack, dir_throw);
-            }
-            for (int i = 0; i < num_throw_attack; i++)
-            {
-                float angle = start_angle + i * (total_angle / (num_throw_attack - 1)) - 90f;
-                Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
-                ThrowWeapon(target, currentPosAttack, dir_throw);
-            }
+            /*            for (int i = 0; i < num_throw_attack; i++)
+                        {
+                            float angle = start_angle + i * (total_angle / (num_throw_attack - 1)) + 90f;
+                            Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                            ThrowWeapon(target, currentPosAttack, dir_throw);
+                        }
+                        for (int i = 0; i < num_throw_attack; i++)
+                        {
+                            float angle = start_angle + i * (total_angle / (num_throw_attack - 1)) - 90f;
+                            Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+                            ThrowWeapon(target, currentPosAttack, dir_throw);
+                        }*/
+            angle = 90f;
+            Vector3 dir_throw_1 = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+            ThrowWeapon(target, currentPosAttack, dir_throw_1);
+            angle = -90f;
+            dir_throw_1 = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+            ThrowWeapon(target, currentPosAttack, dir_throw_1);
         }
     }
     //Abilities 7

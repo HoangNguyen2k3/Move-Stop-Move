@@ -45792,6 +45792,8 @@ MonoBehaviour:
   posStartZombie: []
   canRevive: 1
   uiManager: {fileID: 738702354}
+  name_text: {fileID: 29782404}
+  level_bg: {fileID: 2089517723}
 --- !u!95 &1302919454
 Animator:
   serializedVersion: 7
@@ -51956,6 +51958,8 @@ MonoBehaviour:
   posStartZombie: []
   canRevive: 1
   uiManager: {fileID: 0}
+  name_text: {fileID: 0}
+  level_bg: {fileID: 0}
 --- !u!1 &1498762388
 GameObject:
   m_ObjectHideFlags: 0
@@ -72264,6 +72268,8 @@ MonoBehaviour:
   posStartZombie: []
   canRevive: 1
   uiManager: {fileID: 0}
+  name_text: {fileID: 0}
+  level_bg: {fileID: 0}
 --- !u!114 &367217628382409071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82023,6 +82029,8 @@ MonoBehaviour:
   posStartZombie: []
   canRevive: 1
   uiManager: {fileID: 0}
+  name_text: {fileID: 0}
+  level_bg: {fileID: 0}
 --- !u!222 &2722080398835703890
 CanvasRenderer:
   m_ObjectHideFlags: 0
