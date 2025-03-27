@@ -10,6 +10,7 @@ public class RandomAbilities : MonoBehaviour
     //    public Image ability2;
     public int choice = 1;
     public Button btnChange;
+    public Button btnChageVer2;
     // public Button btnChoose;
     public PlayerZombie player;
     private int choice1;
@@ -28,6 +29,7 @@ public class RandomAbilities : MonoBehaviour
         choice1 = list.current_rand_1 + 1;
         choice2 = list.current_rand_2 + 1;
         btnChange.onClick.AddListener(() => ChangeAbilities());
+        btnChageVer2.onClick.AddListener(() => ChangeAbilities());
         ability.sprite = ability1;
         choice = choice1;
         nameAbilities.text = list.list_name[list.current_rand_1];

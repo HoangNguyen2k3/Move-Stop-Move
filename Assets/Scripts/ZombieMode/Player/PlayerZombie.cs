@@ -45,6 +45,8 @@ public class PlayerZombie : MonoBehaviour
     public bool GetRevive = false;
     private bool check1 = false;
     public bool ReviveAds = false;
+
+    private GameObject temp_obj;
     private void OnEnable()
     {
         if (ReviveAds == false)
@@ -241,6 +243,9 @@ public class PlayerZombie : MonoBehaviour
             rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             rb.MovePosition(transform.position + direct.normalized * speed * Time.deltaTime);
             animator.SetBool(ApplicationVariable.IDLE_PLAYER_STATE, false);
+            isCoolDown = false;
+            hold_weapon.SetActive(true);
+            animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, false);
         }
         else
         {
@@ -266,63 +271,90 @@ public class PlayerZombie : MonoBehaviour
 
     public void AttackEnemy(GameObject other)
     {
-        if (!isCoolDown && direct == Vector3.zero && !isDead)
+        temp_obj = other;
+        if (!isCoolDown && direct == Vector3.zero && !isDead && temp_obj != null)
         {
             if (SoundManager.Instance)
                 SoundManager.Instance.PlaySFXSound(SoundManager.Instance.throwWeapon);
-            switch (num_choose)
-            {
-                case 0: BaseAttack(other); break;
-                case 1: BehindAttack(other); break;
-                case 2: BaseAttack(other); break;
-                case 3: BulletPlus(other); break;
-                case 4: ChaseAttack(other); break;
-                case 5: ContinuousAttack(other); break;
-                case 6: CrossAttack(other); break;
-                case 7: DiagonAttack(other); break;
-                case 8: break;
-                case 9: GrowingAttack(other); break;
-                case 10: BaseAttack(other); break;
-                case 11: Piercing(other); break;
-                case 14: TripleAttack(other); break;
-                case 15: ThrowWallBreak(other); break;
-            }
+            StartCoroutine(Attack());
+            //AttackType(other);
+            temp_obj = other;
 
         }
     }
 
-
-
-    private IEnumerator Attack()
+    public void AttackType(GameObject other)
+    {
+        switch (num_choose)
+        {
+            case 0: BaseAttack(temp_obj); break;
+            case 1: BehindAttack(temp_obj); break;
+            case 2: BaseAttack(temp_obj); break;
+            case 3: BulletPlus(temp_obj); break;
+            case 4: ChaseAttack(temp_obj); break;
+            case 5: ContinuousAttack(temp_obj); break;
+            case 6: CrossAttack(temp_obj); break;
+            case 7: DiagonAttack(temp_obj); break;
+            case 8: break;
+            case 9: GrowingAttack(temp_obj); break;
+            case 10: BaseAttack(temp_obj); break;
+            case 11: Piercing(temp_obj); break;
+            case 14: TripleAttack(temp_obj); break;
+            case 15: ThrowWallBreak(temp_obj); break;
+        }
+    }
+    public void StartAttack()
     {
         isCoolDown = true;
         hold_weapon.SetActive(false);
-        animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, true);
-        yield return new WaitForSeconds(characterPlayer.coolDownAttack / 5);
-        animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, false);
-        /*        if (direct != Vector3.zero)
-                {
-                    hold_weapon.SetActive(true);
-                    isCoolDown = false;
-                    yield return null;
-                }
-                else
-                {*/
-        yield return new WaitForSeconds(characterPlayer.coolDownAttack / 2);
-        hold_weapon.SetActive(true);
-        yield return new WaitForSeconds(characterPlayer.coolDownAttack / 6);
-        isCoolDown = false;
-        // }
     }
-    public void ThrowWeapon(Vector3 target, Vector3 startPos, Vector3 dir, Transform target_trans = null, bool upscale = false, bool throwEnemy = false, bool throwWall = false)
+    public void StopAttack()
+    {
+        hold_weapon.SetActive(true);
+        isCoolDown = false;
+    }
+    public void RotateToEnemy()
     {
         if (range.firstEnemy != null)
         {
             Vector3 directionToEnemy = range.firstEnemy.position - transform.position;
             directionToEnemy.y = 0;
             Quaternion targetRotation = Quaternion.LookRotation(directionToEnemy);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angle * 10);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angle * 20);
         }
+    }
+    private IEnumerator Attack()
+    {
+        animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, true);
+        yield return null;
+        /*        isCoolDown = true;
+                hold_weapon.SetActive(false);
+                animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, true);
+                yield return new WaitForSeconds(characterPlayer.coolDownAttack / 5);
+                animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, false);
+                *//*        if (direct != Vector3.zero)
+                        {
+                            hold_weapon.SetActive(true);
+                            isCoolDown = false;
+                            yield return null;
+                        }
+                        else
+                        {*//*
+                yield return new WaitForSeconds(characterPlayer.coolDownAttack / 2);
+                hold_weapon.SetActive(true);
+                yield return new WaitForSeconds(characterPlayer.coolDownAttack / 6);
+                isCoolDown = false;
+                // }*/
+    }
+    public void ThrowWeapon(Vector3 target, Vector3 startPos, Vector3 dir, Transform target_trans = null, bool upscale = false, bool throwEnemy = false, bool throwWall = false)
+    {
+        /*        if (range.firstEnemy != null)
+                {
+                    Vector3 directionToEnemy = range.firstEnemy.position - transform.position;
+                    directionToEnemy.y = 0;
+                    Quaternion targetRotation = Quaternion.LookRotation(directionToEnemy);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angle * 20);
+                }*/
         startPos.y = transform.position.y + 0.55f;
         GameObject throwWeaponPrefab = Instantiate(characterPlayer.current_Weapon.weaponThrow, startPos, Quaternion.identity);
         throwWeaponPrefab.transform.localScale += Vector3.one * addingScale;
@@ -399,7 +431,7 @@ public class PlayerZombie : MonoBehaviour
     //Base Attack
     private void BaseAttack(GameObject other)
     {
-        StartCoroutine(Attack());
+        // StartCoroutine(Attack());
         /*        await Task.Delay(((int)characterPlayer.coolDownAttack) * 1000);
                 if (direct != Vector3.zero)
                 {
@@ -430,7 +462,7 @@ public class PlayerZombie : MonoBehaviour
     //Abilities 1
     private void BehindAttack(GameObject other)
     {
-        StartCoroutine(Attack());
+        //     StartCoroutine(Attack());
 
         if (other.gameObject.GetComponentInChildren<TargetPos>())
         {
@@ -478,7 +510,7 @@ public class PlayerZombie : MonoBehaviour
     private void BulletPlus(GameObject other)
     {
         float num_throw_add;
-        StartCoroutine(Attack());
+        //   StartCoroutine(Attack());
 
         if (other.gameObject.GetComponentInChildren<TargetPos>())
         {
@@ -501,7 +533,7 @@ public class PlayerZombie : MonoBehaviour
     //Abilities 4
     private async void ChaseAttack(GameObject other)
     {
-        StartCoroutine(Attack());
+        //   StartCoroutine(Attack());
 
         if (other.gameObject.GetComponentInChildren<TargetPos>())
         {
@@ -537,7 +569,7 @@ public class PlayerZombie : MonoBehaviour
     //Abilities 6 
     private void CrossAttack(GameObject other)
     {
-        StartCoroutine(Attack());
+        //    StartCoroutine(Attack());
 
         if (other.gameObject.GetComponentInChildren<TargetPos>())
         {
@@ -583,7 +615,7 @@ public class PlayerZombie : MonoBehaviour
     private void DiagonAttack(GameObject other)
     {
         float num_throw_add;
-        StartCoroutine(Attack());
+        //  StartCoroutine(Attack());
 
         if (other.gameObject.GetComponentInChildren<TargetPos>())
         {
@@ -607,7 +639,7 @@ public class PlayerZombie : MonoBehaviour
     //Abilities 9
     private void GrowingAttack(GameObject other)
     {
-        StartCoroutine(Attack());
+        //   StartCoroutine(Attack());
 
         if (other.gameObject && other.gameObject.GetComponentInChildren<TargetPos>())
         {
@@ -640,7 +672,7 @@ public class PlayerZombie : MonoBehaviour
     //Abilities 11
     private void Piercing(GameObject other)
     {
-        StartCoroutine(Attack());
+        //    StartCoroutine(Attack());
 
         if (other.gameObject && other.gameObject.GetComponentInChildren<TargetPos>())
         {
@@ -668,7 +700,7 @@ public class PlayerZombie : MonoBehaviour
     private void TripleAttack(GameObject other)
     {
         float num_throw_add;
-        StartCoroutine(Attack());
+        //    StartCoroutine(Attack());
 
         if (other.gameObject.GetComponentInChildren<TargetPos>())
         {
@@ -691,7 +723,7 @@ public class PlayerZombie : MonoBehaviour
     //Abilities 15
     private void ThrowWallBreak(GameObject other)
     {
-        StartCoroutine(Attack());
+        //    StartCoroutine(Attack());
 
         if (other.gameObject && other.gameObject.GetComponentInChildren<TargetPos>())
         {

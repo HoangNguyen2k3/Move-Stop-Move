@@ -17,11 +17,13 @@ public class SettingVibrantAndSound : MonoBehaviour
         {
             vibrant.SetActive(false);
             unvibrant.SetActive(true);
+            //            Handheld.();
         }
         else
         {
             vibrant.SetActive(true);
             unvibrant.SetActive(false);
+            //            Handheld.Vibrate();
         }
         if (PlayerPrefs.GetInt("Sound", 1) == 1)
         {

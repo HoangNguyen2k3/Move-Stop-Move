@@ -57,6 +57,7 @@ public class EnemiesHealth : MonoBehaviour
     }
     private void TakedDamageBoss()
     {
+        transform.localScale -= new Vector3(0.05f, 0.05f, 0.05f);
         hpBoss -= 1;
         if (hpBoss <= 0)
         {

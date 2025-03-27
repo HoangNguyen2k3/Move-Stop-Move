@@ -1608,7 +1608,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8.53726, y: -2.47, z: -14.094951}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8923284677609074704}
@@ -1720,6 +1720,7 @@ MonoBehaviour:
   isAlive: 1
   isZombie: 1
   isBoss: 1
+  isScore: 0
 --- !u!114 &6827264986304588996
 MonoBehaviour:
   m_ObjectHideFlags: 0

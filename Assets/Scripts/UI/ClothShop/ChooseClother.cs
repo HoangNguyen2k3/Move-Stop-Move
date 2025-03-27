@@ -50,17 +50,61 @@ public class ChooseClother : MonoBehaviour
             CheckButtonStatus(i);
 
         }
+        CheckFullSkinActive();
+        int temp = CheckCurrentActiveWeaponPage();
+        if (temp == -1) { temp = 0; }
         if (current_num_page == e)
         {
-            button[0].onClick.Invoke();
+            button[temp].onClick.Invoke();
         }
-        SetActiveCurrentClothes(0);
+        SetActiveCurrentClothes(temp);
         if (!CheckCurrentFullSkin())
         {
-            SetTempPlayerSkin(0);
+            SetTempPlayerSkin(temp);
         }
-        SetParamSkin(0);
+        SetParamSkin(temp);
     }
+    private void CheckFullSkinActive()
+    {
+        if (player.characterPlayer.fullSkinPlayer != null && num_page != 3)
+        {
+            foreach (var item in clothShop)
+            {
+                if (item.status == "Selected")
+                {
+                    item.status = "Purchase";
+                }
+            }
+        }
+    }
+    private int CheckCurrentActiveWeaponPage()
+    {
+        int temp = -1;
+        if (num_page != 3)
+        {
+            for (int i = 0; i < clothShop.Length; i++)
+            {
+                if (clothShop[i].status == "Selected")
+                {
+                    temp = i;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < fullSkinShop.Length; i++)
+            {
+                if (fullSkinShop[i].status == "Selected")
+                {
+                    temp = i;
+                    break;
+                }
+            }
+        }
+        return temp;
+    }
+
     private void CheckChooseSkin()
     {
         int temp = -1;
@@ -98,11 +142,11 @@ public class ChooseClother : MonoBehaviour
             }
         }
     }
-    private void Start()
+    private void Awake()
     {
-        CheckButtonStatus(0);
-        SetActiveCurrentClothes(0);
-        SetTempPlayerSkin(0);
+        /*        CheckButtonStatus(0);
+                SetActiveCurrentClothes(0);
+                SetTempPlayerSkin(0);*/
         for (int i = 0; i < button.Length; i++)
         {
             int index = i;
