@@ -91,6 +91,7 @@ public class RandomAbilities : MonoBehaviour
     }
     public void NoChoiceAbilities()
     {
+        Debug.Log("haha");
         noHaveAbilities.SetActive(true);
         haveAbilities.SetActive(false);
     }
