@@ -227,7 +227,7 @@ public class ZombieManager : Singleton<ZombieManager>
             if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, NavMesh.AllAreas))
             {
                 randomPoint = hit.position;
-                if (CheckReviveCondition(randomPoint, 10f))
+                if (CheckReviveCondition(randomPoint, 12f))
                 {
                     if (randomPoint.y > 0f) { continue; }
                     continue;
@@ -241,5 +241,13 @@ public class ZombieManager : Singleton<ZombieManager>
     {
         enemy_remain = num;
         enemy_not_spawn_num = enemy_remain;
+    }
+    public void StopSpawn()
+    {
+        CancelInvoke(nameof(SpawnEnemy));
+    }
+    public void ContinueSpawn()
+    {
+        InvokeRepeating(nameof(SpawnEnemy), 0, 2.5f);
     }
 }

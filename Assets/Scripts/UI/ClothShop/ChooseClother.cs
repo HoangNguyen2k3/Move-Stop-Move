@@ -256,6 +256,7 @@ public class ChooseClother : MonoBehaviour
                 SetRemainClothes("Purchase");
                 fullSkinShop[current_index].status = "Selected";
                 player.characterPlayer.fullSkinPlayer = fullSkinShop[current_index];
+                player.SetupSkinWhenChooseFullSkin();
                 player.TakeInfoFullSkin();
                 CheckButtonStatus(current_index);
                 SetClotherStatus("Selected");
@@ -266,6 +267,7 @@ public class ChooseClother : MonoBehaviour
             SetRemainClothes("Purchase");
             fullSkinShop[current_index].status = "Selected";
             player.characterPlayer.fullSkinPlayer = fullSkinShop[current_index];
+            player.SetupSkinWhenChooseFullSkin();
             player.TakeInfoFullSkin();
             CheckButtonStatus(current_index);
             SetClotherStatus("Selected");

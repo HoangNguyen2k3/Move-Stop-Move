@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,8 +25,11 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private UIManager uiManager;
 
     private float rangeSpawn = 30f;
+    [SerializeField] private CinemachineCamera winningCam;
+    [SerializeField] private CoinManager coinManager;
     private void Start()
     {
+        coinManager = GetComponent<CoinManager>();
         ui_generate = GetComponent<UIGeneratePress>();
         if (PlayerPrefs.HasKey("num_enemy_level"))
         {
@@ -44,6 +48,7 @@ public class GameManager : Singleton<GameManager>
             iswinning = true;
             enemy_alive.text = quickAddText(0);
             uiManager.ProcessEndGame();
+            winningCam.Priority = 10;
             winningGame.SetActive(true);
             earnCoinwin.text = num_coin.ToString();
             playerController.animator.SetBool("IsWin", true);
@@ -173,5 +178,9 @@ public class GameManager : Singleton<GameManager>
     {
         enemy_remain = num;
         enemy_not_spawn_num = enemy_remain;
+    }
+    public void Earnx3Gold()
+    {
+        coinManager.AddingCoinXn(2);
     }
 }

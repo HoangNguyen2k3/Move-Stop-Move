@@ -17,6 +17,7 @@ public class ChooseType : MonoBehaviour
     private int num;
 
     [SerializeField] private GameObject textWarning;
+    [SerializeField] private PlayerController player;
     private void OnEnable()
     {
         SetActiveChooseWeaponType(0);
@@ -36,6 +37,7 @@ public class ChooseType : MonoBehaviour
             {
                 SettingButton(index);
                 SetActiveChooseWeaponType(index);
+                PlayerSetup(index);
                 OnChangeTypeClothes?.Invoke(null, index);
             });
         }
@@ -44,6 +46,13 @@ public class ChooseType : MonoBehaviour
             PurchaseOrSelectWeapon();
         });
 
+    }
+    public void PlayerSetup(int index)
+    {
+        if (index != 3)
+        {
+            player.CheckPlayerCharacter();
+        }
     }
     public void PurchaseOrSelectWeapon()
     {

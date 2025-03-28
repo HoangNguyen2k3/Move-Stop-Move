@@ -158,6 +158,15 @@ public class ThrowWeapon : MonoBehaviour
                     Destroy(gameObject);
                 }
             }
+            else if (other.gameObject.GetComponentInChildren<EnemiesHealth>() &&
+                other.gameObject.GetComponentInChildren<EnemiesHealth>().isBoss == true
+                && other.gameObject.GetComponentInChildren<EnemiesHealth>().isScore == false)
+            {
+                if (!throwEnemy)
+                {
+                    Destroy(gameObject);
+                }
+            }
             else
             {
                 if (!other.gameObject.CompareTag(ApplicationVariable.PLAYER_TAG) && !throwWall)

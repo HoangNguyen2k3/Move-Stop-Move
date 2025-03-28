@@ -13,13 +13,16 @@ MonoBehaviour:
   m_Name: EnemyRandomObj
   m_EditorClassIdentifier: 
   materials_body:
-  - {fileID: 2100000, guid: 1c643c54c9869dc43b431e8f0449eb3a, type: 2}
-  - {fileID: 2100000, guid: 09504c3e38b61b24cae11d3af0f85db2, type: 2}
-  - {fileID: 2100000, guid: 87e3fa178e7956545b4d0c3e41630aeb, type: 2}
-  - {fileID: 2100000, guid: 9410c5628d9c43f46bcae5309b1c38cc, type: 2}
-  - {fileID: 2100000, guid: f095010f7dffd6a46a6892afd13140b1, type: 2}
-  - {fileID: 2100000, guid: a91e7cfde38ae9e4a8994706dc24a28f, type: 2}
-  - {fileID: 2100000, guid: 9cb455a618a6e274cb3f4d9f47c234f1, type: 2}
+  - {fileID: 2100000, guid: 7f0af7657b3b83f48ba165eadeff6d43, type: 2}
+  - {fileID: 2100000, guid: 24e5d4e5396c10746b72017aa39d8822, type: 2}
+  - {fileID: 2100000, guid: 116d0dd4acc021146b10db604bfcc09b, type: 2}
+  - {fileID: 2100000, guid: 5a2c85b569d5c1b4baf749a6cafbeb84, type: 2}
+  - {fileID: 2100000, guid: 370ea344c7bf6b443a78f3b3ace5d109, type: 2}
+  - {fileID: 2100000, guid: b81ba11f642628e468f1bf21a77f5a07, type: 2}
+  - {fileID: 2100000, guid: 0dc2b7f4312efa346844dd25e3791bf4, type: 2}
+  - {fileID: 2100000, guid: dd4116c0c1c08274e8736bac74adb742, type: 2}
+  - {fileID: 2100000, guid: 1707049792305cd428ac114b92861b9e, type: 2}
+  - {fileID: 2100000, guid: 2af2c34e313f30942a44e3354bebc1ec, type: 2}
   materials_pants:
   - {fileID: 2100000, guid: e84d4c513d2c95247ab1b057406b6766, type: 2}
   - {fileID: 2100000, guid: 8411112922f748f4bb1007458b1720e4, type: 2}
@@ -40,8 +43,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 9cb455a618a6e274cb3f4d9f47c234f1, type: 2}
   weapon_hold:
   - {fileID: 6631450432033280675, guid: 6792b12b6fd024944925008d6dae7931, type: 3}
-  - {fileID: 3146213775905627499, guid: 3169afcfd8e8d644fb8f4236070bf69f, type: 3}
   - {fileID: 1183598430815540528, guid: 582e092f899654e4788ec50affd6d648, type: 3}
+  - {fileID: 3146213775905627499, guid: 3169afcfd8e8d644fb8f4236070bf69f, type: 3}
   - {fileID: 2774914305842834732, guid: e6d82512723544e4e91d54816012e465, type: 3}
   - {fileID: 2611023300772851564, guid: 4240955244c0b6d4fb23c0e62de354d8, type: 3}
   - {fileID: 6178012049125945725, guid: a2c5fced90be2ff4f80e12491b8d4179, type: 3}

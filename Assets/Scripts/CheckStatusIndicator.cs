@@ -6,6 +6,7 @@ public class CheckStatusIndicator : MonoBehaviour
     [SerializeField] private GameObject child;
 
     public bool inZombieMode = false;
+    public bool isNamePlayer = false;
     private void Start()
     {
         if (!inZombieMode)
@@ -19,9 +20,13 @@ public class CheckStatusIndicator : MonoBehaviour
             {
                 Destroy(gameObject);
             }
-            if (lobby.currentinLobby && child.activeSelf == true)
+            if ((lobby.currentinLobby && child.activeSelf == true) || (lobby.setOffMoveEnemy_indicator && child.activeSelf == true))
             {
                 child.SetActive(false);
+            }
+            if (isNamePlayer && !lobby.setOffMoveEnemy_indicator)
+            {
+                child.SetActive(true);
             }
 
         }

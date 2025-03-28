@@ -187,7 +187,7 @@ public class PlayerZombie : MonoBehaviour
     }
     public void FixedUpdate()
     {
-        if (isDead)
+        if (isDead || isWinning)
         {
             rb.constraints = RigidbodyConstraints.FreezeAll;
             return;
@@ -205,6 +205,7 @@ public class PlayerZombie : MonoBehaviour
         {
             if (!ReviveAds)
             {
+                ZombieManager.Instance.StopSpawn();
                 ReviveAds = true;
                 gameObject.SetActive(false);
                 ZombieManager.Instance.CanRevive();
@@ -216,6 +217,7 @@ public class PlayerZombie : MonoBehaviour
         }
         else
         {
+            ZombieManager.Instance.StopSpawn();
             GetRevive = false;
             RevivePlayer();
         }
@@ -223,7 +225,7 @@ public class PlayerZombie : MonoBehaviour
         //gameObject.SetActive(false);
     }
 
-    public void RevivePlayer()
+    public async void RevivePlayer()
     {
         isDead = false;
         gameObject.SetActive(true);
@@ -231,8 +233,11 @@ public class PlayerZombie : MonoBehaviour
         range.enemiesInRange.Clear();
         range.firstEnemy = null;
         isAnimationDead = false;
+        await Task.Delay(10);
         transform.position = ZombieManager.Instance.GetRandomPositionRevivePlayer(50f);
+        await Task.Delay(10);
         animator.SetBool(ApplicationVariable.IS_DEAD_STATE, false);
+        ZombieManager.Instance.ContinueSpawn();
     }
     public void DeadPlayer()
     {
@@ -376,7 +381,23 @@ public class PlayerZombie : MonoBehaviour
         throwWeaponPrefab.transform.rotation = Quaternion.LookRotation(dir);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /*    private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                check1 = true;
+            }
+            if (collision.collider && collision.gameObject.CompareTag("Enemy") && num_alive_player == 0 && canAttack)
+            {
+                isDead = true;
+                //  ZombieManager.Instance.islose = true;
+            }
+            else if (collision.collider && collision.gameObject.CompareTag("Enemy") && num_alive_player >= 1 && canAttack)
+            {
+                WaitToPlayerShield();
+            }
+        }*/
+    private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
@@ -385,7 +406,6 @@ public class PlayerZombie : MonoBehaviour
         if (collision.collider && collision.gameObject.CompareTag("Enemy") && num_alive_player == 0 && canAttack)
         {
             isDead = true;
-            //  ZombieManager.Instance.islose = true;
         }
         else if (collision.collider && collision.gameObject.CompareTag("Enemy") && num_alive_player >= 1 && canAttack)
         {
@@ -500,8 +520,8 @@ public class PlayerZombie : MonoBehaviour
                             Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
                             ThrowWeapon(target, currentPosAttack, dir_throw);
                         }*/
-            angle = 180f;
-            Vector3 dir_throw1 = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+            float angle1 = 180f;
+            Vector3 dir_throw1 = Quaternion.AngleAxis(angle1, Vector3.up) * dir;
             ThrowWeapon(target, currentPosAttack, dir_throw1);
         }
     }
@@ -551,7 +571,7 @@ public class PlayerZombie : MonoBehaviour
             Vector3 target = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
             target.y = transform.position.y + 0.55f;
             Vector3 dir = (target - currentPosAttack).normalized;
-            if (num_throw_attack == 1)
+            if (num_throw_attack == 1 && other.gameObject != null)
             {
                 ThrowWeapon(target, currentPosAttack, dir, other.transform);
                 return;
@@ -562,7 +582,8 @@ public class PlayerZombie : MonoBehaviour
             {
                 float angle = start_angle + i * (total_angle / (num_throw_attack - 1));
                 Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
-                ThrowWeapon(target, currentPosAttack, dir_throw, other.transform);
+                if (other.gameObject != null)
+                    ThrowWeapon(target, currentPosAttack, dir_throw, other.transform);
                 await Task.Delay(50);
             }
         }
@@ -571,7 +592,7 @@ public class PlayerZombie : MonoBehaviour
     private async void ContinuousAttack(GameObject other)
     {
         BaseAttack(other);
-        await Task.Delay(200);
+        await Task.Delay(100);
         BaseAttack(other);
     }
 
@@ -618,11 +639,11 @@ public class PlayerZombie : MonoBehaviour
                             Vector3 dir_throw = Quaternion.AngleAxis(angle, Vector3.up) * dir;
                             ThrowWeapon(target, currentPosAttack, dir_throw);
                         }*/
-            angle = 90f;
-            Vector3 dir_throw_1 = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+            float angle2 = 90f;
+            Vector3 dir_throw_1 = Quaternion.AngleAxis(angle2, Vector3.up) * dir;
             ThrowWeapon(target, currentPosAttack, dir_throw_1);
-            angle = -90f;
-            dir_throw_1 = Quaternion.AngleAxis(angle, Vector3.up) * dir;
+            angle2 = -90f;
+            dir_throw_1 = Quaternion.AngleAxis(angle2, Vector3.up) * dir;
             ThrowWeapon(target, currentPosAttack, dir_throw_1);
         }
     }

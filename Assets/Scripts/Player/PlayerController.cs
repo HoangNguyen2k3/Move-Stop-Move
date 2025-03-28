@@ -50,6 +50,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI name_text;
     [SerializeField] private Image level_bg;
 
+    private GameObject temp_target;
+
     private void Start()
     {
         //   PlayerPrefs.SetFloat("Coin", 1000f);
@@ -81,6 +83,25 @@ public class PlayerController : MonoBehaviour
             {
                 SettingSkin(characterPlayer.skinClother[i], i);
             }
+            else
+            {
+                switch (i)
+                {
+                    case 0:
+                        foreach (Transform child in skinPlayerObject[i].transform)
+                        {
+                            Destroy(child.gameObject);
+                        }
+                        break;
+                    case 1:
+                        skinPlayerObject[i].GetComponent<SkinnedMeshRenderer>().sharedMaterial = begin_Material;
+                        break;
+                    case 2:
+                        goto case 0;
+                    case 3: break;
+
+                }
+            }
         }
     }
     public void SettingSkin(ClotherShop skin, int index)
@@ -107,7 +128,43 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+    public void SetupSkinWhenChooseFullSkin()
+    {
+        for (int i = 0; i <= 2; i++)
+        {
+            if (characterPlayer.skinClother[i] != null)
+            {
+                characterPlayer.skinClother[i].status = "Purchase";
+                characterPlayer.skinClother[i] = null;
+            }
+        }
+        characterPlayer.skinClother[0] = null;
+        characterPlayer.skinClother[1] = null;
+        characterPlayer.skinClother[2] = null;
+        foreach (Transform child in skinPlayerObject[0].transform)
+        {
+            Destroy(child.gameObject);
+        }
+        for (int i = 0; i < skinPlayerObject[1].GetComponent<SkinnedMeshRenderer>().materials.Length; i++)
+        {
+            skinPlayerObject[1].GetComponent<SkinnedMeshRenderer>().sharedMaterials[i] = begin_Material;
+        }
 
+        foreach (Transform child in skinPlayerObject[2].transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+    public void CheckPlayerCharacter()
+    {
+        for (int i = 0; i <= 2; i++)
+        {
+            if (characterPlayer.skinClother[i] && characterPlayer.skinClother[i].status == "Purchase")
+            {
+                characterPlayer.skinClother[i] = null;
+            }
+        }
+    }
     //Full skin set up
     public void SettingFullSkin(FullSkinObject skin)
     {
@@ -244,8 +301,14 @@ public class PlayerController : MonoBehaviour
     {
         if (direct != Vector3.zero)
         {
+            if (hold_weapon.activeSelf == false)
+            {
+                hold_weapon.SetActive(true);
+            }
+            animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, false);
             transform.position += direct.normalized * speed * Time.deltaTime;
             animator.SetBool(ApplicationVariable.IDLE_PLAYER_STATE, false);
+            isCoolDown = false;
         }
         else
         {
@@ -320,54 +383,42 @@ public class PlayerController : MonoBehaviour
             if (other.CompareTag(ApplicationVariable.ENEMY_TAG) && !isCoolDown && firstEnemy == other.transform && direct == Vector3.zero && !isDead)
             {
                 StartCoroutine(Attack());
-                /*                if (other.gameObject.GetComponentInChildren<TargetPos>())
-                                {
-                                    float spacing = 0.5f;
-                                    Vector3 basePos = posStart.position;
-                                    int mid = (int)num_throw_attack / 2;
-                                    Vector3 targetPosBegin = other.gameObject.GetComponentInChildren<TargetPos>().transform.position;
-                                    // Vector3 targetPos;
-                                    for (int i = 0; i < num_throw_attack; i++)
-                                    {
-                                        //float offset = (i - mid) * spacing;
-                                        float offsetX = (i - mid) * spacing;
-                                        float offsetZ = (i % 2 == 0 ? 1 : -1) * spacing;
-                                        //   Vector3 throwPosition = basePos + new Vector3(offset, 0, 0);
-                                        Vector3 throwPosition = basePos + new Vector3(offsetX, 0, offsetZ);
-                                        Vector3 targetPos = targetPosBegin + new Vector3(offsetX, 0, offsetZ);
-                                        //   targetPos = targetPosBegin + new Vector3(offset, 0, 0);
-                                        ThrowWeapon(targetPos, throwPosition);
-                                    }
-                                }*/
             }
             return;
         }
         if (other.CompareTag(ApplicationVariable.ENEMY_TAG) && !isCoolDown && firstEnemy == other.transform && direct == Vector3.zero && !lobby.currentinLobby && !isDead)
         {
             StartCoroutine(Attack());
-
-            if (other.gameObject.GetComponentInChildren<TargetPos>())
-            {
-                ThrowWeapon(other.gameObject.GetComponentInChildren<TargetPos>().transform.position, posStart.position);
-            }
+            temp_target = other.gameObject;
+            /*            if (other.gameObject.GetComponentInChildren<TargetPos>())
+                        {
+                            temp_target = other.gameObject;
+                            // ThrowWeapon(other.gameObject.GetComponentInChildren<TargetPos>().transform.position, posStart.position);
+                        }*/
 
         }
     }
 
+    /*    private IEnumerator Attack()
+        {
+            isCoolDown = true;
+            hold_weapon.SetActive(false);
+            animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, true);
+            yield return new WaitForSeconds(characterPlayer.coolDownAttack / 5);
+            animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, false);
+            yield return new WaitForSeconds(characterPlayer.coolDownAttack / 2);
+            hold_weapon.SetActive(true);
+            yield return new WaitForSeconds(characterPlayer.coolDownAttack / 2);
+            isCoolDown = false;
+        }*/
     private IEnumerator Attack()
     {
-        isCoolDown = true;
-        hold_weapon.SetActive(false);
-        animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, true);
-        yield return new WaitForSeconds(characterPlayer.coolDownAttack / 5);
-        animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, false);
-        yield return new WaitForSeconds(characterPlayer.coolDownAttack / 2);
-        hold_weapon.SetActive(true);
-        yield return new WaitForSeconds(characterPlayer.coolDownAttack / 2);
-        isCoolDown = false;
-    }
 
-    public void ThrowWeapon(Vector3 target, Vector3 startPos)
+        animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, true);
+        yield return null;
+    }
+    //New Attack
+    public void StartAttack()
     {
         SoundManager.Instance.PlaySFXSound(SoundManager.Instance.throwWeapon);
         if (firstEnemy != null)
@@ -375,8 +426,25 @@ public class PlayerController : MonoBehaviour
             Vector3 directionToEnemy = firstEnemy.position - transform.position;
             directionToEnemy.y = 0;
             Quaternion targetRotation = Quaternion.LookRotation(directionToEnemy);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angle * 10);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angle * 20);
         }
+        isCoolDown = true;
+    }
+    public void StopAttack()
+    {
+        isCoolDown = false;
+        animator.SetBool(ApplicationVariable.ATTACK_PLAYER_STATE, false);
+    }
+    public void StartThrow()
+    {
+        if (temp_target && temp_target.GetComponentInChildren<TargetPos>())
+        {
+            ThrowWeapon(temp_target.GetComponentInChildren<TargetPos>().transform.position, posStart.position);
+        }
+    }
+    public void ThrowWeapon(Vector3 target, Vector3 startPos)
+    {
+
 
         GameObject throwWeaponPrefab = Instantiate(characterPlayer.current_Weapon.weaponThrow, startPos, Quaternion.identity);
         throwWeaponPrefab.transform.localScale += Vector3.one * addingScale;

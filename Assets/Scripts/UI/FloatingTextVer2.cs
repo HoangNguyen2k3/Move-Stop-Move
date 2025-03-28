@@ -12,8 +12,9 @@ public class FloatingTextScreenSpace : MonoBehaviour
 
     void Start()
     {
-        if (!GameObject.FindGameObjectWithTag("FloatingText")) { Destroy(gameObject); }
-        screenCanvas = GameObject.FindGameObjectWithTag("FloatingText").GetComponent<Canvas>();
+        if (!GameObject.FindGameObjectWithTag("FloatingText")) { Destroy(gameObject); return; }
+        if (GameObject.FindGameObjectWithTag("FloatingText"))
+            screenCanvas = GameObject.FindGameObjectWithTag("FloatingText").GetComponent<Canvas>();
 
 
         root = transform.root;

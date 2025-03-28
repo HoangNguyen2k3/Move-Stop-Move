@@ -11,7 +11,9 @@ public class LobbyManager : Singleton<LobbyManager>
     [SerializeField] private ScreenShotAndShow show;
     public bool currentinLobby = true;
 
+    public bool setOffMoveEnemy_indicator = false;
     private PlayerController playerControl;
+
     private void Start()
     {
         playerControl = FindFirstObjectByType<PlayerController>();

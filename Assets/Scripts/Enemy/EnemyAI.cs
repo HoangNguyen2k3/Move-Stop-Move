@@ -61,11 +61,11 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        if (LobbyManager.Instance.currentinLobby)
+        if (LobbyManager.Instance.currentinLobby && !LobbyManager.Instance.setOffMoveEnemy_indicator)
         {
             return;
         }
-        if (!LobbyManager.Instance.currentinLobby && isFirst)
+        if (!LobbyManager.Instance.currentinLobby && isFirst && !LobbyManager.Instance.setOffMoveEnemy_indicator)
         {
             isFirst = false;
             InvokeRepeating(nameof(Wander), 0f, wanderInterval);
@@ -91,9 +91,9 @@ public class EnemyAI : MonoBehaviour
         {
             animator.SetBool("IsIdle", true);
         }
-        if (target == null) FindNearestTarget();
+        if (target == null || target.gameObject.activeSelf == false) FindNearestTarget();
 
-        if (target != null && Vector3.Distance(transform.position, target.position) <= attackRange)
+        if (target != null && target.gameObject.activeSelf && Vector3.Distance(transform.position, target.position) <= attackRange)
         {
             StopAndAttack();
             CancelInvoke(nameof(Wander));
@@ -159,7 +159,8 @@ public class EnemyAI : MonoBehaviour
         throwWeapon.GetComponent<ThrowWeapon>().who_throw_obj = transform.GetChild(1).gameObject;
         throwWeapon.GetComponent<ThrowWeapon>().currentlevelObject = GetComponent<LevelManager>();
         throwWeapon.GetComponent<ThrowWeapon>().who_throw = "Enemy";
-        throwWeapon.GetComponent<ThrowWeapon>().target = target.GetComponentInChildren<TargetPos>().transform.position;
+        if (target)
+            throwWeapon.GetComponent<ThrowWeapon>().target = target.GetComponentInChildren<TargetPos>().transform.position;
 
         //        yield return new WaitForSeconds(timeCoolDown / 2.5f);
         yield return new WaitForSeconds(0.55f);
