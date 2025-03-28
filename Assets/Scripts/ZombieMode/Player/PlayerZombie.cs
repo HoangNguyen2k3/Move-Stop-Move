@@ -28,7 +28,7 @@ public class PlayerZombie : MonoBehaviour
 
     [Header("Zombie Mode")]
     public float num_throw_attack = 1f;
-    private float angle_attack = 12f;
+    private float angle_attack = 13f;
     public CircleRange range;
     public int num_alive_player = 0;
     public bool canAttack = true;

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "906097362575",
+    "project_id": "move-stop-move-7cc8f",
+    "storage_bucket": "move-stop-move-7cc8f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906097362575:android:9c95dc4856738201d0d2fa",
+        "android_client_info": {
+          "package_name": "com.movestopmove.firebasedb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvhTYPvoChgdabPKQV4CxQZQCiHBerQ1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

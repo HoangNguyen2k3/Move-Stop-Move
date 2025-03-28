@@ -9,11 +9,10 @@ public class WinZombieMode : MonoBehaviour
     [SerializeField] private SaveDayZombieMode saveDayZombieMode;
     [SerializeField] private Color done_color;
     [SerializeField] private Color notdone_color;
-    [Header("Sound")]
-    [SerializeField] private AudioClip sound_win;
     private void OnEnable()
     {
-        SoundManager.Instance.PlaySFXSound(sound_win);
+        if (SoundManager.Instance)
+            SoundManager.Instance.PlaySFXSound(SoundManager.Instance.win_sound);
         day.text = "you survived day " + saveDayZombieMode.current_day.ToString() + "!";
         for (int i = 0; i < day_bar.Length; i++)
         {

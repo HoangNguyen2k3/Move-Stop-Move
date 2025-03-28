@@ -83,11 +83,6 @@ public class ZombieManager : Singleton<ZombieManager>
         if (islose) { return; }
         if (enemy_remain <= 0 && !iswinning)
         {
-            if (saveDayZombieMode.current_day < 5)
-            {
-                saveDayZombieMode.current_day += 1;
-                PlayerPrefs.SetInt("DayZombieMode", saveDayZombieMode.current_day);
-            }
             currentInLobbyZombie = true;
             CanvasIndicator.SetActive(false);
             floatingTextPlayer.SetActive(false);
@@ -96,6 +91,11 @@ public class ZombieManager : Singleton<ZombieManager>
             SetUpCoin();
             winningGame.SetActive(true);
             camWinning.Priority = 10;
+            if (saveDayZombieMode.current_day < 5)
+            {
+                saveDayZombieMode.current_day += 1;
+                PlayerPrefs.SetInt("DayZombieMode", saveDayZombieMode.current_day);
+            }
             //    earnCoinwin.text = num_coin.ToString();
             playerController.animator.SetBool("IsWin", true);
             playerController.isWinning = true;

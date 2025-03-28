@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47412add59e3bbe4a8eeb0f5e4d2e2c2, type: 3}
   m_Name: SaveDayZombieMode
   m_EditorClassIdentifier: 
-  current_day: 3
+  current_day: 4
   num_enemy_day: 28000000320000003c0000004600000050000000

@@ -18,13 +18,15 @@ public class SettingSoundUI : MonoBehaviour
             {
                 text.text = "OFF";
                 image.color = OffColor;
-                SoundManager.Instance.SFXSound.mute = true;
+                if (SoundManager.Instance)
+                    SoundManager.Instance.SFXSound.mute = true;
             }
             else
             {
                 text.text = "ON";
                 image.color = OnColor;
-                SoundManager.Instance.SFXSound.mute = false;
+                if (SoundManager.Instance)
+                    SoundManager.Instance.SFXSound.mute = false;
             }
         }
         else
@@ -50,14 +52,16 @@ public class SettingSoundUI : MonoBehaviour
                 text.text = "OFF";
                 image.color = OffColor;
                 PlayerPrefs.SetInt("Sound", 0);
-                SoundManager.Instance.SFXSound.mute = true;
+                if (SoundManager.Instance)
+                    SoundManager.Instance.SFXSound.mute = true;
             }
             else
             {
                 text.text = "ON";
                 image.color = OnColor;
                 PlayerPrefs.SetInt("Sound", 1);
-                SoundManager.Instance.SFXSound.mute = false;
+                if (SoundManager.Instance)
+                    SoundManager.Instance.SFXSound.mute = false;
             }
         }
         else

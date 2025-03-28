@@ -18,6 +18,11 @@ public class RandomAbilities : MonoBehaviour
     private Sprite ability1;
     private Sprite ability2;
     private ZombieManager zombieManager;
+    //Show abilities in pause
+    [SerializeField] private GameObject noHaveAbilities;
+    [SerializeField] private GameObject haveAbilities;
+    [SerializeField] private Image img_abilities;
+    [SerializeField] private TextMeshProUGUI name_abilities;
 
     private void Start()
     {
@@ -69,17 +74,31 @@ public class RandomAbilities : MonoBehaviour
                 player.num_choose = 0;
                 break;
             case 13:
-                player.levelManager.LevelUpRange();
+                player.levelManager.isUpScale = true;
                 player.num_choose = 0;
                 break;
             default: player.num_choose = choice; break;
         }
+        ChooseAbilitiesSetting();
+    }
+    public void ChooseAbilitiesSetting()
+    {
+        noHaveAbilities.SetActive(false);
+        haveAbilities.SetActive(true);
+        img_abilities.sprite = list.spriteAbilities[choice - 1];
+        name_abilities.text = list.list_name[choice - 1];
+
+    }
+    public void NoChoiceAbilities()
+    {
+        noHaveAbilities.SetActive(true);
+        haveAbilities.SetActive(false);
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            choice = 4;
-        }
+        /*        if (Input.GetKeyDown(KeyCode.P))
+                {
+                    choice = 4;
+                }*/
     }
 }

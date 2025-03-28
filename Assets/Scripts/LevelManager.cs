@@ -28,7 +28,7 @@ public class LevelManager : MonoBehaviour
     public float current_num_weapon_throw = 1f;
     public GameObject circle;
     public ZombieManager zombieManager;
-
+    public bool isUpScale = false;
 
     private float addingOrbit = 0.15f;
     private void OnEnable()
@@ -54,6 +54,11 @@ public class LevelManager : MonoBehaviour
         }
         current_level = startLevel;
         textlevel.text = current_level.ToString();
+        if (isUpScale)
+        {
+            LevelUpRange_1();
+            isUpScale = false;
+        }
     }
     private void Update()
     {
@@ -178,6 +183,16 @@ public class LevelManager : MonoBehaviour
         // circle.transform.localScale += new Vector3(0.025f * 2, 0.025f * 2, 0.025f * 2);
         transform.localScale += new Vector3(0.025f, 0.025f, 0.025f);
         playerZombie.speed += 0.3f;
+    }
+    public void LevelUpRange_1()
+    {
+        if (cam.Lens.FieldOfView <= maxCam)
+        {
+            cam.Lens.FieldOfView += 2.5f;
+        }
+        // circle.transform.localScale += new Vector3(0.025f * 2, 0.025f * 2, 0.025f * 2);
+        transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
+        playerZombie.speed += 0.4f;
     }
     public void LevelUpRangeSetUp()
     {
