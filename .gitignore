@@ -71,3 +71,10 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+# 🔥 Firebase-related files
+Firebase/ # Bỏ qua toàn bộ thư mục Firebase (nếu có)
+google-services.json # Android Firebase config file
+GoogleService-Info.plist # iOS Firebase config file
+.env # Nếu bạn có sử dụng biến môi trường cho Firebase
+firebase.json # Firebase CLI config file
+.firebase/ # Thư mục cache của Firebase CLI
