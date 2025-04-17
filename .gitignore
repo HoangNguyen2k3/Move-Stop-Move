@@ -79,3 +79,6 @@ GoogleService-Info.plist # iOS Firebase config file
 firebase.json # Firebase CLI config file
 .firebase/ # Thư mục cache của Firebase CLI
 /Assets/Plugins/
+/Assets/Firebase/
+/Assets/AudienceNetwork/
+/Assets/AppsFlyer
