@@ -78,3 +78,4 @@ GoogleService-Info.plist # iOS Firebase config file
 .env # Nếu bạn có sử dụng biến môi trường cho Firebase
 firebase.json # Firebase CLI config file
 .firebase/ # Thư mục cache của Firebase CLI
+/Assets/Plugins/
